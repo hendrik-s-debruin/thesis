@@ -1,0 +1,51 @@
+\documentclass{report}
+
+	\usepackage{ifdraft}
+	\usepackage{todonotes}
+
+	\usepackage{mathrsfs}
+	\usepackage{amsfonts}
+	\usepackage{amssymb}
+	\usepackage{dsfont}
+
+	\usepackage{graphicx}
+
+	\usepackage[citestyle=authoryear,bibstyle=authortitle]{biblatex}
+		\addbibresource{bib/cdpr.bib}
+		\addbibresource{bib/path_planning.bib}
+		\addbibresource{bib/trajectory_generation.bib}
+
+	\input{props/layout.tex}
+
+	\usepackage{hyperref}
+	\usepackage[all]{hypcap}
+
+	\usepackage[section=section, acronyms]{glossaries}
+		\makenoidxglossaries{}
+		\input{defs/notation.tex}
+		\input{defs/symbols.tex}
+		\input{defs/abbrevs.tex}
+		\input{defs/glossary.tex}
+		\setglossarystyle{listdotted}
+		\ifdraft{\glsaddall}{}
+
+\begin{document}
+
+	\input{chapters/abstract}
+
+	\clearpage
+	\pagenumbering{roman}
+
+	\tableofcontents
+	\listoffigures
+	\listoftables
+	\input{defs/nomenclature.tex}
+
+	\clearpage
+	\pagenumbering{arabic}
+	\input{chapters/intro/intro}
+	\input{chapters/lit_study/lit_study}
+
+	\printbibliography{}
+
+\end{document}

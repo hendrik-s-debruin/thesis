@@ -1,0 +1,173 @@
+% Dependencies:
+%	*	mathrsfs	- for mathscr font
+%	*	amsfonts	- for mathfrak and mathbb (upper case) letters
+%	*	amssym		- for backepsilon
+%	*	dsfont		- for mathds
+\newglossary*{notation}{Notation}
+
+% ==============================================================================
+% Scalar
+% ==============================================================================
+	\newglossaryentry{not:scalar}
+	{%
+		name=\ensuremath{m},
+		description=a scalar,
+		type=notation
+	}
+	\glsadd{not:scalar}
+
+% ==============================================================================
+% Vector
+% ==============================================================================
+	\renewcommand{\vec}[1]{\ensuremath{\boldsymbol{#1}}}
+	\newglossaryentry{not:vec}
+	{%
+		name=\vec{m}\ifdraft{: \textbackslash{} vec}{},
+		description=a vector,
+		type=notation
+	}
+	\glsadd{not:vec}
+
+% ==============================================================================
+% Projection
+% ==============================================================================
+	\newcommand{\project}[2]{\ensuremath{{}^{#2}\!{#1}}}
+	\newglossaryentry{not:project}
+	{%
+		name=\project{\vec{m}}{n}\ifdraft{: \textbackslash{} project\{to\}}{},,
+		description=projection of vector \vec{m} in frame $n$,
+		type=notation
+	}
+	\glsadd{not:project}
+
+% ==============================================================================
+% Skew Matrix
+% ==============================================================================
+	\newcommand{\skewmat}[1]{\ensuremath{\widehat{#1}}}
+	%\newcommand{\skewmat}[1]{\ensuremath{\left[{#1}\right]_{\mathrm{X}}}}
+	\newglossaryentry{not:skewmat}
+	{%
+		name=\skewmat{\vec{m}}\ifdraft{: \textbackslash{} skew}{},
+		description=the skew matrix associated with the vector \vec{m},
+		type=notation
+	}
+	\glsadd{not:skewmat}
+
+% ==============================================================================
+% Matrix
+% ==============================================================================
+	\newcommand{\mat}[1]{\ensuremath{\boldsymbol{\mathrm{#1}}}}
+	\newglossaryentry{not:mat}
+	{%
+		name=\mat{M}\ifdraft{: \textbackslash{} mat}{},
+		description=a matrix,
+		type=notation
+	}
+	\glsadd{not:mat}
+
+% ==============================================================================
+% Pseudo Inverse
+% ==============================================================================
+	\newcommand{\pseudoinv}[1]{\ensuremath{{#1}^{+}}}
+	\newglossaryentry{not:pseudoinv}
+	{%
+		name=\pseudoinv{\mat{M}}\ifdraft{: \textbackslash{} pseudoinv}{},
+		description=the pseudo inverse of matrix \mat{M},
+		type=notation
+	}
+	\glsadd{not:pseudoinv}
+
+% ==============================================================================
+% Vector Space
+% ==============================================================================
+	\newcommand{\vecspace}[1]{\ensuremath{\mathscr{#1}}}
+	\newglossaryentry{not:vecspace}
+	{%
+		name=\vecspace{M}\ifdraft{: \textbackslash{} vecspace}{},
+		description=a vector space,
+		type=notation
+	}
+	\glsadd{not:vecspace}
+
+% ==============================================================================
+% Set
+% ==============================================================================
+	\newcommand{\set}[1]{\ensuremath{\mathcal{#1}}}
+	\newglossaryentry{not:set}
+	{%
+		name=\set{M}\ifdraft{: \textbackslash{} set}{},
+		description=a set,
+		type=notation
+	}
+	\glsadd{not:set}
+
+% ==============================================================================
+% Function
+% ==============================================================================
+	\newcommand{\func}[1]{\ensuremath{\mathrm{#1}}}
+	\newglossaryentry{not:func}
+	{%
+		name=\func{m}\ifdraft{: \textbackslash{} func}{},
+		description=a function,
+		type=notation
+	}
+	\glsadd{not:func}
+
+% ==============================================================================
+% Vector Function
+% ==============================================================================
+	\newcommand{\vecfunc}[1]{\ensuremath{\boldsymbol{\mathrm{#1}}}}
+	\newglossaryentry{not:vecfunc}
+	{%
+		name=\vecfunc{m}\ifdraft{: \textbackslash{} vecfunc}{},
+		description=a vector function,
+		type=notation
+	}
+	\glsadd{not:vecfunc}
+
+% ==============================================================================
+% Estimate
+% ==============================================================================
+	\newcommand{\estimate}[1]{\ensuremath{\widetilde{#1}}}
+	\newglossaryentry{not:estimate}
+	{%
+		name=\estimate{m}\ifdraft{: \textbackslash{} estimate}{},
+		description=an estimate of the quantity $m$,
+		type=notation
+	}
+	\glsadd{not:estimate}
+
+% ==============================================================================
+% nth Time Derivative
+% ==============================================================================
+	\newcommand{\tdern}[2]{\ensuremath{{#1}^{(#2)}}}
+	\newglossaryentry{not:tdern}
+	{%
+		name=\tdern{m}{n}\ifdraft{: \textbackslash{} tdern}{},
+		description=the nth time derivative of quantity $m$,
+		type=notation
+	}
+	\glsadd{not:tdern}
+
+% ==============================================================================
+% Desired Value
+% ==============================================================================
+	\newcommand{\desired}[1]{\ensuremath{{#1}^{*}}}
+	\newglossaryentry{not:desired}
+	{%
+		name=\desired{m}\ifdraft{: \textbackslash{} desired}{},
+		description=the desired value of $m$,
+		type=notation
+	}
+	\glsadd{not:desired}
+
+% ==============================================================================
+% Such That
+% ==============================================================================
+	\newglossaryentry{not:suchthat}
+	{%
+		name={\ensuremath{\backepsilon}},
+		description=such that,
+		type=notation
+	}
+	\newcommand{\suchthat}{\gls{not:suchthat}}
