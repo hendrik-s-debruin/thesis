@@ -1,7 +1,10 @@
-\documentclass{report}
+\documentclass[]{report}
 
 	\usepackage{ifdraft}
-	\usepackage{todonotes}
+	\usepackage[obeyFinal]{todonotes}
+
+	\usepackage{titlesec}
+	\setcounter{secnumdepth}{3}
 
 	\usepackage{mathrsfs}
 	\usepackage{amsfonts}
@@ -43,7 +46,7 @@
 
 	\clearpage
 	\pagenumbering{arabic}
-	\input{chapters/intro/intro}
+%	\input{chapters/intro/intro}
 	\input{chapters/lit_study/lit_study}
 
 	\printbibliography{}

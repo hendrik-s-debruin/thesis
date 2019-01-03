@@ -50,16 +50,16 @@
 	\newcommand{\timesym}{\gls{sym:time}}
 
 % ==============================================================================
-% Joint Position
+% Time Normalised
 % ==============================================================================
-	\newglossaryentry{sym:joint}
+	\newglossaryentry{sym:timenorm}
 	{%
-		name={\ensuremath{q}},
-		sort=q,
-		description=Joint Position,
+		name={\ensuremath{\tau}},
+		sort=t,
+		description=normalised time \ensuremath{\tau \in [0, 1]},
 		type=symbol
 	}
-	\newcommand{\joint}{\gls{sym:joint}}
+	\newcommand{\timenorm}{\gls{sym:timenorm}}
 
 % ==============================================================================
 % Tolerance
@@ -155,3 +155,66 @@
 		type=symbol
 	}
 	\newcommand{\constraint}{\gls{sym:constraint}}
+
+% ==============================================================================
+% Configuration
+% ==============================================================================
+	\newglossaryentry{sym:configuration}
+	{%
+		name=\ensuremath{q},
+		sort=q,
+		description=Configuration,
+		type=symbol
+	}
+	\newcommand{\configuration}{\gls{sym:configuration}}
+
+%TODO indexes
+% ==============================================================================
+% Index
+% ==============================================================================
+	\newglossaryentry{sym:indexi}
+	{%
+		name=\ensuremath{i},
+		sort=i,
+		description=an index,
+		type=symbol
+	}
+	\newcommand{\indexi}{\gls{sym:indexi}}
+
+%%TODO Polynomials
+% ==============================================================================
+% Coefficient
+% ==============================================================================
+	\newglossaryentry{sym:coefficient}
+	{%
+		name=\ensuremath{a},
+		sort=a,
+		description=Polynomial Coefficient,
+		type=symbol
+	}
+	\newcommand{\coefficient}{\gls{sym:coefficient}}
+
+% ==============================================================================
+% Polynomial Degree
+% ==============================================================================
+	\newglossaryentry{sym:poldeg}
+	{%
+		name=\ensuremath{n},
+		sort=n,
+		description=Polynomial Degree,
+		type=symbol
+	}
+	\newcommand{\poldeg}{\gls{sym:poldeg}}
+
+% TODO these are subscripts from here on down
+% ==============================================================================
+% Final
+% ==============================================================================
+	\newglossaryentry{sym:final}
+	{%
+		name={\ensuremath{\mathrm{F}}},
+		sort=f,
+		description=Final,
+		type=symbol
+	}
+	\newcommand{\final}{\gls{sym:final}}
