@@ -153,8 +153,8 @@
 
 					\item %ELLIPTICAL
 
-						Harmonic trajectories may be generalised to obtain
-						elliptical trajectories. They are of the following form:
+						Elliptical trajectories are a generalised form of
+						harmonic trajectories.  They are of the following form:
 
 						\begin{equation}
 							\configuration(\timesym) =
@@ -346,13 +346,120 @@
 
 			\paragraph{Circular Bends}
 
-				Circular Bends can be used
+				Circular Bends can be added to the position profile of a linear
+				trajectory to start the trajectory segment from rest or to bring
+				it to rest. Given a base linear trajectory,
+				$\configuration(\timesym)$, the full trajectory
+				$\configuration'(\timesym)$ is given  by:
 
-			\paragraph{Linear Trajectory with Parabolic Bends}
+				\begin{equation}
+					\configuration'(\timesym) =
+						\begin{cases}
+							(\configuration_{\final} - \configuration_0)
+							\left(
+								1 - \sqrt
+									{%
+										1 - \frac
+											{%
+												{(\timesym - \timesym_0)}^2
+											}
+											{%
+												{(\configuration_{\final} -
+												\configuration_0)}^2
+											}
+									}
+							\right)
+							+ \configuration_0
+							%
+							& \timesym \in [\timesym_0, \timesym_a]
+							%
+							\\
+							%
+							\configuration(\timesym)
+							%
+							& \timesym \in [\timesym_a, \timesym_b]
+							%
+							\\
+							%
+							\configuration_0 +
+								\sqrt
+									{%
+										{(\configuration_{\final} -
+										\configuration_0)}^2
+										-
+										{(\timesym_{\final} - \timesym)}^2
+									}
+							%
+							& \timesym \in [\timesym_b, \timesym_{\final}]
+						\end{cases}
+				\end{equation}
+				\todo{$a$ and $b$ are not in nomenclature}
 
-			\paragraph{Linear Trajectory with Polynomial Bends}
+				The time intervals must be chosen such that:
 
-			\paragraph{Trajectory with Double S velocity Profile}
+				\begin{equation}
+					\begin{cases}
+						\configuration'(\timesym \in [\timesym_0,
+							\timesym_a])|_{\timesym_a}
+							=
+							\configuration'(\timesym \in [\timesym_a,
+								\timesym_b])|_{\timesym_a}
+						%
+						\\
+						%
+						\dot{\configuration}'(\timesym \in [\timesym_0,
+							\timesym_a])|_{\timesym_a}
+							=
+							\dot{\configuration}'(\timesym \in [\timesym_a,
+								\timesym_b])|_{\timesym_a}
+					\end{cases}
+				\end{equation}
+				\todo{$a$ and $b$ are not in nomenclature}
+
+			\paragraph{Polynomial Bends}
+
+				Another method of starting or stopping a trajectory, or of
+				joining different trajectory segments, is through the use of
+				polynomial bends. The degree of smoothness of the connections
+				can be controlled by choosing the degree of the polynomial
+				bends. Given a base trajectory, $\configuration(\timesym)$, a
+				new trajectory with polynomial bends,
+				$\configuration'(\timesym)$ can be defined as follows:
+
+				\begin{equation}
+					\configuration'(\timesym) =
+					\begin{cases}
+						\configuration_a(\timesym) & \timesym \in [\timesym_0, \timesym_a] \\
+						\configuration(\timesym) & \timesym \in [\timesym_a, \timesym_b] \\
+						\configuration_b(\timesym) & \timesym \in [\timesym_b, \timesym_{\final}] \\
+					\end{cases}
+					\label{eq:polynomial_bends}
+				\end{equation}
+				\todo{$a$ and $b$ are not in nomenclature}
+
+				Here, $\configuration_a$ and $\configuration_b$ may be computed
+				using the polynomial trajectory method of
+				Section~\ref{sec:elementary_trajectories}.
+
+				\todo{for this section, reference bookref 17. The book
+				references it on page 117. This section is a combination of
+				various sections from the book}
+
+			\todo{maybe add a discussion on the trapezoidal trajectories?}
+
+			\paragraph{Cycloidal and Harmonic Blends}
+
+				We may also connect trajectory segments with sinusoidal
+				profiles described in Section~\ref{sec:elementary_trajectories}.
+				The clear advantage of these bends are that they are of type
+				$\contdeg{\infty}$.
+
+				Again, the new trajectory $\configuration'(\timesym)$ is given
+				by Equation~\ref{eq:polynomial_bends}, where
+				$\configuration_a(\timesym)$ and $\configuration_b(\timesym)$
+				are now one of the trigonometric functions of
+				Section~\ref{sec:elementary_trajectories}.
+				\todo{$a$ and $b$ are not in nomenclature}
 
 	\subsection{Multi-Dimensional Trajectory Generation}%
 	\label{sec:multi_dimensional_trajectory_generation}
