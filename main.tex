@@ -1,4 +1,4 @@
-\documentclass[final]{report}
+\documentclass[]{report}
 
 	\usepackage{ifdraft}
 	\usepackage[obeyFinal]{todonotes}
@@ -34,6 +34,8 @@
 
 \begin{document}
 
+	\listoftodos{}
+
 	\input{chapters/abstract}
 
 	\clearpage
@@ -46,7 +48,7 @@
 
 	\clearpage
 	\pagenumbering{arabic}
-%	\input{chapters/intro/intro}
+	%\input{chapters/intro/intro}
 	\input{chapters/lit_study/lit_study}
 
 	\printbibliography{}

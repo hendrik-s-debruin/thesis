@@ -1,5 +1,17 @@
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Torque
+% ==============================================================================
+	\newglossaryentry{sym:torque}
+	{%
+		name=\ensuremath{\vec{\tau}},
+		sort=t,
+		description=torque,
+		type=symbol
+	}
+	\newcommand{\torque}{\gls{sym:torque}}
+
+% ==============================================================================
 % Gain
 % ==============================================================================
 	\newglossaryentry{sym:gain}
@@ -73,7 +85,19 @@
 	\newcommand{\timenorm}{\gls{sym:timenorm}}
 
 % ==============================================================================
-% Time Normalised
+% Set of Time Instants
+% ==============================================================================
+	\newglossaryentry{sym:setoftimeinstants}
+	{%
+		name={\ensuremath{\set{T}}},
+		sort=t,
+		description=A set of time instants,
+		type=symbol
+	}
+	\newcommand{\setoftimeinstants}{\gls{sym:setoftimeinstants}}
+
+% ==============================================================================
+% Period
 % ==============================================================================
 	\newglossaryentry{sym:period}
 	{%
@@ -148,7 +172,7 @@
 	\newglossaryentry{sym:dynamicmodel}
 	{%
 		name={\ensuremath{\vecfunc{d}}},
-		sort=D,
+		sort=d,
 		description=Dynamic Model,
 		type=symbol
 	}
@@ -160,7 +184,7 @@
 	\newglossaryentry{sym:invdynamicmodel}
 	{%
 		name={\ensuremath{{\vecfunc{d}^{-1}}}},
-		sort=D,
+		sort=d,
 		description=Inverse Dynamic Model,
 		type=symbol
 	}
@@ -171,13 +195,28 @@
 % ==============================================================================
 	\newglossaryentry{sym:constraint}
 	{%
-		name=\protect\reflectbox{\ensuremath{\mathds{C}}},
+		%name=\protect\reflectbox{\ensuremath{\mathds{C}}},
 		%name=\protect\reflectbox{\ensuremath{\mat{C}}},
-		sort=C,
+		name=\ensuremath{c},
+		sort=c,
 		description=constraint,
 		type=symbol
 	}
 	\newcommand{\constraint}{\gls{sym:constraint}}
+
+% ==============================================================================
+% Set of Constraints
+% ==============================================================================
+	\newglossaryentry{sym:setofconstraints}
+	{%
+		%name=\protect\reflectbox{\ensuremath{\set{C}}},
+		%name=\protect\reflectbox{\ensuremath{\mat{C}}},
+		name=\ensuremath{\set{C}},
+		sort=c,
+		description=set of constraints,
+		type=symbol
+	}
+	\newcommand{\setofconstraints}{\gls{sym:setofconstraints}}
 
 % ==============================================================================
 % Configuration
@@ -193,7 +232,7 @@
 
 %TODO indexes
 % ==============================================================================
-% Index
+% Index i
 % ==============================================================================
 	\newglossaryentry{sym:indexi}
 	{%
@@ -203,8 +242,41 @@
 		type=symbol
 	}
 	\newcommand{\indexi}{\gls{sym:indexi}}
+% ==============================================================================
+% Index j
+% ==============================================================================
+	\newglossaryentry{sym:indexj}
+	{%
+		name=\ensuremath{j},
+		sort=j,
+		description=an index,
+		type=symbol
+	}
+	\newcommand{\indexj}{\gls{sym:indexj}}
 
 %%TODO Polynomials
+% ==============================================================================
+% B-Spline
+% ==============================================================================
+	\newglossaryentry{sym:bspline}
+	{%
+		name=\ensuremath{\vec{B}},
+		sort=b,
+		description=B-spline basis function,
+		type=symbol
+	}
+	\newcommand{\bspline}{\gls{sym:bspline}}
+% ==============================================================================
+% knot
+% ==============================================================================
+	\newglossaryentry{sym:knot}
+	{%
+		name=\ensuremath{\vec{k}},
+		sort=k,
+		description=B-spline knot vector,
+		type=symbol
+	}
+	\newcommand{\knot}{\gls{sym:knot}}
 % ==============================================================================
 % Coefficient
 % ==============================================================================

@@ -15,7 +15,18 @@
 		description=Degree of differentiablity
 		type=notation
 	}
-%	\glsadd{not:contdeg}
+	\glsadd{not:contdeg}
+% ==============================================================================
+% Geometric Continuity Degree
+% ==============================================================================
+	\newcommand{\contdeggeom}[1]{\ensuremath{\gls{not:contdeggeom}^{#1}}}
+	\newglossaryentry{not:contdeggeom}
+	{%
+		name=\ensuremath{G},
+		description=Geometric degree of differentiablity
+		type=notation
+	}
+	\glsadd{not:contdeggeom}
 % ==============================================================================
 % differential
 % ==============================================================================
@@ -107,6 +118,18 @@
 	\glsadd{not:vecspace}
 
 % ==============================================================================
+% Vector Norm
+% ==============================================================================
+	\newcommand{\norm}[1]{\ensuremath{\left|\left|#1\right|\right|}}
+	\newglossaryentry{not:norm}
+	{%
+		name=\norm{\vec{m}}\ifdraft{: \textbackslash{} norm}{},
+		description=the norm of vector $\vec{m}$,
+		type=notation
+	}
+	\glsadd{not:norm}
+
+% ==============================================================================
 % Set
 % ==============================================================================
 	\newcommand{\set}[1]{\ensuremath{\mathcal{#1}}}
@@ -167,6 +190,18 @@
 	\glsadd{not:estimate}
 
 % ==============================================================================
+% Approximation
+% ==============================================================================
+	\newcommand{\approximation}[1]{\ensuremath{\widetilde{#1}}}
+	\newglossaryentry{not:approx}
+	{%
+		name=\approximation{m}\ifdraft{: \textbackslash{} approx}{},
+		description=an approx of the quantity $m$,
+		type=notation
+	}
+	\glsadd{not:approx}
+
+% ==============================================================================
 % nth Time Derivative
 % ==============================================================================
 	\newcommand{\tdern}[2]{\ensuremath{{#1}^{(#2)}}}
@@ -189,6 +224,18 @@
 		type=notation
 	}
 	\glsadd{not:desired}
+
+% ==============================================================================
+% Line
+% ==============================================================================
+	\newcommand{\vecline}[2]{\ensuremath{\overline{#1#2}}}
+	\newglossaryentry{not:line}
+	{%
+		name=\ensuremath{\vecline{\vec{m_1}}{\vec{m_2}}}\ifdraft{: \textbackslash{} line}{},
+		description=a line connecting points $m_1$ and $m_2$,
+		type=notation
+	}
+	\glsadd{not:line}
 
 % ==============================================================================
 % Such That

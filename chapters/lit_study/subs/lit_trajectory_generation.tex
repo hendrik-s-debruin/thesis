@@ -481,6 +481,13 @@
 		\todo{Say that there are trajectories which interpolate, as well as
 		trajectories which approximate. Todo, write about these}
 
+		One approach to multipoint trajectories is to define a set of primitive
+		trajectories, such as straight lines or circles, and then to connect
+		these disjoint trajectories smoothly with the blending techniques
+		discussed in Section~\ref{sec:trajetory_composition}. The remainder of
+		this section will review other approaches to multi-point trajectory
+		generation.
+
 		\subsubsection{Interpolation Techniques}%
 		\label{sec:interpolation_techniques}
 
@@ -584,7 +591,7 @@
 					\arg\min_{\polynomial}
 					\left\{
 						\relweight
-						\underbrace{
+						\underbrace{%
 							\sum_{\indexi = 0}^{\cardinality{\setofpoints}}
 								\gain_{\indexi}
 								{%
@@ -596,7 +603,7 @@
 						}_{\text{error in approximation}}
 						+
 						(1 - \relweight)
-						\underbrace{
+						\underbrace{%
 							\int_{\timesym_0}^{\timesym_{\cardinality{\setofpoints}}}
 								\ddot{\polynomial}^2
 							\der \timesym
@@ -617,11 +624,492 @@
 	\subsection{Multi-Dimensional Trajectory Generation}%
 	\label{sec:multi_dimensional_trajectory_generation}
 
-		\todo{b splines, also see section 4.5 which was under one-dimensional}
+		It is often possible to decompose multi-dimensional trajectories into
+		simpler components. Trajectories for these components may be handled by
+		the techniques discussed in
+		Sections~\ref{sec:one_dimensional_trajectory_generation}
+		and~\ref{sec:multipoint_trajectories}. The remainder of this section
+		deals with trajectory generation techniques that deal directly with the
+		multi-dimensional case.
+
+		The trajectories given in this section are of the form
+		$\traj(\timenorm)$. Here, the trajectory $\traj$ defines a curve in
+		space. $\timenorm(\timesym)$ acts as a motion law that determines when
+		certain points in the trajectory are reached. Therefore, a trajectory
+		for $\timenorm$ can be generated with any of the one dimensional methods
+		described in Section~\ref{sec:one_dimensional_trajectory_generation}
+		or~\ref{sec:multipoint_trajectories}.
+
+		\subsubsection{Multi-Dimensional Interpolation Trajectories}%
+		\label{sec:multi_dimensional_interpolation_trajectories}
+
+			\paragraph{B-Splines}%
+			\label{sec:b_spines}
+
+				B-splines are a common method to interpolate between points
+				$\point$ in a given set $\setofpoints$. They are given by the
+				relation:
+
+				\begin{equation}
+					\traj = \sum_{\indexi = 0}^{\cardinality{\setofpoints}}
+						\point_{\indexi}\bspline_{\indexi}^{\poldeg}(\timenorm)
+					\label{eq:bspline}
+				\end{equation}
+
+				Where the superscript denotes the degree of the spline
+				$\bspline$. The points $\point_{\indexi}$ are known as the
+				control points of Equation~\ref{eq:bspline}.  Each B-spline
+				meets at a point known as a knot $\knot$. Given an ordered set
+				of knots such that
+				\(
+					\knot_{\indexi} \prec \knot_{\indexj} \iff \indexi < \indexj
+				\), a basis spline $\bspline$ is defined as follows:
+
+				\begin{align}
+					\begin{split}
+						\bspline_{\indexi}^0(\timenorm) &=
+							\begin{cases}
+								1, & \timenorm \in [\knot_{\indexi}, \knot_{\indexi + 1}]\\
+								0, & \text{otherwise}
+							\end{cases}
+						%
+						\\
+						%
+						\bspline_{\indexi}^{\poldeg}(\timenorm) &=
+							\frac
+							{%
+								\timenorm - \knot_{\indexi}
+							}
+							{%
+								\knot_{\indexi + \poldeg} - \knot_{\indexi}
+							}
+							\bspline_{\indexi}^{\poldeg - 1}(\timenorm)
+							+
+							\frac
+							{%
+								\knot_{\indexi + \poldeg + 1} - \timenorm
+							}
+							{%
+								\knot_{\indexi + \poldeg + 1} - \knot_{\indexi + 1}
+							}
+							\bspline_{\indexi + 1}^{\poldeg - 1}(\timenorm)
+							,
+							\quad \poldeg > 0
+						\label{eq:bspline_interpolation_generation}
+						\end{split}
+				\end{align}
+
+				%The following constraint is added to normalise the spline
+				%functions:
+
+				%\begin{equation}
+				%	\sum_{\indexi = 0}^{\cardinality{\setofpoints}}
+				%		\bspline_{\indexi}^{\poldeg}(\timenorm)
+				%		=
+				%		1
+				%		\quad \forall \timenorm
+				%\end{equation}
+
+				Setting the degree of the B-spline curve to $\poldeg$ imposes a
+				continuity level of $\contdeggeom{\poldeg - 1}$.
+				\todo{continuity degree, geometric continuity degree are not
+				showing up in nomenclature}
+
+				\todo{reference book refs 38, 99, 100. See p 475 of book}
+				\todo{this section is actually taken from handbook on splines
+				for the user}
+
+		\subsubsection{Multi-Dimensional Approximation Trajectories}%
+		\label{sec:multi_dimensional_approximation_trajectories}
+
+			\paragraph{Linear Interpolation with Polynomial Bends}%
+			\label{sec:linear_interpolation_with_polynomial_bends}
+
+				Linear interpolation with polynomial bends is a very simple way
+				to approximate the points $\point\in\setofpoints$ to within a
+				specifiable tolerance $\tol$ and a specified degree of
+				smoothness. Consider an ordered set of points $\setofpoints$
+				such that $\point_{\indexi} \prec \point_{\indexj} \iff \indexi
+				\leq \indexj$. For the internal points the following basic
+				algorithm can be used to generate an interpolation
+				\(
+					\forall \point \in
+						\setofpoints\setminus
+							\left\{
+								\point_0,
+								\point_{\cardinality{\setofpoints}}
+							\right\}
+				\):
+
+				\begin{enumerate}
+
+					\item
+
+						Construct a (hyper)sphere of radius $\tol$ around point
+						$\point_{\indexi}$.
+
+					\item
+
+						Connect points
+						\(
+							(
+								\point_{\indexi - 1},
+								\point_{\indexi},
+								\point_{\indexi + 1}
+							)
+						\)
+						with the straight lines
+						\(
+							\vecline{
+								\point_{\indexi -1}
+							}
+							{
+								\point_{\indexi}
+							}
+						\)
+						and
+						\(
+							\vecline{
+								\point_{\indexi}
+							}
+							{
+								\point_{\indexi+1}
+							}
+						\).
+
+					\item
+
+						Mark the intersection of the line
+						\(
+							\vecline{
+								\point_{\indexi -1}
+							}
+							{
+								\point_{\indexi}
+							}
+						\)
+						and the sphere as the point $\point_{\indexi}'$, and the
+						intersection of the line
+						\(
+							\vecline{
+								\point_{\indexi}
+							}
+							{
+								\point_{\indexi+1}
+							}
+						\) and the sphere as the point $\point_{\indexi}''$.
+
+					\item
+
+						The trajectory $\traj$ that is guaranteed to come within
+						$\tol$ of the current point $\point_{\indexi}$
+						is then defined by:
+
+						\begin{equation}
+							\traj_{\indexi}(\timenorm) =
+								\begin{cases}
+									\vecline{%
+										\point_{\indexi -1}
+									}
+									{%
+										\point_{\indexi}
+									},
+									& \traj(\timenorm)\mapsto
+										[
+											\point_{\indexi-1},
+											\point_{\indexi}'
+										]
+									%
+									\\
+									%
+									\traj'(\timenorm),
+									& \traj(\timenorm)\mapsto
+										[
+											\point_{\indexi}',
+											\point_{\indexi}''
+										]
+									%
+									\\
+									%
+									\vecline{%
+										\point_{\indexi}
+									}
+									{%
+										\point_{\indexi+1}
+									},
+									& \traj(\timenorm)\mapsto
+										[
+											\point_{\indexi}'',
+											\point_{\indexi+1}
+										]
+								\end{cases}
+						\end{equation}
+
+						Where $\traj'$ is the part of the trajectory $\traj$
+						between points $\point_{\indexi}'$ and
+						$\point_{\indexi}''$ and is given by a polynomial
+						function such as a B-spline discussed in
+						Section~\ref{sec:b_spines}. The result is straight lines
+						smoothly connected with bends.
+
+				\end{enumerate}
+
+				The end points of $\setofpoints$,  points $\point_0$ and
+				$\point_{\cardinality{\setofpoints}}$, may be connected to
+				their following/preceding points by simple straight lines.
+
+				\missingfigure{graphic for linear interpolation with polynomial
+				bends}
+
+			\paragraph{Smoothing Cubic B-Splines}%
+			\label{sec:smoothing_cubic_b_splines}
+
+				In a spirit similar to smoothing cubic splines, B-splines may be
+				made to approximate points to within a given tolerance $\tol$.
+				The splines are of the form in Equation~\ref{eq:bspline}.
+
+				A smoothing cubic B-spline is defined by a set of points $\point
+				\in \setofpoints$ which need to be approximated by the control
+				points $\approximation{\point} \in \approximation{\setofpoints}$
+				(which replace the points $\point$ in Equation~\ref{eq:bspline})
+				at given points of time $\timenorm \in \setoftimeinstants$.
+				Instead of defining the splines with the recursive procedure
+				given in Equation~\ref{eq:bspline_interpolation_generation}, a
+				minimisation needs to be performed. This minimisation is
+				analogous to the cubic spline case,
+				Equation~\ref{eq:smoothing_cubic_splines_criterion}, and is
+				given by the expression:
+
+				\begin{equation}
+					\approximation{\setofpoints} =
+					\arg\min_{\approximation{\setofpoints}}
+					\left\{
+						\relweight
+						\underbrace{%
+							\sum_{\indexi = 0}^{\cardinality{\setofpoints}}
+								\gain_{\indexi}
+								{%
+									\norm{%
+										\traj(\timenorm_{\indexi}) -
+										\point_{\indexi}
+									}
+								}^2
+						}_{\text{error in approximation}}
+						+
+						(1 - \relweight)
+						\underbrace{%
+							\int_{\timesym_0}^{\timesym_{\cardinality{\setofpoints}}}
+								{%
+									\norm
+									{%
+										\frac
+										{%
+											\der^2 \traj(\timenorm)
+										}
+										{%
+											\der\timenorm^2
+										}
+									}
+								}^2
+							\der \timenorm
+						}_{\text{total curvature}}
+					\right\}
+					\label{eq:smoothing_b_splines_criterion}
+				\end{equation}
+				\todo{fix argmin}
+
+				Note that $\gain_{\indexi}$ may be set to change the
+				approximation error in some specific points. A methodology to
+				perform this minimisation can be found in \todo{put reference
+				here}.
+
+			\todo{Mixed Interpolation/Approximation, book p 375}
+
 
 	\subsection{Trajectory Scaling}%
 	\label{sec:trajectory_scaling}
 
 		Given a trajectory $\configuration(\timesym)$, one may perform several
 		scaling techniques to ensure actuators do not exceed saturation
-		constraints. 
+		constraints. Trajectories may be scaled to avoid kinematic saturation
+		(that is, saturation in velocities, acceleration or higher derivatives),
+		or to avoid dynamic saturation (that is, saturation in the torques
+		induced in the actuators).
+
+		\subsubsection{Kinematic Scaling}%
+		\label{sec:kinematic_scaling}
+
+			Given a trajectory $\configuration(\timesym)$, it is possible to
+			alter the time it takes by considering a new time variable
+			$\timesym'$ related to $\timesym$ through some relation:
+
+			\begin{equation}
+				\timesym = f(\timesym')
+				\label{eq:time_scaling}
+			\end{equation}
+			\todo{$f$ is not in nomenclature. Used throughout this section}
+
+			Where $f$ is a strictly increasing function. The new trajectory
+			$\configuration'(\timesym')$ and its higher derivates are given by
+			the chain rule as:
+
+			\begin{align}
+				\begin{split}
+					\configuration'(\timesym') &= \configuration(f(\timesym'))\\
+					%
+					\dot{\configuration}'(\timesym') &=
+						\frac
+						{%
+							\der \configuration(f)
+						}
+						{%
+							\der f
+						}
+						\frac
+						{%
+							\der f(\timesym')
+						}
+						{%
+							\der \timesym'
+						}\\
+					%
+					\ddot{\configuration}'(\timesym') &=
+						\frac
+						{%
+							\der \configuration(f)
+						}
+						{%
+							\der f
+						}
+						\frac
+						{%
+							\der^2 f(\timesym')
+						}
+						{%
+							\der \timesym'^2
+						}
+						+
+						\frac
+						{%
+							\der^2 \configuration(f)
+						}
+						{%
+							\der \configuration^2
+						}
+						{%
+							\left(
+								\frac
+								{%
+									\der f(\timesym')
+								}
+								{%
+									\der \timesym'
+								}
+							\right)
+						}^2\\
+						%
+					\label{eq:kinematic_scaling_general}
+				\end{split}
+			\end{align}
+			\[
+				\vdots
+			\]
+			\todo{this is a hack. These equations should be put into a box
+			together}
+
+			A simple example for $f$ is the linear function:
+
+			\begin{equation}
+				\timesym = \gain\timesym'
+				\label{eq:linear_time_scaling}
+			\end{equation}
+
+			In this case, Equation~\ref{eq:kinematic_scaling_general} reduces
+			to:
+
+			\begin{equation}
+				\tdern{\configuration'(\timesym')}{n} = \gain^{n}
+					\tdern{\configuration(\timesym)}{n}
+			\end{equation}
+			\todo{$n$ here is not in nomenclature}
+
+			Now, given a set of constraints $\setofconstraints$ on the maximum
+			velocity, acceleration, or higher derivatives of a trajectory,
+			$\gain$ may be chosen as follows:
+
+			\begin{equation}
+				\gain = \min
+					\left\{
+						\sqrt[\indexi - 1]
+						{%
+							\frac
+							{%
+								\constraint_{\indexi}
+							}
+							{%
+									\norm
+									{%
+										\tdern{\configuration(\timesym)}{\indexi}
+									}_{\max}
+							}
+						}
+						\quad
+						\forall \constraint_{\indexi} \in \setofconstraints
+					\right\}
+			\end{equation}
+
+			Where $\constraint_{\indexi}$ is the constraint on the $\indexi$th
+			derivative of position. This will ensure that $\configuration'$ does
+			not exceed these constraints.
+			\todo{I think the book had its own references here too}
+
+		\subsubsection{Dynamic Scaling}%
+		\label{sec:dynamic_scaling}
+
+			Given the dynamic model of a system, $\dynamicmodel(\torque)$, the
+			same time scaling approach as given in
+			Equation~\ref{eq:time_scaling} can be used.
+
+			The torques in the actuators are given by:
+
+			\begin{equation}
+				\torque = \invdynamicmodel(\configuration, \dot{\configuration},
+					\ddot{\configuration})
+				\label{eq:inv_dynamic_model_scaling}
+			\end{equation}
+
+			Equation~\ref{eq:inv_dynamic_model_scaling} can usually be expressed
+			as a linear combination of the terms $\configuration,
+			\dot{\configuration}, \ddot{\configuration}$ with matrix
+			coefficients. If this is the case, a substitution such as
+			Equation~\ref{eq:linear_time_scaling} may be made to obtain a new
+			trajectory $\configuration'$ and associated actuator torques
+			$\torque'$ of the form:
+
+			\begin{equation}
+				\torque' =
+					\invdynamicmodel
+					(
+						\configuration'(\timesym'),
+						\dot{\configuration}'(\timesym')\gain,
+						\ddot{\configuration}'(\timesym')\gain^2
+					)
+			\end{equation}
+
+			Since $\invdynamicmodel$ is a sum of matrix multiplications,
+			$\gain$ may be chosen to ensure $\torque' < \torque$.
+			\todo{make sure I didn't confuse direct and indirect models in this
+			section}
+
+
+		\subsubsection{Variable Scaling}%
+		\label{sec:variable_scaling}
+
+			The approaches of Section~\ref{sec:kinematic_scaling}
+			and~\ref{sec:dynamic_scaling} rely on slowing down the execution of
+			the trajectory to avoid saturation limits. It is worth noting that,
+			instead of slowing down the global trajectory, a smart approach
+			might be to only slow down only those sections of the trajectory
+			that are too close to the saturation limits.  This will ensure that
+			the constraints are met, while still avoiding unnecessarily slow
+			motions.
