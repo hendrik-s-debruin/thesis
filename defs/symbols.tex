@@ -1,4 +1,15 @@
 \newglossary*{symbol}{Symbols}
+% ==============================================================================
+% Gain
+% ==============================================================================
+	\newglossaryentry{sym:gain}
+	{%
+		name={\ensuremath{\lambda}},
+		sort=l,
+		description=A tunable gain,
+		type=symbol
+	}
+	\newcommand{\gain}{\gls{sym:gain}}
 
 % ==============================================================================
 % Point
@@ -18,7 +29,7 @@
 	\newglossaryentry{sym:setofpoints}
 	{%
 		name={\ensuremath{\set{P}}},
-		sort=P,
+		sort=p,
 		description=A set of points in space,
 		type=symbol
 	}
@@ -60,6 +71,18 @@
 		type=symbol
 	}
 	\newcommand{\timenorm}{\gls{sym:timenorm}}
+
+% ==============================================================================
+% Time Normalised
+% ==============================================================================
+	\newglossaryentry{sym:period}
+	{%
+		name={\ensuremath{T}},
+		sort=t,
+		description=period,
+		type=symbol
+	}
+	\newcommand{\period}{\gls{sym:period}}
 
 % ==============================================================================
 % Tolerance
@@ -185,6 +208,18 @@
 % ==============================================================================
 % Coefficient
 % ==============================================================================
+	\newglossaryentry{sym:polynomial}
+	{%
+		name=\ensuremath{\func{p}},
+		sort=p,
+		description=a polynomial function,
+		type=symbol
+	}
+	\newcommand{\polynomial}{\gls{sym:polynomial}}
+
+% ==============================================================================
+% Coefficient
+% ==============================================================================
 	\newglossaryentry{sym:coefficient}
 	{%
 		name=\ensuremath{a},
@@ -193,6 +228,18 @@
 		type=symbol
 	}
 	\newcommand{\coefficient}{\gls{sym:coefficient}}
+
+% ==============================================================================
+% Coefficient
+% ==============================================================================
+	\newglossaryentry{sym:coefficientb}
+	{%
+		name=\ensuremath{b},
+		sort=b,
+		description=Polynomial Coefficient,
+		type=symbol
+	}
+	\newcommand{\coefficientb}{\gls{sym:coefficientb}}
 
 % ==============================================================================
 % Polynomial Degree
@@ -205,6 +252,18 @@
 		type=symbol
 	}
 	\newcommand{\poldeg}{\gls{sym:poldeg}}
+
+% ==============================================================================
+% Polynomial Degree
+% ==============================================================================
+	\newglossaryentry{sym:relweight}
+	{%
+		name=\ensuremath{\mu},
+		sort=m,
+		description=relative weight of a factor \ensuremath{\mu \in [0, 1]},
+		type=symbol
+	}
+	\newcommand{\relweight}{\gls{sym:relweight}}
 
 % TODO these are subscripts from here on down
 % ==============================================================================
