@@ -1,5 +1,29 @@
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Quaternion
+% ==============================================================================
+	\newglossaryentry{sym:quaternion}
+	{%
+		name=\ensuremath{\vec{h}},
+		sort=h,
+		description=quaternion,
+		type=symbol
+	}
+	\newcommand{\quaternion}{\gls{sym:quaternion}}
+
+% ==============================================================================
+% Queue
+% ==============================================================================
+	\newglossaryentry{sym:queue}
+	{%
+		name=\ensuremath{\vec{q}},
+		sort=q,
+		description=queue,
+		type=symbol
+	}
+	\newcommand{\queue}{\gls{sym:queue}}
+
+% ==============================================================================
 % Torque
 % ==============================================================================
 	\newglossaryentry{sym:torque}
@@ -58,6 +82,11 @@
 		type=symbol
 	}
 	\newcommand{\traj}{\gls{sym:traj}}
+
+% ==============================================================================
+% Path
+% ==============================================================================
+	\newcommand{\pathsym}{\traj}
 
 
 % ==============================================================================
@@ -254,6 +283,112 @@
 	}
 	\newcommand{\indexj}{\gls{sym:indexj}}
 
+% ==============================================================================
+% Index k
+% ==============================================================================
+	\newglossaryentry{sym:indexk}
+	{%
+		name=\ensuremath{k},
+		sort=k,
+		description=an index,
+		type=symbol
+	}
+	\newcommand{\indexk}{\gls{sym:indexk}}
+
+% ==============================================================================
+% State
+% ==============================================================================
+	\newglossaryentry{sym:state}
+	{%
+		name=\ensuremath{\vec{x}},
+		sort=x,
+		description=the state  of the robot,
+		type=symbol
+	}
+	\newcommand{\state}{\gls{sym:state}}
+
+% ==============================================================================
+% State Space
+% ==============================================================================
+	\newglossaryentry{sym:statespace}
+	{%
+		name=\ensuremath{\vecspace{X}},
+		sort=x,
+		description=the state space of the robot,
+		type=symbol
+	}
+	\newcommand{\statespace}{\gls{sym:statespace}}
+
+% ==============================================================================
+% Inverse Action
+% ==============================================================================
+	\newglossaryentry{sym:invaction}
+	{%
+		name=\ensuremath{\vec{u}^{-1}},
+		sort=u,
+		description=the inverse action  of the robot,
+		type=symbol
+	}
+	\newcommand{\invaction}{\gls{sym:invaction}}
+% ==============================================================================
+% Action
+% ==============================================================================
+	\newglossaryentry{sym:action}
+	{%
+		name=\ensuremath{\vec{u}},
+		sort=u,
+		description=the action  of the robot,
+		type=symbol
+	}
+	\newcommand{\action}{\gls{sym:action}}
+
+% ==============================================================================
+% Action Space
+% ==============================================================================
+	\newglossaryentry{sym:actionspace}
+	{%
+		name=\ensuremath{\vecspace{U}},
+		sort=u,
+		description=the action space of the robot,
+		type=symbol
+	}
+	\newcommand{\actionspace}{\gls{sym:actionspace}}
+
+% ==============================================================================
+% Inverse Action Space
+% ==============================================================================
+	\newglossaryentry{sym:invactionspace}
+	{%
+		name=\ensuremath{\vecspace{U}^{-1}},
+		sort=u,
+		description=the inverse action space of the robot,
+		type=symbol
+	}
+	\newcommand{\invactionspace}{\gls{sym:invactionspace}}
+
+% ==============================================================================
+% Configuration Space
+% ==============================================================================
+	\newglossaryentry{sym:configurationspace}
+	{%
+		name=\ensuremath{\vecspace{C}},
+		sort=c,
+		description=the configuration space of the robot,
+		type=symbol
+	}
+	\newcommand{\configurationspace}{\gls{sym:configurationspace}}
+% ==============================================================================
+% World Space
+% ==============================================================================
+	\newglossaryentry{sym:worldspace}
+	{%
+		name=\ensuremath{\vecspace{W}},
+		sort=w,
+		description=the world inhabited by the robot,
+		type=symbol
+	}
+	\newcommand{\world}{\gls{sym:worldspace}}
+
 %%TODO Polynomials
 % ==============================================================================
 % B-Spline
@@ -337,15 +472,145 @@
 	}
 	\newcommand{\relweight}{\gls{sym:relweight}}
 
-% TODO these are subscripts from here on down
 % ==============================================================================
-% Final
+% Half Space Primitive
 % ==============================================================================
-	\newglossaryentry{sym:final}
+	\newglossaryentry{sym:halfspaceprimitive}
 	{%
-		name={\ensuremath{\mathrm{F}}},
-		sort=f,
-		description=Final,
+		name=\ensuremath{\set{H}},
+		sort=h,
+		description=a half space primitive,
 		type=symbol
 	}
-	\newcommand{\final}{\gls{sym:final}}
+	\newcommand{\halfspaceprimitive}{\gls{sym:halfspaceprimitive}}
+
+% ==============================================================================
+% Transform function
+% ==============================================================================
+	\newglossaryentry{sym:transform}
+	{%
+		name=\ensuremath{\func{h}},
+		sort=h,
+		description=a transform function,
+		type=symbol
+	}
+	\newcommand{\transform}{\gls{sym:transform}}
+% ==============================================================================
+% Robot DOF
+% ==============================================================================
+	\newglossaryentry{sym:robotdof}
+	{%
+		name=\ensuremath{m},
+		sort=m,
+		description=robot degrees of freedom,
+		type=symbol
+	}
+	\newcommand{\robotdof}{\gls{sym:robotdof}}
+
+% ==============================================================================
+% Robot
+% ==============================================================================
+	\newglossaryentry{sym:robot}
+	{%
+		name=\ensuremath{\set{A}},
+		sort=a,
+		description=a robot,
+		type=symbol
+	}
+	\newcommand{\robot}{\gls{sym:robot}}
+
+% ==============================================================================
+% Point in Robot
+% ==============================================================================
+	\newglossaryentry{sym:pointinrobot}
+	{%
+		name=\ensuremath{\vec{a}},
+		sort=a,
+		description=a point in a robot,
+		type=symbol
+	}
+	\newcommand{\pointinrobot}{\gls{sym:pointinrobot}}
+
+% ==============================================================================
+% Obstacle
+% ==============================================================================
+	\newglossaryentry{sym:obstacle}
+	{%
+		name=\ensuremath{\set{O}},
+		sort=o,
+		description=an obstacle,
+		type=symbol
+	}
+	\newcommand{\obstacle}{\gls{sym:obstacle}}
+
+% ==============================================================================
+% Obstacle
+% ==============================================================================
+	\newglossaryentry{sym:logicalpredicate}
+	{%
+		name=\ensuremath{\func{\phi}},
+		sort=f,
+		description=an logical predicate,
+		type=symbol
+	}
+	\newcommand{\logicalpredicate}{\gls{sym:logicalpredicate}}
+
+% ==============================================================================
+% True
+% ==============================================================================
+	\newglossaryentry{sym:true}
+	{%
+		name=\ensuremath{\top},
+		sort=t,
+		description=true,
+		type=symbol
+	}
+	\newcommand{\true}{\gls{sym:true}}
+
+% ==============================================================================
+% False
+% ==============================================================================
+	\newglossaryentry{sym:false}
+	{%
+		name=\ensuremath{\bot},
+		sort=t,
+		description=false,
+		type=symbol
+	}
+	\newcommand{\false}{\gls{sym:false}}
+
+% ==============================================================================
+% Graph
+% ==============================================================================
+	\newglossaryentry{sym:topologicalgraph}
+	{%
+		name=\ensuremath{\set{G}},
+		sort=g,
+		description=topological graph,
+		type=symbol
+	}
+	\newcommand{\topologicalgraph}{\gls{sym:topologicalgraph}}
+
+% ==============================================================================
+% Edge
+% ==============================================================================
+	\newglossaryentry{sym:edge}
+	{%
+		name=\ensuremath{\vec{e}},
+		sort=e,
+		description=edge of a graph,
+		type=symbol
+	}
+	\newcommand{\edge}{\gls{sym:edge}}
+
+% ==============================================================================
+% Vertex
+% ==============================================================================
+	\newglossaryentry{sym:vertex}
+	{%
+		name=\ensuremath{\vec{v}},
+		sort=e,
+		description=vertex of a graph,
+		type=symbol
+	}
+	\newcommand{\vertex}{\gls{sym:vertex}}

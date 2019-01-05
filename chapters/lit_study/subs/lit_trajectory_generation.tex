@@ -638,7 +638,9 @@
 		certain points in the trajectory are reached. Therefore, a trajectory
 		for $\timenorm$ can be generated with any of the one dimensional methods
 		described in Section~\ref{sec:one_dimensional_trajectory_generation}
-		or~\ref{sec:multipoint_trajectories}.
+		or~\ref{sec:multipoint_trajectories}. The motion law $\timenorm$ can
+		also be chosen to adhere to some kinematic and dynamic constraints.
+		Section~\ref{sec:trajectory_scaling} deals with this.
 
 		\subsubsection{Multi-Dimensional Interpolation Trajectories}%
 		\label{sec:multi_dimensional_interpolation_trajectories}
@@ -1028,8 +1030,8 @@
 			to:
 
 			\begin{equation}
-				\tdern{\configuration'(\timesym')}{n} = \gain^{n}
-					\tdern{\configuration(\timesym)}{n}
+				\tdern{\configuration'}{n}(\timesym') = \gain^{n}
+					\tdern{\configuration}{n}(\timesym)
 			\end{equation}
 			\todo{$n$ here is not in nomenclature}
 
@@ -1040,7 +1042,7 @@
 			\begin{equation}
 				\gain = \min
 					\left\{
-						\sqrt[\indexi - 1]
+						\sqrt[\indexi]
 						{%
 							\frac
 							{%
@@ -1049,7 +1051,7 @@
 							{%
 									\norm
 									{%
-										\tdern{\configuration(\timesym)}{\indexi}
+										\tdern{\configuration}{\indexi}(\timesym)
 									}_{\max}
 							}
 						}

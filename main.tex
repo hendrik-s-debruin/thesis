@@ -1,4 +1,4 @@
-\documentclass[]{report}
+\documentclass[final]{report}
 
 	\usepackage{ifdraft}
 	\usepackage[obeyFinal]{todonotes}
@@ -10,6 +10,12 @@
 	\usepackage{amsfonts}
 	\usepackage{amssymb}
 	\usepackage{dsfont}
+	% these next 2 packages are temp
+	\usepackage{mathtools}
+	\usepackage{relsize}
+
+	\usepackage{algorithm}
+	\usepackage{algpseudocode}
 
 	\usepackage{graphicx}
 
@@ -29,6 +35,7 @@
 		\input{defs/symbols.tex}
 		\input{defs/abbrevs.tex}
 		\input{defs/glossary.tex}
+		\input{defs/subscripts.tex}
 		\setglossarystyle{listdotted}
 		\ifdraft{\glsaddall}{}
 
@@ -36,15 +43,16 @@
 
 	\listoftodos{}
 
-	\input{chapters/abstract}
-
-	\clearpage
-	\pagenumbering{roman}
-
-	\tableofcontents
-	\listoffigures
-	\listoftables
-	\input{defs/nomenclature.tex}
+%	\input{chapters/abstract}
+%
+%	\clearpage
+%	\pagenumbering{roman}
+%
+%	\tableofcontents
+%	\listoffigures
+%	\listoftables
+%	\listofalgorithms{}
+%	\input{defs/nomenclature.tex}
 
 	\clearpage
 	\pagenumbering{arabic}

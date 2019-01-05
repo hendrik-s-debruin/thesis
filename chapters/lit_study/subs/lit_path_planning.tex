@@ -1,21 +1,417 @@
 \section{Path Planning}%
 \label{sec:path_planning}
 
-	\subsection{Discrete Case}
+	\todo{talk about the things mentioned here}
 
-		(Occupancy grid, Dijkstra etc)
+	Complete algorithms
 
-	\subsection{Continuous Case}
+	Incomplete algorithms
 
-		\subsubsection{Geometric Representations}
+	\todo{discuss path here}
+	DISCUSS THIS
 
-			(Robot, obstacles as polyhedral models)
+	\begin{equation}
+		\pathsym : \timenorm \in [0, 1] \mapsto \configurationspace_{\freeregion}
+	\end{equation}
 
-			(Not 2D case, skip to 3D)
+	\subsection{Vector Spaces in Motion Planning}%
+	\label{sec:vector_spaces_in_motion_planning}
 
-		\subsubsection{Configuration Space}
+		\todo{Talk about the things here}
 
-		\subsubsection{Sampling-Based Motion Planning}
+		The reachable world the robot inhabits is denoted as $\world$. In
+		general it is defined as $\world \subseteq \Re^3$, but for planar robots
+		it is sufficient to assume $\world \subseteq \Re^2$.
 
-		\subsubsection{Combinatorial Motion Planning}
+		State space $\statespace$.
 
+		Action space $\actionspace(\state)$
+
+		The position of a robot in space is a function of the robot's
+		configuration, $\robot(\configuration) \subset \world$. The
+		configuration space is the set of configurations a robot can reach:
+
+		\begin{equation}
+			\configurationspace =
+				\{
+					\configuration | \configuration \in \text{joint limits of }
+					\robot
+				\}
+		\end{equation}
+
+		In general, the robot with $\robotdof$ degrees of freedom may be in
+		collision with an obstacle or with itself. The obstacle configuration
+		space is given by:
+
+		\begin{equation}
+			\configurationspace_{\obstacleregion} =
+				\underbrace
+				{%
+					\left(
+						\bigcup_{\indexi=1}^{\robotdof}
+							\left\{
+								\configuration \in \configurationspace |
+									\robot_{\indexi}(\configuration) \cap \obstacle
+									\neq \emptyset
+							\right\}
+					\right)
+				}_{\text{collision with obstacle}}
+				\bigcup
+				\underbrace
+				{%
+					\left(
+						\bigcup_{%
+							\{\indexi, \indexj\} \in [1, \robotdof]
+						}
+						\left\{
+							\configuration \in \configurationspace |
+								\robot_{\indexi}(\configuration) \cap
+								\robot_{\indexj}(\configuration)
+								\neq \emptyset
+						\right\}
+					\right)
+				}_{\text{self collision}}
+			\label{eq:obstacle_configuration_space}
+		\end{equation}
+
+		For efficiency, pairs $\{\indexi, \indexj\}$ for which self collision
+		are impossible may be omitted from the check in
+		Equation~\ref{eq:obstacle_configuration_space}.
+
+		The free configuration space is simply:
+
+		\begin{equation}
+			\configurationspace_{\freeregion} = \configurationspace \setminus
+				\configurationspace_{\obstacleregion}
+		\end{equation}
+
+	\subsection{Semi-Algebraic Representation of Bodies}%
+	\label{sec:semi_algebraic_representation_of_bodies}
+
+		A common way of representing a robot $\robot$ or obstacle $\obstacle$ is
+		by the use of convex polyhedra. The following discussion will be based
+		on obstacles, but the same representation can be made for a robot.
+
+		A polyhedron may be built up by the use of a set of half-space
+		primitives $\halfspaceprimitive$ that each define a face of the
+		polyhedron. One face may be defined by using three non-collinear points
+		of the plane and solving:
+
+		\begin{equation}
+			ax + by + cz + d = 0
+		\end{equation}
+
+		By setting
+		\(
+			f = ax + by +cz + d
+		\),
+		a half-space primitive may be defined as the set of points:
+
+		\begin{equation}
+			\halfspaceprimitive_{\indexi} =
+				\left\{
+					(x,y,z) \in \world |
+					f_{\indexi}(x,y,z) \leq 0
+				\right\}
+				\label{eq:half_space_primitive}
+		\end{equation}
+		\todo{some of these are not in the nomenclature}
+
+		%Note here that $f_{\indexi}$ will be negative for the half-space that
+		%contains the polyhedron.
+		Now, a convex polyhedron obstacle may be
+		defined as:
+
+		\begin{equation}
+			\obstacle_{\indexi} =
+				\halfspaceprimitive_1 \cap \halfspaceprimitive_2 \cap \cdots \cap
+				\halfspaceprimitive_{\cardinality{\obstacle_{\indexi}}}
+				\label{eq:convex_obstacle}
+		\end{equation}
+
+		Finally, a non-convex polyhedron obstacle can be formed by the union of
+		convex polyhedra:
+
+		\begin{equation}
+			\obstacle =
+				\obstacle_1 \cup \obstacle_2 \cup \cdots \cup \obstacle_{\cardinality{\obstacle}}
+				\label{eq:non_convex_obstacle}
+		\end{equation}
+
+		A polynomial function $f(x,y,z)$ may also be used to define the
+		primitive in Equation~\ref{eq:half_space_primitive} without changing the
+		validity of the model. Furthermore, it is worth noting that other
+		models, such as bitmaps, super quadratics and generalised cylinders may
+		be used to represent obstacles. A discussion on how to build these
+		models can be found in \todo{put reference here. Book around p 105}.
+
+		\subsubsection{Rigid-Body Transformation}%
+		\label{sec:rigid_body_transformation}
+
+			A robot $\robot$ is capable of undergoing rigid transforms. If the
+			semi-algebraic model is used to parametrise a robot, such a
+			transform must be reflected in the collection of primitives that
+			make up the robot.
+
+			In general, it is best to describe the primitives within the robot
+			frame and not the world frame, that is,
+			$\halfspaceprimitive_{\indexi} \in \robot \not\subset\world$. The
+			robot may then be positioned in $\world$ by defining a transform
+			function \transform:
+
+			\begin{equation}
+				\transform: \pointinrobot\in\robot \mapsto \point\in\world
+			\end{equation}
+
+			This function transforms the primitives of the robot in the
+			following manner:
+
+			\begin{equation}
+				\transform(\halfspaceprimitive_{\indexi}) =
+					\left\{
+						\point \in \world |
+							f_{\indexi}(\transform^{-1}(\point)) \leq 0
+					\right\}
+			\end{equation}
+
+			This new collection of primitives serves to locate the robot in the
+			world, $\robot\in\world$. For rigid robots, $\transform$ is often
+			expressed with the well-known transformation matrices. However,
+			simple function shifting techniques from calculus may also be used.
+			An example of a translation function is simply:
+
+			\begin{equation}
+				\transform: (x, y, z) \mapsto (x + \Delta x, y + \Delta y, z + \Delta z)
+			\end{equation}
+
+		\subsubsection{Collision Detection}%
+		\label{sec:collision_detection}
+
+			The semi-algebraic model of
+			Section~\ref{sec:semi_algebraic_representation_of_bodies} can be
+			used to detect whether a point is in collision with an obstacle by
+			use of a simple logical predicate.
+
+			Define, $\forall\halfspaceprimitive_{\indexi}$, a logical predicate
+			\(
+				\logicalpredicate_{\indexi}:
+					\point\in\world \mapsto \{\true, \false\}
+			\)
+			such that:
+
+			\begin{equation}
+				\logicalpredicate_{\indexi} =
+					\begin{cases}
+						\true, & f_{\indexi} \leq 0 \\
+						\false, & f_{\indexi} > 0
+					\end{cases}
+			\end{equation}
+
+			A point $\point$ can then be tested for collision with an obstacle
+			$\obstacle$ using the predicate $\logicalpredicate$:
+
+			\begin{equation}
+				\logicalpredicate(\point) =
+					\bigvee_{\obstacle_{\indexi} \in \obstacle}
+						\left(
+							\bigwedge_{\halfspaceprimitive_{\indexj} \in \obstacle_{\indexi}}
+								\logicalpredicate_{\indexj}
+						\right)
+				=
+				\begin{cases}
+					\true,  &\point \in\obstacle \\
+					\false, &\point \not\in \obstacle
+				\end{cases}
+			\end{equation}
+
+			DISCUSS MORE STUFF HERE
+			\todo{hierarchical collision detection}
+			\todo{reference paper for detecting collision between polyhedra}
+
+	\subsection{Explicit Modelling of $\configurationspace_{\obstacleregion}$}%
+	\label{sec:explicit_modelling_of_obstacle_region_configuration_space}
+
+		\todo{page 180 book}
+		SECTION 4.3.3
+
+	\subsection{Discrete Case}%
+	\label{sec:discrete_case}
+
+		\todo{in this section, f is not in the nomenclature}
+
+		Many motion planning problems reduce to graph search.
+		Algorithm~\ref{alg:general_forward_search} \todo{reference where I got
+		this algorithm} illustrates the general framework to implement forward
+		search in a graph.
+
+		\begin{algorithm}
+			\caption{General Forward Search}\label{alg:general_forward_search}
+			\begin{algorithmic}[1]
+				\Procedure{ForwardSearch}{$\state_{\initial}, \statespace_{\goal}$}
+
+					\State{} $\queue.Insert(\state_{\initial})$
+					\State{} mark $\state_{\initial}$ as visited.
+
+					\While{$\queue \neq \emptyset$}
+
+						\State{} $\state \gets \queue.GetFirst()$
+						\If{$\state \in \statespace_{\goal}$}
+
+							\State{} \textbf{return} SUCCESS
+
+						\EndIf{}
+
+						\ForAll{$\action \in \actionspace(\state)$}
+							\State{} $\state' \gets f(\state, \action)$
+
+							\If{$\state'$ not visited}
+								\State{} Mark $\state'$ as visited
+								\State{} $\queue.Insert(\state')$
+							\Else{}
+								\State{} Resolve duplicate $\state'$
+							\EndIf{}
+						\EndFor{}
+					\EndWhile{}
+					\State{} \textbf{Return} FAILURE
+				\EndProcedure{}
+			\end{algorithmic}
+		\end{algorithm}
+
+		The algorithm works by keeping a priority queue $\queue$ of active
+		states. Every possible state can be either active, unvisited, or
+		inactive. An active state is a visited state which has subsequent states
+		that have not yet been visited, whereas an inactive state is a visited
+		state for which all subsequent states have been visited.
+
+		Each active state is $\state$ is expanded to find new states $\state'$
+		by using the action $\action$ as follows:
+
+		\begin{equation}
+			\state' = f(\state, \action)
+		\end{equation}
+
+		Sometimes the branching factor is lower when starting from the goal and
+		working backwards towards the initial position.
+		Algorithm~\ref{alg:general_forward_search} may be modified to a backward
+		search by making the following substitutions:
+
+		\begin{align}
+			\begin{split}
+				\state_{\goal} &\leftrightarrow \state_{\initial} \\
+				\statespace_{\initial} &\leftrightarrow \statespace_{\goal} \\
+				\invaction &\leftrightarrow \action\\
+				\invactionspace &\leftrightarrow \actionspace\\
+				f^{-1} &\leftrightarrow f
+			\end{split}
+		\end{align}
+
+		Finally, it is worth noting that changing the type of priority queue
+		$\queue$ in Algorithm~\ref{alg:general_forward_search} can be modified
+		to obtain different types of search algorithms. For instance, Breadth
+		First Search is obtained by setting $\queue$ to a \gls{fifo} queue, whereas
+		Depth First Search may be obtained by setting $\queue$ to a
+		stack\todo{reference this sentence p51}. The
+		well-known Dijkstra and $A^*$ algorithms can be seen as specialisations
+		of Algorithm~\ref{alg:general_forward_search}.
+
+		\todo{mention bidirectional search}
+
+	\subsection{Continuous Case}%
+	\label{sec:continuous_case}
+
+		\subsubsection{Sampling-Based Motion Planning}%
+		\label{sec:sampling_based_motion_planning}
+
+			Sampling methods avoid explicit construction of
+			$\configurationspace_{\obstacleregion}$. The idea is that they
+			instead sample $\configurationspace$ while looking for a path. These
+			algorithms cannot detect whether a path does not exist, and instead
+			run forever.
+
+			\paragraph{Sampling Strategies}%
+			\label{sec:sampling_strategies}
+
+				These algorithms differ in the way that they sample
+				$\configurationspace$. As they sample, they may build a
+				topological graph \( \topologicalgraph(\vertex, \edge \in
+				\configurationspace_{\freeregion}) \) which can be used with the
+				algorithms from Section~\ref{sec:discrete_case} to obtain a path
+				$\pathsym$.  Sampling strategies are required to produce dense
+				samples as they progress in time.  What follows is a brief
+				overview of possible sampling methods.
+
+				\begin{itemize}
+
+					\item Random Sampling
+
+						This technique generates directions and orientations
+						separately from different random distributions.  A
+						random quaternion $\quaternion$ is generated from the
+						formula:\todo{reference the formula}
+
+						\begin{equation}
+							\quaternion =
+								\left(
+									\sqrt
+									{%
+										1 - u_1
+									}
+									\sin
+										2\pi u_2
+									,
+									\sqrt
+									{%
+										1 - u_1
+									}
+									\cos
+										2\pi u_2
+									,
+									\sqrt
+									{%
+										u_1
+									}
+									\sin
+										2\pi u_3
+									,
+									\sqrt
+									{%
+										u_1
+									}
+									\cos
+										2\pi u_3
+								\right)
+						\end{equation}
+
+						Where
+						\(
+							(u_1, u_2, u_3) \in [0, 1]
+						\)
+						are chosen from a uniform distribution.
+
+						The components
+						\(
+							\point_1, \ldots, \point_n
+						\)
+						of a direction $\point$ may be drawn from a zero-mean
+						Gaussian distribution. The direction is normalised with:
+
+						\begin{equation}
+							\frac{\point}{\norm{\point}}
+						\end{equation}
+
+						and is used to choose which direction to take a step in
+						for the next sample.
+
+					\item Low-Dispersion Sampling
+
+					\item Low-Discrepancy Sampling
+
+					\item Incremental Sampling and Search
+
+					\item Randomised Potential Fields
+
+					\item Rapidly Exploring Dense Trees
+				\end{itemize}
+
+		\subsubsection{Combinatorial Motion Planning}%
+		\label{sec:combinatorial_motion_planning}
