@@ -1,5 +1,29 @@
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Sample
+% ==============================================================================
+	\newglossaryentry{sym:sample}
+	{%
+		name=\ensuremath{\sigma},
+		sort=s,
+		description=sample,
+		type=symbol
+	}
+	\newcommand{\sample}{\gls{sym:sample}}
+
+% ==============================================================================
+% Distance
+% ==============================================================================
+	\newglossaryentry{sym:distance}
+	{%
+		name=\ensuremath{d},
+		sort=h,
+		description=distance,
+		type=symbol
+	}
+	\newcommand{\distance}{\gls{sym:distance}}
+
+% ==============================================================================
 % Quaternion
 % ==============================================================================
 	\newglossaryentry{sym:quaternion}
@@ -16,7 +40,7 @@
 % ==============================================================================
 	\newglossaryentry{sym:queue}
 	{%
-		name=\ensuremath{\vec{q}},
+		name=\ensuremath{\code{q}},
 		sort=q,
 		description=queue,
 		type=symbol
@@ -578,6 +602,18 @@
 		type=symbol
 	}
 	\newcommand{\false}{\gls{sym:false}}
+
+% ==============================================================================
+% Swath
+% ==============================================================================
+	\newglossaryentry{sym:swath}
+	{%
+		name=\ensuremath{\set{S}},
+		sort=s,
+		description=the set of points reached by a topological graph,
+		type=symbol
+	}
+	\newcommand{\swath}{\gls{sym:swath}}
 
 % ==============================================================================
 % Graph

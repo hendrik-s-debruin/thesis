@@ -224,9 +224,143 @@
 				\end{cases}
 			\end{equation}
 
-			DISCUSS MORE STUFF HERE
 			\todo{hierarchical collision detection}
 			\todo{reference paper for detecting collision between polyhedra}
+
+			\paragraph{Hierarchical Collision Detection}%
+			\label{sec:hierarchical_collision_detection}
+
+				An efficient method to detect collision between bodies is to
+				decompose the bodies into a tree structure. See
+				Figure~\ref{fig:hierarchical_collision_detection_tree} for an
+				example.
+
+				\begin{figure}[hb]
+					\missingfigure{Hierarchical Collision Detection Tree}
+					\caption{Hierarchical Collision Detection Tree}%
+					\label{fig:hierarchical_collision_detection_tree}
+				\end{figure}
+
+				The tree structure represents a type of two-phase collision
+				detection. These phases are:
+
+				\begin{enumerate}
+
+					\item Broad phase:
+
+						A simple bounding region, such as a sphere, is drawn
+						around the object. Spheres are easy to check for
+						collision, since they intersect if their centres are
+						closer than the sum of their radii.
+
+					\item Narrow phase:
+
+						If the broad phase is not in collision, then the objects
+						are definitely not in collision. However, if it is in
+						collision, then one cannot yet determine the state of
+						the objects.
+
+						In this case, the objects are decomposed into smaller
+						parts and the broad phase detection is applied to the
+						component sections.
+
+						As the tree deepens, narrower and narrower bounding
+						regions are applied to the constituent objects. At the
+						leaves, the polygonal shapes described in
+						Section~\ref{sec:semi_algebraic_representation_of_bodies}
+						need to be checked for collision directly. An algorithm
+						to perform this detection can be found in\todo{put
+						reference to polygon collision detection algorithm
+						here}.
+
+				\end{enumerate}
+
+			\paragraph{Path Segment Collision Detection}%
+			\label{sec:path_segment_collision_detection}
+
+				Hierarchical Collision Detection checks a single point to ensure
+
+				\begin{equation}
+					\configuration \in \configurationspace_{\freeregion}
+				\end{equation}
+
+				However, there is the need to ensure that that a whole path is
+				not in collision, that is:
+				\begin{equation}
+					\configuration \in
+						\traj(\timenorm \in [0, 1])
+							\in \configurationspace_{\freeregion}
+				\end{equation}
+
+				One method is to choose an increment $\Delta\configuration$, and
+				then choose two points $(\traj(\timenorm_1),
+				\traj(\timenorm_2))$ such that:
+
+				\begin{equation}
+					\norm
+					{%
+						\vecline
+						{%
+							\traj(\timenorm_1)
+						}
+						{%
+							\traj(\timenorm_2)
+						}
+					}
+					\leq
+					\Delta\configuration
+				\end{equation}
+
+				Here, the line
+				\(
+					\vecline
+					{%
+						\traj(\timenorm_1)
+					}
+					{%
+						\traj(\timenorm_2)
+					}
+				\)
+				is taken along the trajectory $\traj$. If
+				$\Delta\configuration$ is chosen correctly, then the absence of
+				collision in $\traj(\timenorm_1)$ and $\traj(\timenorm_2)$ can
+				guarantee that the segment
+				\(
+					\vecline
+					{%
+						\traj(\timenorm_1)
+					}
+					{%
+						\traj(\timenorm_2)
+					}
+				\)
+				is free of collisions.
+
+				Furthermore, instead
+				of testing the line in $\Delta\configuration$ increments from
+				start to finish, it may be more efficient to perform a binary
+				search over the line. This does not affect the case when there
+				are no collisions, but tends to find collisions faster if they
+				exist.
+
+				The parameter $\Delta\configuration$ is often set
+				experimentally. However, if the hierarchical collision detection
+				algorithm is modified to return a distance $\distance$
+				guaranteed to be smaller than the minimum distance between the
+				bodies, then $\Delta\configuration$ inducing a transform
+				$\transform(\robot)$ may be chosen such that:
+
+				\begin{equation}
+					\max_{\pointinrobot\in\robot}
+					\left\{%
+						\norm
+						{%
+							\pointinrobot - \transform(\pointinrobot)
+						}
+					\right\}
+					\leq
+					\distance
+				\end{equation}
 
 	\subsection{Explicit Modelling of $\configurationspace_{\obstacleregion}$}%
 	\label{sec:explicit_modelling_of_obstacle_region_configuration_space}
@@ -244,20 +378,20 @@
 		this algorithm} illustrates the general framework to implement forward
 		search in a graph.
 
-		\begin{algorithm}
+		\begin{algorithm}[ht]
 			\caption{General Forward Search}\label{alg:general_forward_search}
 			\begin{algorithmic}[1]
 				\Procedure{ForwardSearch}{$\state_{\initial}, \statespace_{\goal}$}
 
-					\State{} $\queue.Insert(\state_{\initial})$
+					\State{} $\queue\code{.Insert}(\state_{\initial})$
 					\State{} mark $\state_{\initial}$ as visited.
 
 					\While{$\queue \neq \emptyset$}
 
-						\State{} $\state \gets \queue.GetFirst()$
+						\State{} $\state \gets \queue\code{.GetFirst}()$
 						\If{$\state \in \statespace_{\goal}$}
 
-							\State{} \textbf{return} SUCCESS
+							\State{} \textbf{return} \code{SUCCESS}
 
 						\EndIf{}
 
@@ -266,13 +400,13 @@
 
 							\If{$\state'$ not visited}
 								\State{} Mark $\state'$ as visited
-								\State{} $\queue.Insert(\state')$
+								\State{} $\queue\code{.Insert}(\state')$
 							\Else{}
 								\State{} Resolve duplicate $\state'$
 							\EndIf{}
 						\EndFor{}
 					\EndWhile{}
-					\State{} \textbf{Return} FAILURE
+					\State{} \textbf{Return} \code{FAILURE}
 				\EndProcedure{}
 			\end{algorithmic}
 		\end{algorithm}
@@ -293,17 +427,36 @@
 		Sometimes the branching factor is lower when starting from the goal and
 		working backwards towards the initial position.
 		Algorithm~\ref{alg:general_forward_search} may be modified to a backward
-		search by making the following substitutions:
+		search by making the substitutions shown in
+		Table~\ref{tab:switiching_between_forward_and_backward_search}.%following substitutions:
 
-		\begin{align}
-			\begin{split}
-				\state_{\goal} &\leftrightarrow \state_{\initial} \\
-				\statespace_{\initial} &\leftrightarrow \statespace_{\goal} \\
-				\invaction &\leftrightarrow \action\\
-				\invactionspace &\leftrightarrow \actionspace\\
-				f^{-1} &\leftrightarrow f
-			\end{split}
-		\end{align}
+		%\begin{align}
+		%	\begin{split}
+		%		\state_{\goal} &\leftrightarrow \state_{\initial} \\
+		%		\statespace_{\initial} &\leftrightarrow \statespace_{\goal} \\
+		%		\invaction &\leftrightarrow \action\\
+		%		\invactionspace &\leftrightarrow \actionspace\\
+		%		f^{-1} &\leftrightarrow f
+		%	\end{split}
+		%\end{align}
+
+		\begin{table}[ht]
+			\centering
+			\begin{tabular}{c  c}
+				\toprule
+				Forward Search 			& Backward Search\\
+				\midrule
+				$\state_{\initial}$		&	$\state_{\goal}$ 			\\
+				$\statespace_{\goal}$	&	$\statespace_{\initial}$	\\
+				$\action$ 				&	$\invaction$				\\
+				$\actionspace$ 			&	$\invactionspace$			\\
+				$f$ 					&	$f^{-1}$					\\
+				%\bottomrule
+			\end{tabular}
+			\caption{Switching Between Forward and Backward Search}%
+			\label{tab:switiching_between_forward_and_backward_search}
+		\end{table}
+
 
 		Finally, it is worth noting that changing the type of priority queue
 		$\queue$ in Algorithm~\ref{alg:general_forward_search} can be modified
@@ -404,14 +557,117 @@
 
 					\item Low-Dispersion Sampling
 
-					\item Low-Discrepancy Sampling
+						Low-Dispersion Sampling is a bit more sophisticated than
+						Random Sampling. It tries to place the samples such that
+						the largest uncovered area is minimised. Obviously, such
+						samples cannot be perfectly random, but they tend to
+						work better for motion planning.
 
-					\item Incremental Sampling and Search
+						\todo{these symbols are not in nomenclature}
+
+						Optimal dispersion is produced by partitioning
+						$\configurationspace$ into cubes and placing the sample
+						at the centre of each cube. Given $k$ samples, the
+						number of cubes per axis is then simply
+						\(
+							\floor*{k^{\frac{1}{\dim{\configurationspace}}}}
+						\).
+
+					%\item Low-Discrepancy Sampling
+
+					\todo{Maybe mention low-discrepancy sampling p 221}
+
+					%\item Incremental Sampling and Search
+
+					\todo{Incremental Sampling and Search}
 
 					\item Randomised Potential Fields
 
-					\item Rapidly Exploring Dense Trees
+						Sampling techniques can get stuck in local minima.
+						Randomised Potential Fields attempt to escape such
+						minima.
+
+						These algorithms have an attractive term which relates
+						to the distance to $\configuration_{\goal}$, as well as
+						a repulsive term which acts as a penalty on
+						configurations that are too close to
+						$\configurationspace_{\obstacleregion}$. The idea is
+						that the algorithms perform a Best First Search search
+						until they detect that they have gotten stuck. When this
+						happens, the algorithm performs a random walk through
+						$\configurationspace$ and  then performs Best First
+						Search again. If the algorithm gets stuck too many
+						times, it returns back to a random previous point
+						$\configuration$ and starts over at this point.
+
+						A negative point of such algorithms is that they tend to
+						have a large amount of tuning parameters.
+
+					\item \glspl{rdt}
+
+						\glspl{rdt} incrementally construct a tree in
+						$\configurationspace$. The resolution of the tree
+						increases with time without the need for tuning
+						parameters. This makes them analogous in a sense to
+						space-filling curves. The well known \gls{rrt}
+						algorithms can be considered as a special case of
+						\glspl{rdt}. The basic \gls{rdt} algorithm is shown in
+						Algorithm~\ref{alg:basic_rdt}.
+
+						\begin{algorithm}[ht]
+							\caption{Basic \gls{rdt} Algorithm}%
+							\label{alg:basic_rdt}
+							\begin{algorithmic}[1]
+								\Procedure{BasicRDT}{$\configuration_{\initial}$}
+									\State{} Initialise $\topologicalgraph$ with $\configuration_{\initial}$
+									\While{$\configuration_{\goal}$ not reached}%
+										\State{} $\sample \gets \code{SAMPLE}(\configurationspace)$ 								\label{alg:basic_rdt:sample}%
+										\State{} $\configuration_1 \gets \code{NEAREST}(\swath(\topologicalgraph),\sample)$ 		\label{alg:basic_rdt:nearest}%
+										\State{} $\configuration_2 \gets \code{STOP\_CONFIGURATION}(\configuration_1, \sample)$ 	\label{alg:basic_rdt:stop}%
+										\If{$\configuration_1 \neq \configuration_2$}%
+											\State{} $\topologicalgraph$.\code{add\_vertex}$(\configuration_2)$ 					\label{alg:basic_rdt:add_vertex}%
+											\State{} $\topologicalgraph$.\code{add\_edge}$(\configuration_1, \configuration_2)$ 	\label{alg:basic_rdt:add_edge}%
+										\EndIf{}
+									\EndWhile{}
+								\EndProcedure{}
+							\end{algorithmic}
+						\end{algorithm}
+
+						The algorithm attempts to connect a sample
+						$\sample\in\configurationspace$ to the nearest point
+						$\configuration_1$ in the swath of the topological
+						graph, $\swath(\topologicalgraph)$, in
+						Line~\ref{alg:basic_rdt:nearest}. Note that this may add
+						a new vertex to $\topologicalgraph$ if
+						$\configuration_1$ is closer to an edge
+						$\edge\in\topologicalgraph$ than a vertex
+						$\vertex\in\topologicalgraph$.
+						Line~\ref{alg:basic_rdt:stop} picks a point
+						$\configuration_2$ along the direction
+						$\vecline{\configuration_1}{\sample}$ as close as
+						possible to $\sample$, but stopping short of any
+						obstacles. This point is then added to
+						$\topologicalgraph$.
+
 				\end{itemize}
+
+			\paragraph{Connecting $\configuration_{\initial}$ and
+			$\configuration_{\goal}$ to the grid}%
+			\label{sec:connecting_initial_configuration_and_goal_configuration_to_the_grid}
+
+				Sampled points are not likely to coincide directly with
+				$\configuration_{\initial}$ or $\configuration_{\goal}$.
+				Instead, a region around these points must be chosen. The points
+				are connected to any sampled points in this region using a
+				method such as that described in
+				Section~\ref{sec:path_segment_collision_detection}. The size of
+				this region can for instance be based on the greatest distance
+				between a sampled point and its farthest neighbour.
+
+			\paragraph{Smoothing Random Paths}%
+			\label{sec:smoothing_random_paths}
+
+				THERE IS A FORMULA IN SECTION 5.4.3 OF NOTES
 
 		\subsubsection{Combinatorial Motion Planning}%
 		\label{sec:combinatorial_motion_planning}

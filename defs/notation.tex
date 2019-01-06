@@ -6,6 +6,18 @@
 \newglossary*{notation}{Notation}
 
 % ==============================================================================
+% Code
+% ==============================================================================
+	\newcommand{\code}[1]{\ensuremath{\texttt{#1}}}
+	\newglossaryentry{not:code}
+	{%
+		name=\code{m},
+		description=a coding function or variable,
+		type=notation
+	}
+	\glsadd{not:code}
+
+% ==============================================================================
 % Continuity Degree
 % ==============================================================================
 	\newcommand{\contdeg}[1]{\ensuremath{\gls{not:contdeg}^{#1}}}
@@ -247,3 +259,9 @@
 		type=notation
 	}
 	\newcommand{\suchthat}{\gls{not:suchthat}}
+
+% ==============================================================================
+% Floor and Ceiling
+% ==============================================================================
+	\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+	\DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}

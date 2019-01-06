@@ -1,64 +1,68 @@
 \documentclass[final]{report}
 
-	\usepackage{ifdraft}
-	\usepackage[obeyFinal]{todonotes}
+%    \usepackage[margin=3cm]{geometry}
 
-	\usepackage{titlesec}
-	\setcounter{secnumdepth}{3}
+    \usepackage{ifdraft}
+    \usepackage[obeyFinal]{todonotes}
 
-	\usepackage{mathrsfs}
-	\usepackage{amsfonts}
-	\usepackage{amssymb}
-	\usepackage{dsfont}
-	% these next 2 packages are temp
-	\usepackage{mathtools}
-	\usepackage{relsize}
+    \usepackage{titlesec}
+    \setcounter{secnumdepth}{3}
 
-	\usepackage{algorithm}
-	\usepackage{algpseudocode}
+    \usepackage{mathrsfs}
+    \usepackage{amsfonts}
+    \usepackage{amssymb}
+    \usepackage{dsfont}
+    % these next 2 packages are temp
+    \usepackage{mathtools}
+    \usepackage{relsize}
 
-	\usepackage{graphicx}
+    \usepackage{algorithm}
+    \usepackage{algpseudocode}
 
-	\usepackage[citestyle=authoryear,bibstyle=authortitle]{biblatex}
-		\addbibresource{bib/cdpr.bib}
-		\addbibresource{bib/path_planning.bib}
-		\addbibresource{bib/trajectory_generation.bib}
+    \usepackage{graphicx}
 
-	\input{props/layout.tex}
+	\usepackage{booktabs}
 
-	\usepackage{hyperref}
-	\usepackage[all]{hypcap}
+    \usepackage[citestyle=authoryear,bibstyle=authortitle]{biblatex}
+        \addbibresource{bib/cdpr.bib}
+        \addbibresource{bib/path_planning.bib}
+        \addbibresource{bib/trajectory_generation.bib}
 
-	\usepackage[section=section, acronyms]{glossaries}
-		\makenoidxglossaries{}
-		\input{defs/notation.tex}
-		\input{defs/symbols.tex}
-		\input{defs/abbrevs.tex}
-		\input{defs/glossary.tex}
-		\input{defs/subscripts.tex}
-		\setglossarystyle{listdotted}
-		\ifdraft{\glsaddall}{}
+    \input{props/layout.tex}
+
+    \usepackage{hyperref}
+    \usepackage[all]{hypcap}
+
+    \usepackage[section=section, acronyms]{glossaries}
+        \makenoidxglossaries{}
+        \input{defs/notation.tex}
+        \input{defs/symbols.tex}
+        \input{defs/abbrevs.tex}
+        \input{defs/glossary.tex}
+        \input{defs/subscripts.tex}
+        \setglossarystyle{listdotted}
+        \ifdraft{\glsaddall}{}
 
 \begin{document}
 
-	\listoftodos{}
+    \listoftodos{}
 
-%	\input{chapters/abstract}
-%
-%	\clearpage
-%	\pagenumbering{roman}
-%
-%	\tableofcontents
-%	\listoffigures
-%	\listoftables
-%	\listofalgorithms{}
-%	\input{defs/nomenclature.tex}
+    \input{chapters/abstract}
 
-	\clearpage
-	\pagenumbering{arabic}
-	%\input{chapters/intro/intro}
-	\input{chapters/lit_study/lit_study}
+    \clearpage
+    \pagenumbering{roman}
 
-	\printbibliography{}
+    \tableofcontents
+    \listoffigures
+    \listoftables
+    \listofalgorithms{}
+    \input{defs/nomenclature.tex}
+
+    \clearpage
+    \pagenumbering{arabic}
+    \input{chapters/intro/intro}
+    \input{chapters/lit_study/lit_study}
+
+    \printbibliography{}
 
 \end{document}
