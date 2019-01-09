@@ -25,6 +25,26 @@
 
 		State space $\statespace$.
 
+		Phase Space $\phasespace$.
+
+		The region of inevitable collision
+		$\phasespace_{\regionOfInevitableCollision}$ is the set of states that
+		will lead to a collision, regardless of the input given to the system.
+		This space is defined as:
+
+		\begin{equation}
+			\phasespace_{\regionOfInevitableCollision} =
+				\left\{
+					\state(0) \in \phasespace |
+						\forall\action\in\actionspace,
+							\exists\timesym > 0
+					\suchthat
+						\state(\timesym) \in \phasespace{\obstacleregion}
+				\right\}
+		\end{equation}
+
+		Completely characterising this space remains an open problem, however.
+
 		Action space $\actionspace(\state)$
 
 		The position of a robot in space is a function of the robot's
@@ -671,3 +691,147 @@
 
 		\subsubsection{Combinatorial Motion Planning}%
 		\label{sec:combinatorial_motion_planning}
+
+			Combinatorial motion planning methods differ from the sampling-based
+			methods of Section~\ref{sec:sampling_based_motion_planning} in that
+			they are complete algorithms. That is, these algorithms are
+			guaranteed to find a path in finite time if it exists, or report
+			that no path exists.
+
+			These algorithms work by decomposing $\configurationspace$ into
+			cells $\cell$ that are guaranteed to be free from collisions. That
+			is, the algorithms guarantee that:
+
+			\begin{equation}
+				\point\in\configurationspace_{\freeregion},
+				\quad
+				\forall\point\in\cell \, \text{and} \, \forall\cell\in\world
+			\end{equation}
+
+			An example cell decomposition for $\world\subseteq\Re^2$ can be seen
+			in Figure~\ref{fig:example_2d_cell_decomposition}.
+
+			\begin{figure}[hb]
+				\missingfigure{Example 2D Cell Decomposition}
+				\caption{Example 2D Cell Decomposition}%
+				\label{fig:example_2d_cell_decomposition}
+			\end{figure}
+
+			The connectivity of the cells is encapsulated in a graph
+			$\topologicalgraph$ which may be searched for paths using the
+			methodologies of Section~\ref{sec:discrete_case}.
+
+			It should be noted that \todo{reference here} warns that
+			combinatorial motion planning methods may be impractical in
+			practice. They are also not suitable for differential constraints.
+			As such, they are not explored further in this report. However, a
+			good reference for such algorithms can be found in \todo{reference}.
+
+	\todo{Maybe mention Feedback Planning as a subsection}
+
+	\subsection{Planning in the Presence of Differential Constraints}%
+	\label{sec:planning_in_the_presence_of_differential_constraints}
+
+		Planning may be subject to differential constraints. Such constraints
+		are often expressed in an implicit form:
+
+		\begin{equation}
+			g(\configuration, \dot{\configuration}, \ldots, \tdern{\configuration}{n})
+				\relop 0
+			\label{eq:implicit_dif_constraint}
+		\end{equation}
+
+		Such a constraint may for instance indicate that the velocity may not
+		exceed a certain threshold. In such a case,
+		equation~\ref{eq:implicit_dif_constraint} takes the form
+		$\norm{\dot{\configuration}} < \threshold$.
+
+		However, planning algorithms require differential constraints to be
+		expressed in the parametric form:
+
+		\begin{equation}
+			\dot{\configuration} = f(\configuration, \action)
+			\label{eq:parameteric_dif_constraint}
+		\end{equation}
+
+		The state-space representation techniques from control theory may be
+		used to convert the representation in
+		Equation~\ref{eq:implicit_dif_constraint} to that in
+		Equation~\ref{eq:parameteric_dif_constraint}. As a simple example,
+		consider $k$ equations of the form:
+
+		\begin{equation}
+			g_1(\configuration_1)\dot{\configuration}_1 + \cdots +
+				g_n(\configuration_n)\dot{\configuration}_n
+			=
+			0
+		\end{equation}
+
+		These may be converted to the form in
+		Equation~\ref{eq:parameteric_dif_constraint} by making the
+		substitutions:
+
+		\begin{align}
+				\dot{\configuration_{\indexi}} &= \action_{\indexi} 					\quad&&\forall\indexi\in [1, \dim{\configurationspace} - k] \\
+				\dot{\configuration_{\indexi}} &= f_{\indexi}(\configuration, \action)	\quad&&\forall\indexi\in [\dim{\configurationspace} - k + 1,\dim\configurationspace]
+		\end{align}
+
+		Where $f_{\indexi}$ is found by simply solving the functions for
+		$\dot{\configuration_{\indexi}}$.
+
+		\subsubsection{Use of Phase Space}%
+		\label{sec:use_of_phase_space}
+
+			When higher-order differential constraints are imposed on the
+			problem, it is of benefit to express the system in phase space
+			$\phasespace$ instead of configuration space $\configurationspace$.
+			In general, the relation between the dimensions of these spaces is
+			given by:
+			\todo{discuss phase space}
+
+			\begin{equation}
+				\dim\phasespace = k\dim\configurationspace
+			\end{equation}
+
+			Where $k$ is the highest-order of the differential constraints.
+
+		\subsubsection{Sampling Approaches}%
+		\label{sec:sampling_approaches}
+
+			One approach to path planning with differential constraints requires
+			the selection of a discrete set of motion primitives:
+
+			\begin{equation}
+				\actionspace_{\discrete} \subset \actionspace
+			\end{equation}
+
+			To each action $\action_{\discrete} \in \actionspace_{\discrete}$ is
+			associated a time duration $\timesym_{\discrete}$.
+
+			To find successive states, sampling algorithms use the discrete
+			state transition function:
+
+			\begin{equation}
+				\state_{\indexk + 1} = f_{\discrete}(\state_{\indexk},
+					{\action_{\discrete}}_{\indexk})
+			\end{equation}
+
+			Therefore, the sampling algorithm needs to sample both $\phasespace$
+			and $\actionspace$. The methods mentioned in
+			Section~\ref{sec:sampling_based_motion_planning} are generally used
+			to sample these spaces.
+
+			Collision detection from Section~\ref{sec:collision_detection} is
+			used to test these samples. However, the phase constraints need to
+			be tested separately. Since
+			$\phasespace_{\regionOfInevitableCollision}$ cannot be checked
+			directly, the general method is to test that a state $\state$ is
+			farther than some threshold $\threshold$ from each constraint
+			boundary.
+
+			In practice, \gls{rdt} methods tend to return feasible trajectories
+			in phase space with relatively few samples. However, these paths
+			tend to be suboptimal.
+
+
+

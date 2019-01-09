@@ -6,6 +6,18 @@
 \newglossary*{notation}{Notation}
 
 % ==============================================================================
+% Relation Operator
+% ==============================================================================
+	\newcommand{\relop}{\ensuremath{\bowtie}}
+	\newglossaryentry{not:relop}
+	{%
+		name=\ensuremath{\relop},
+		description=an operator in the set \ensuremath{\{<, \leq, =, \geq, >\}},
+		type=notation
+	}
+	\glsadd{not:relop}
+
+% ==============================================================================
 % Code
 % ==============================================================================
 	\newcommand{\code}[1]{\ensuremath{\texttt{#1}}}

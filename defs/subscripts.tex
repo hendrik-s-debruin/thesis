@@ -1,4 +1,15 @@
 \newglossary*{subscript}{Subscripts}
+% ==============================================================================
+% Discretised 
+% ==============================================================================
+	\newglossaryentry{sub:discrete}
+	{%
+		name={\ensuremath{\mathrm{d}}},
+		sort=d,
+		description=discretised,
+		type=subscript
+	}
+	\newcommand{\discrete}{\gls{sub:discrete}}
 
 % ==============================================================================
 % Final
@@ -59,3 +70,16 @@
 		type=subscript
 	}
 	\newcommand{\freeregion}{\gls{sub:freeregion}}
+
+% ==============================================================================
+% Region of Inevitable Collision
+% ==============================================================================
+	\newglossaryentry{sub:regionOfInevitableCollision}
+	{%
+		name={\ensuremath{\mathrm{RIC}}},
+		sort=ric,
+		description=region of inevitable collision,
+		type=subscript
+	}
+	\newcommand{\regionOfInevitableCollision}{\gls{sub:regionOfInevitableCollision}}
+

@@ -1,5 +1,17 @@
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Cell
+% ==============================================================================
+	\newglossaryentry{sym:cell}
+	{%
+		name=\ensuremath{\set{C}},
+		sort=c,
+		description=cell,
+		type=symbol
+	}
+	\newcommand{\cell}{\gls{sym:cell}}
+
+% ==============================================================================
 % Sample
 % ==============================================================================
 	\newglossaryentry{sym:sample}
@@ -174,6 +186,18 @@
 	\newcommand{\tol}{\gls{sym:tolerance}}
 
 % ==============================================================================
+% Tolerance
+% ==============================================================================
+	\newglossaryentry{sym:threshold}
+	{%
+		name={\ensuremath{\delta}},
+		sort=d,
+		description=Threshold,
+		type=symbol
+	}
+	\newcommand{\threshold}{\gls{sym:threshold}}
+
+% ==============================================================================
 % Geometric Model
 % ==============================================================================
 	\newglossaryentry{sym:geometricmodel}
@@ -342,6 +366,11 @@
 		type=symbol
 	}
 	\newcommand{\statespace}{\gls{sym:statespace}}
+
+% ==============================================================================
+% Phase Space
+% ==============================================================================
+	\newcommand{\phasespace}{\statespace}
 
 % ==============================================================================
 % Inverse Action

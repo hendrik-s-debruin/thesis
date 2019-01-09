@@ -1,4 +1,9 @@
-\documentclass[final]{report}
+\documentclass[]{report}
+
+	%\usepackage{fontspec}
+	%	\setmainfont{Nimbus Roman}
+
+	%\renewcommand{\familydefault}{\sfdefault}
 
 %    \usepackage[margin=3cm]{geometry}
 
@@ -45,22 +50,22 @@
 
 \begin{document}
 
-    \listoftodos{}
-
-    \input{chapters/abstract}
-
-    \clearpage
-    \pagenumbering{roman}
-
-    \tableofcontents
-    \listoffigures
-    \listoftables
-    \listofalgorithms{}
+%    \listoftodos{}
+%
+%    \input{chapters/abstract}
+%
+%    \clearpage
+%    \pagenumbering{roman}
+%
+%    \tableofcontents
+%    \listoffigures
+%    \listoftables
+%    \listofalgorithms{}
     \input{defs/nomenclature.tex}
 
     \clearpage
     \pagenumbering{arabic}
-    \input{chapters/intro/intro}
+    %\input{chapters/intro/intro}
     \input{chapters/lit_study/lit_study}
 
     \printbibliography{}
