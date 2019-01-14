@@ -1,20 +1,110 @@
 \section{Modelling of Cable-Driven Parallel Robots}%
 \label{sec:modelling_of_cable_driven_parallel_robots}
 
-	\subsection{\glsentrylong{dgm}}
+	The main aspects of \gls{cdpr} modelling is discussed in the current
+	section. \todo{give better intro/overview of what is discussed here}
 
-	\subsection{\glsentrylong{igm}}
+	\subsection{\glsentrylong{cdpr} Classification}%
+	\label{sec:cdpr_classification}
 
-	\subsection{\glsentrylong{dkm}}
+		\glspl{cdpr} can be classified in different ways. One way to is to
+		classify such robots by their degrees of freedom $\robotdof$ and the
+		number of cables, $\numcables$. Using these parameters, the degree of
+		redundancy, $\degofredundancy$, is defined as:
 
-	\subsection{\glsentrylong{ikm}}
+		\begin{equation}
+			\degofredundancy = \numcables - \robotdof
+		\end{equation}
 
-	\subsection{\glsentrylong{ddm}}
+		Different classes of \glspl{cdpr} can be obtained by varying the
+		relation of $\robotdof$ and $\numcables$.
 
-	\subsection{\glsentrylong{idm}}
+		\begin{description}
 
-	\subsection{Workspace Evaluation}
+			\item[\glspl{irpm}]
 
-	\subsection{Cable-Cable Collisions}
+				are under-constrained robots. They cannot withstand any applied
+				wrench to the platform. A \gls{cdpr} is an \gls{irpm} when:
 
-	\subsection{Cable-Platform Collisions}
+				\begin{equation}
+					\numcables < \robotdof \leq 6
+				\end{equation}
+
+				Robots where $\numcables = \robotdof$ may also be considered
+				\glspl{irpm}, as they rely on gravity to impose a force
+				equilibrium.
+
+			\item[\glspl{crpm}]
+
+				are \glspl{cdpr} where poses are supported completely by
+				tensions in the cables. \glspl{cdpr} are \glspl{crpm} when:
+
+				\begin{equation}
+					\numcables = \robotdof + 1
+				\end{equation}
+
+			\item[\glspl{rrpm}]
+
+				are robots that have redundant actuation. That is, when:
+
+				\begin{equation}
+					\numcables > \robotdof + 1
+				\end{equation}
+		\end{description}
+
+		\glspl{cdpr} can also be classified according to the type of motion that
+		they can generate at the end-effector. These motion types are generally
+		classified according to the pattern $x$R$y$T, where $x$ is the degrees
+		of rotational freedom and $y$ is the degrees of translational freedom. A
+		summary of all possible motion profiles is reported in
+		Table~\ref{tab:types_of_cdpr_motion_profiles}.
+
+		\begin{table}[ht]
+			\centering
+			\begin{tabular}{c c}
+				\toprule
+				planar robots & spatial robots \\
+				\midrule
+				1T 			& 	3T \\
+				2T 			& 	2R3T \\
+				1R2T 		& 	3R3T
+			\end{tabular}
+			\caption{Types of \gls{cdpr} motion profiles}%
+			\label{tab:types_of_cdpr_motion_profiles}
+		\end{table}
+
+	\subsection{Geometric Model}%
+	\label{sec:geometric_model}
+
+		\glspl{cdpr} differ from classical parallel mechanisms in that they have
+		the additional constraint that the cables have to be in tension. The
+		ideal model of a \gls{cdpr} assumes that cables are straight lines. That
+		is, effects such as sagging are disregarded.
+
+		The geometry of a \gls{cdpr} is reported in
+		Figure~\ref{fig:geometry_of_cdpr}.
+
+		\begin{figure}[hb]
+			\missingfigure{geometry of CDPR}
+			\caption{Geometry of \gls{cdpr}}%
+			\label{fig:geometry_of_cdpr}
+		\end{figure}
+
+
+%	\subsection{\glsentrylong{dgm}}
+%
+%	\subsection{\glsentrylong{igm}}
+%
+%	\subsection{\glsentrylong{dkm}}
+%
+%	\subsection{\glsentrylong{ikm}}
+%
+%	\subsection{\glsentrylong{ddm}}
+%
+%	\subsection{\glsentrylong{idm}}
+%
+%	\subsection{Workspace Evaluation}
+%
+%	\subsection{Cable-Cable Collisions}
+%
+%	\subsection{Cable-Platform Collisions}

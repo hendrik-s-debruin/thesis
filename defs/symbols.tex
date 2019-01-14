@@ -1,4 +1,41 @@
 \newglossary*{symbol}{Symbols}
+
+% ==============================================================================
+% Robot DOF
+% ==============================================================================
+	\newglossaryentry{sym:robotdof}
+	{%
+		name=\ensuremath{n},
+		sort=n,
+		description=robot degrees of freedom,
+		type=symbol
+	}
+	\newcommand{\robotdof}{\gls{sym:robotdof}}
+
+% ==============================================================================
+% Number of Cables
+% ==============================================================================
+	\newglossaryentry{sym:numcables}
+	{%
+		name=\ensuremath{m},
+		sort=m,
+		description=number of cables,
+		type=symbol
+	}
+	\newcommand{\numcables}{\gls{sym:numcables}}
+
+% ==============================================================================
+% Degree of Redundancy
+% ==============================================================================
+	\newglossaryentry{sym:degofredundancy}
+	{%
+		name=\ensuremath{r},
+		sort=r,
+		description=degree of redunancy,
+		type=symbol
+	}
+	\newcommand{\degofredundancy}{\gls{sym:degofredundancy}}
+
 % ==============================================================================
 % Cell
 % ==============================================================================
@@ -548,17 +585,6 @@
 		type=symbol
 	}
 	\newcommand{\transform}{\gls{sym:transform}}
-% ==============================================================================
-% Robot DOF
-% ==============================================================================
-	\newglossaryentry{sym:robotdof}
-	{%
-		name=\ensuremath{m},
-		sort=m,
-		description=robot degrees of freedom,
-		type=symbol
-	}
-	\newcommand{\robotdof}{\gls{sym:robotdof}}
 
 % ==============================================================================
 % Robot
