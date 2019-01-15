@@ -1,4 +1,4 @@
-\documentclass[draft]{report}
+\documentclass[]{report}
 
 	%\usepackage{fontspec}
 	%	\setmainfont{Nimbus Roman}
@@ -18,8 +18,8 @@
     \usepackage{amssymb}
     \usepackage{dsfont}
 %	\usepackage{mathabx}
-    % these next 2 packages are temp
     \usepackage{mathtools}
+    % these next 1 packages are temp
     \usepackage{relsize}
 
     \usepackage{algorithm}
@@ -53,20 +53,20 @@
 
 %    \listoftodos{}
 %
-%    \input{chapters/abstract}
-%
-%    \clearpage
-%    \pagenumbering{roman}
-%
-%    \tableofcontents
-%    \listoffigures
-%    \listoftables
-%    \listofalgorithms{}
+    \input{chapters/abstract}
+
+    \clearpage
+    \pagenumbering{roman}
+
+    \tableofcontents
+    \listoffigures
+    \listoftables
+    \listofalgorithms{}
     \input{defs/nomenclature.tex}
 
     \clearpage
     \pagenumbering{arabic}
-    %\input{chapters/intro/intro}
+    \input{chapters/intro/intro}
     \input{chapters/lit_study/lit_study}
 
     \printbibliography{}

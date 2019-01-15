@@ -2,6 +2,19 @@
 % 	mathabx: earth symbol
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Special Orthonormal Group
+% ==============================================================================
+	\newglossaryentry{sym:specialOrthonormalGroup}
+	{%
+		name=\ensuremath{\mathrm{SO}},
+		sort=se,
+		description=special orthonormal group,
+		type=symbol
+	}
+	\newcommand{\specialOrthonormalGroupbare}{\gls{sym:specialOrthonormalGroup}}
+	\newcommand{\specialOrthonormalGroup}[1]{\ensuremath{\specialOrthonormalGroupbare_{#1}}}
+
+% ==============================================================================
 % Special Euclidean Group
 % ==============================================================================
 	\newglossaryentry{sym:specialEuclideanGroup}
@@ -33,6 +46,18 @@
 % ==============================================================================
 % ==============================================================================
 % ==============================================================================
+
+% ==============================================================================
+% Workspace
+% ==============================================================================
+	\newglossaryentry{sym:workspace}
+	{%
+		name=\ensuremath{\mathcal{W}},
+		sort=w,
+		description=workspace of robot,
+		type=symbol
+	}
+	\newcommand{\workspace}{\gls{sym:workspace}}
 
 % ==============================================================================
 % Loop Closure Constraints
@@ -182,6 +207,18 @@
 	\newcommand{\rotmat}[2]{{\project{\rotmatbare}{#1}}_{#2}}
 
 % ==============================================================================
+% Set of Rotation Matrices
+% ==============================================================================
+	\newglossaryentry{sym:setofrotationmatrices}
+	{%
+		name=\ensuremath{\set{R}},
+		sort=r,
+		description=set of rotaion matrices,
+		type=symbol
+	}
+	\newcommand{\setofrotationmatrices}{\gls{sym:setofrotationmatrices}}
+
+% ==============================================================================
 % Structure Matrix
 % ==============================================================================
 	\newglossaryentry{sym:strucmat}
@@ -228,6 +265,18 @@
 		type=symbol
 	}
 	\newcommand{\pose}{\gls{sym:pose}}
+
+% ==============================================================================
+% Set of End Effector Poses
+% ==============================================================================
+	\newglossaryentry{sym:setofposes}
+	{%
+		name=\ensuremath{\set{Y}},
+		sort=y,
+		description=set of poses of the end-effector,
+		type=symbol
+	}
+	\newcommand{\setofposes}{\gls{sym:setofposes}}
 
 % ==============================================================================
 % Cartesian Frame
@@ -1045,3 +1094,83 @@
 		type=symbol
 	}
 	\newcommand{\convexhull}{\gls{sym:convexhull}}
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% CSP
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+% ==============================================================================
+% CSP function
+% ==============================================================================
+	\newglossaryentry{sym:cspfunc}
+	{%
+		name=\ensuremath{\vecfunc{\phi}},
+		sort=f,
+		description=CSP function,
+		type=symbol
+	}
+	\newcommand{\cspfunc}{\gls{sym:cspfunc}}
+
+% ==============================================================================
+% Calculation Variables
+% ==============================================================================
+	\newglossaryentry{sym:calcvars}
+	{%
+		name=\ensuremath{\vec{c}},
+		sort=f,
+		description=calculation variables of CSP,
+		type=symbol
+	}
+	\newcommand{\calcvars}{\gls{sym:calcvars}}
+
+% ==============================================================================
+% Verification Variables
+% ==============================================================================
+	\newglossaryentry{sym:vervars}
+	{%
+		name=\ensuremath{\vec{v}},
+		sort=f,
+		description=verification variables of CSP,
+		type=symbol
+	}
+	\newcommand{\vervars}{\gls{sym:vervars}}
+
+% ==============================================================================
+% Verification Domain
+% ==============================================================================
+	\newglossaryentry{sym:verdomain}
+	{%
+		name=\ensuremath{\set{X}_{v}},
+		sort=f,
+		description=verification domain of CSP,
+		type=symbol
+	}
+	\newcommand{\verdomain}{\gls{sym:verdomain}}
+
+% ==============================================================================
+% CSP Search Space
+% ==============================================================================
+	\newglossaryentry{sym:cspsearchspace}
+	{%
+		name=\ensuremath{\set{X}_{s}},
+		sort=f,
+		description=search space of CSP,
+		type=symbol
+	}
+	\newcommand{\cspsearchspace}{\gls{sym:cspsearchspace}}
+
+% ==============================================================================
+% CSP Solution Set
+% ==============================================================================
+	\newglossaryentry{sym:cspsolutionset}
+	{%
+		name=\ensuremath{\set{X}_{c}},
+		sort=f,
+		description=solution set of CSP,
+		type=symbol
+	}
+	\newcommand{\cspsolutionset}{\gls{sym:cspsolutionset}}

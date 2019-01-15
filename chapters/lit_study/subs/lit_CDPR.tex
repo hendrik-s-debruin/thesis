@@ -1,582 +1,961 @@
 \section{Modelling of Cable-Driven Parallel Robots}%
 \label{sec:modelling_of_cable_driven_parallel_robots}
 
-	The main aspects of \gls{cdpr} modelling is discussed in the current
-	section. \todo{give better intro/overview of what is discussed here}
+	The main aspects  of  \gls{cdpr}  modelling  is  discussed	in	the  current
+	section.  \todo{give  better  intro/overview  of  what	is	discussed  here}
 
-	\subsection{\glsentrylong{cdpr} Classification}%
-	\label{sec:cdpr_classification}
+    \subsection{\glsentrylong{cdpr} Classification}%
+    \label{sec:cdpr_classification}
 
-		\glspl{cdpr} can be classified in different ways. One way to is to
-		classify such robots by their degrees of freedom $\robotdof$ and the
-		number of cables, $\numcables$. Using these parameters, the degree of
-		redundancy, $\degofredundancy$, is defined as:
+		\glspl{cdpr} can be classified in different ways.	One  way  to  is  to
+		classify such robots by their degrees of  freedom  $\robotdof$	and  the
+		number of cables, $\numcables$.  Using these parameters, the  degree  of
+        redundancy, $\degofredundancy$, is defined as:
 
-		\begin{equation}
-			\degofredundancy = \numcables - \robotdof
-		\end{equation}
+        \begin{equation}
+            \degofredundancy = \numcables - \robotdof
+        \end{equation}
 
-		Different classes of \glspl{cdpr} can be obtained by varying the
-		relation of $\robotdof$ and $\numcables$.
+		Different classes  of  \glspl{cdpr}  can  be  obtained	by	varying  the
+        relation of $\robotdof$ and $\numcables$.
 
-		\begin{description}
+        \begin{description}
 
-			\item[\glspl{irpm}]
+            \item[\glspl{irpm}]
 
-				are under-constrained robots. They cannot withstand any applied
-				wrench to the platform. A \gls{cdpr} is an \gls{irpm} when:
+				are under-constrained robots.  They cannot withstand any applied
+				wrench to the platform.  A \gls{cdpr}  is  an  \gls{irpm}  when:
 
-				\begin{equation}
-					\numcables < \robotdof \leq 6
-				\end{equation}
+                \begin{equation}
+                    \numcables < \robotdof \leq 6
+                \end{equation}
 
-				Robots where $\numcables = \robotdof$ may also be considered
-				\glspl{irpm}, as they rely on gravity to impose a force
-				equilibrium.
+				Robots where $\numcables = \robotdof$  may	also  be  considered
+				\glspl{irpm},  as  they  rely  on  gravity	to	impose	a  force
+                equilibrium.
 
-			\item[\glspl{crpm}]
+            \item[\glspl{crpm}]
 
-				are \glspl{cdpr} where poses are supported completely by
-				tensions in the cables. \glspl{cdpr} are \glspl{crpm} when:
+				are  \glspl{cdpr}  where  poses  are  supported  completely   by
+				tensions in the cables.   \glspl{cdpr}	are  \glspl{crpm}  when:
 
-				\begin{equation}
-					\numcables = \robotdof + 1
-				\end{equation}
+                \begin{equation}
+                    \numcables = \robotdof + 1
+                \end{equation}
 
-			\item[\glspl{rrpm}]
+            \item[\glspl{rrpm}]
 
-				are robots that have redundant actuation. That is, when:
+				are robots	that  have	redundant  actuation.	That  is,  when:
 
-				\begin{equation}
-					\numcables > \robotdof + 1
-				\end{equation}
-		\end{description}
+                \begin{equation}
+                    \numcables > \robotdof + 1
+                \end{equation}
+        \end{description}
 
 		\glspl{cdpr} can also be classified according to the type of motion that
-		they can generate at the end-effector. These motion types are generally
-		classified according to the pattern $x$R$y$T, where $x$ is the degrees
-		of rotational freedom and $y$ is the degrees of translational freedom. A
-		summary of all possible motion profiles is reported in
-		Table~\ref{tab:types_of_cdpr_motion_profiles}.
+		they can generate at the end-effector.	These motion types are generally
+		classified according to the pattern $x$R$y$T, where $x$ is	the  degrees
+        of rotational freedom and $y$ is the degrees of translational freedom. A
+		summary   of   all	 possible	motion	 profiles	is	  reported	  in
+        Table~\ref{tab:types_of_cdpr_motion_profiles}.
 
-		\begin{table}[ht]
-			\centering
-			\begin{tabular}{c c}
-				\toprule
-				planar robots & spatial robots \\
-				\midrule
-				1T 			& 	3T \\
-				2T 			& 	2R3T \\
-				1R2T 		& 	3R3T
-			\end{tabular}
-			\caption{Types of \gls{cdpr} motion profiles}%
-			\label{tab:types_of_cdpr_motion_profiles}
-		\end{table}
+        \begin{table}[ht]
+            \centering
+            \begin{tabular}{c c}
+                \toprule
+                planar robots & spatial robots \\
+                \midrule
+                1T          &   3T \\
+                2T          &   2R3T \\
+                1R2T        &   3R3T
+            \end{tabular}
+            \caption{Types of \gls{cdpr} motion profiles}%
+            \label{tab:types_of_cdpr_motion_profiles}
+        \end{table}
 
-	\subsection{Geometric Model}%
-	\label{sec:geometric_model}
+    \subsection{Geometric Model}%
+    \label{sec:geometric_model}
 
 		\glspl{cdpr} differ from classical parallel mechanisms in that they have
-		the additional constraint that the cables have to be in tension. The
-		ideal model of a \gls{cdpr} assumes that cables are straight lines. That
-		is, effects such as sagging are disregarded. Geometric equations are
-		derived under the standard model.  Figure~\ref{fig:geometry_of_cdpr}
-		shows this model.  \todo{this isn't good wording}
+		the additional constraint that the cables have to be  in  tension.	 The
+        ideal model of a \gls{cdpr} assumes that cables are straight lines. That
+		is, effects such as sagging are disregarded.   Geometric  equations  are
+		derived under  the	standard  model.   Figure~\ref{fig:geometry_of_cdpr}
+        shows this model.  \todo{this isn't good wording}
 
-		\begin{figure}[hb]
-			\missingfigure{geometry of CDPR}
-			\caption{Geometry of \gls{cdpr}}%
-			\label{fig:geometry_of_cdpr}
-		\end{figure}
+        \begin{figure}[hb]
+            \missingfigure{geometry of CDPR}
+            \caption{Geometry of \gls{cdpr}}%
+            \label{fig:geometry_of_cdpr}
+        \end{figure}
 
-		In Figure~\ref{fig:geometry_of_cdpr} the proximal anchor point is
-		denoted $\proximalanchor$, while the distal anchor is $\distalanchor$.
-		The loop closure constraint for each cable is:
+		In	Figure~\ref{fig:geometry_of_cdpr}  the	proximal  anchor  point   is
+		denoted $\proximalanchor$, while the distal anchor	is	$\distalanchor$.
+        The loop closure constraint for each cable is:
 
-		\begin{equation}
-			\project{%
-				\proximalanchor_{\indexi}
-			}{\world}
-			- \transvec
-			- \rotmat{\world}{\platform}
-				\project{%
-					\distalanchor_{\indexi}
-				}{\platform}
-			- \cablevec_{\indexi}
-			=
-			\zerovec
-			\label{eq:cdpr_loop_closure}
-		\end{equation}
+        \begin{equation}
+            \project{%
+                \proximalanchor_{\indexi}
+            }{\world}
+            - \transvec
+            - \rotmat{\world}{\platform}
+                \project{%
+                    \distalanchor_{\indexi}
+                }{\platform}
+            - \cablevec_{\indexi}
+            =
+            \zerovec
+            \label{eq:cdpr_loop_closure}
+        \end{equation}
 
 		The cable unit vector is defined to always point towards the base of the
-		robot. It is given by the expression:
+        robot. It is given by the expression:
 
-		\begin{equation}
-			\cableuvec_{\indexi} =
-				\frac
-				{%
-					\cablevec_{\indexi}
-				}
-				{%
-					\norm{\cablevec_{\indexi}}
-				}
-		\end{equation}
+        \begin{equation}
+            \cableuvec_{\indexi} =
+                \frac
+                {%
+                    \cablevec_{\indexi}
+                }
+                {%
+                    \norm{\cablevec_{\indexi}}
+                }
+        \end{equation}
 
-		\subsubsection{Inverse Geometric Model}%
-		\label{sec:inverse_geometric_model}
+        \subsubsection{Inverse Geometric Model}%
+        \label{sec:inverse_geometric_model}
 
-			The Inverse Geometric Model, $\invgeometricmodel(\pose)$, takes the
-			pose $\pose = (\transvec, \rotmatbare)$ of the end-effector and
-			returns the lengths of the cables of the \gls{cdpr},
-			$\cablelengths$. It is found by solving for
-			Equation~\ref{eq:cdpr_loop_closure}:
+            The \gls{igm} $\invgeometricmodel(\pose)$, takes the
+			pose $\pose = (\transvec,  \rotmatbare)$  of  the  end-effector  and
+			returns   the	lengths   of   the	 cables   of   the	 \gls{cdpr},
+            $\cablelengths$. It is found by solving for
+            Equation~\ref{eq:cdpr_loop_closure}:
 
-			\begin{equation}
-				\cablelengths
-					= \left[
-						\begin{matrix}
-							\norm{\cablevec_1} \\
-							\vdots \\
-							\norm{\cablevec_{\numcables}}
-						\end{matrix}
-					\right]
-					= \invgeometricmodel(\pose)
-					= \left[
-						\begin{matrix}
-							\norm
-							{%
-								\project{\proximalanchor_1}{\world}
-								- \transvec
-								- \rotmat{\world}{\platform}\project{\distalanchor_1}{\platform}
-							}
-							\\
-							\vdots
-							\\
-							\norm
-							{%
-								\project{\proximalanchor_{\numcables}}{\world}
-								- \transvec
-								- \rotmat{\world}{\platform}\project{\distalanchor_{\numcables}}{\platform}
-							}
-						\end{matrix}
-					\right]
-				\label{eq:cdpr_inverse_geometric_model}
-			\end{equation}
+            \begin{equation}
+                \cablelengths
+                    = \left[
+                        \begin{matrix}
+                            \norm{\cablevec_1} \\
+                            \vdots \\
+                            \norm{\cablevec_{\numcables}}
+                        \end{matrix}
+                    \right]
+                    = \invgeometricmodel(\pose)
+                    = \left[
+                        \begin{matrix}
+                            \norm
+                            {%
+                                \project{\proximalanchor_1}{\world}
+                                - \transvec
+                                - \rotmat{\world}{\platform}\project{\distalanchor_1}{\platform}
+                            }
+                            \\
+                            \vdots
+                            \\
+                            \norm
+                            {%
+                                \project{\proximalanchor_{\numcables}}{\world}
+                                - \transvec
+                                - \rotmat{\world}{\platform}\project{\distalanchor_{\numcables}}{\platform}
+                            }
+                        \end{matrix}
+                    \right]
+                \label{eq:cdpr_inverse_geometric_model}
+            \end{equation}
 
-			Even though $\invgeometricmodel(\pose)$ always exists, it makes no
-			guarantee about whether a given pose is in wrench closure. This
-			needs to be checked separately.
+			Even though $\invgeometricmodel(\pose)$ always exists, it  makes  no
+			guarantee about whether a given pose is  in  wrench  closure.	This
+            needs to be checked separately.
 
-		\subsubsection{Direct Geometric Model}%
-		\label{sec:direct_geometric_model}
+        \subsubsection{Direct Geometric Model}%
+        \label{sec:direct_geometric_model}
 
-			The direct geometric model,
-			\(
-				\geometricmodel(\pose):\Re^{\numcables}\mapsto\specialEuclideanGroup{3}
-			\),
-			is not as simple to derive as the inverse geometric model in
-			Equation~\ref{eq:cdpr_inverse_geometric_model}. In general,
-			$\geometricmodel$ may have multiple solutions.
+            The \gls{dgm},
+            \(
+                \geometricmodel(\pose):\Re^{\numcables}\mapsto\specialEuclideanGroup{3}
+            \),
+			is	 not   as	simple	 to   derive	as	  the	 \gls{igm}	  in
+            Equation~\ref{eq:cdpr_inverse_geometric_model}. In general,
+            $\geometricmodel$ may have multiple solutions.
 
-			The calculation of $\geometricmodel$ changes based on the topology
-			of the \gls{cdpr}. In general, different algorithms exist for:
+			The calculation of $\geometricmodel$ changes based on  the	topology
+			of the \gls{cdpr}.	In	general,  different  algorithms  exist	for:
 
-			\begin{itemize}
+            \begin{itemize}
 
-				\item[]
+                \item[]
 
-					\glspl{irpm} with $\robotdof > \numcables$
+                    \glspl{irpm} with $\robotdof > \numcables$
 
-				\item[]
+                \item[]
 
-					\glspl{irpm} with $\robotdof = \numcables$
+                    \glspl{irpm} with $\robotdof = \numcables$
 
-				\item[]
+                \item[]
 
-					\glspl{crpm} and \glspl{rrpm}
+                    \glspl{crpm} and \glspl{rrpm}
 
-				\item[]
+                \item[]
 
-					Point motion types 2T and 3T
+                    Point motion types 2T and 3T
 
-				\item[]
+                \item[]
 
-					Body motion types 1R2T and 3R3T
+                    Body motion types 1R2T and 3R3T
 
-			\end{itemize}
+            \end{itemize}
 
-			Since the direct geometric model is generally used in feedback laws
-			for the controller \todo{cite page 139} and is not directly
-			required in path planning, an overview of the algorithms for
-			calculating $\geometricmodel$ is outside the scope of this
-			literature study. The algorithms may be found in\todo{cite page
-			154}.
+			Since  the	\gls{dgm}	is	 generally	 used	in	 feedback	laws
+			for  the  controller  \todo{cite  page	139}  and  is  not	directly
+			required in  path  planning,  an  overview	of	the  algorithms  for
+			calculating  $\geometricmodel$	is	outside  the   scope   of	this
+			literature study.  The algorithms may  be  found  in\todo{cite	page
+            154}.
 
-	\subsection{Kinematic Model}%
-	\label{sec:kinematic_model}
+    \subsection{Kinematic Model}%
+    \label{sec:kinematic_model}
 
-		Supposing the direct geometric model $\pose =
-		\geometricmodel(\cablelengths)$ is known, the direct kinematic model
-		$\kinematicmodel$ can be found by derivation:
+		Supposing the  \gls{dgm}  $\pose  =  \geometricmodel(\cablelengths)$  is
+		known,	 the   \gls{dkm}   $\kinematicmodel$	can    be	 found	  by
+        derivation:
 
-		\begin{equation}
-			\dot{\pose}
-				= {\kinematicmodel}(\cablelengths, \dot{\cablelengths})
-				%= \dot{\geometricmodel}(\cablelengths, \dot{\cablelengths})
-				=	\frac
-					{%
-						\partial\geometricmodel(\cablelengths)
-					}
-					{%
-						\partial\timesym
-					}
-				=	\frac
-					{%
-						\partial\geometricmodel(\cablelengths)
-					}
-					{%
-						\partial\cablelengths
-					}
-					\frac
-					{%
-						\partial\cablelengths
-					}
-					{%
-						\partial\timesym
-					}
-				= 	\geometricjac\dot{\cablelengths}
-		\end{equation}
+        \begin{equation}
+            \dot{\pose}
+                = {\kinematicmodel}(\cablelengths, \dot{\cablelengths})
+				%=	 \dot{\geometricmodel}(\cablelengths,	\dot{\cablelengths})
+                =   \frac
+                    {%
+                        \partial\geometricmodel(\cablelengths)
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \frac
+                    {%
+                        \partial\geometricmodel(\cablelengths)
+                    }
+                    {%
+                        \partial\cablelengths
+                    }
+                    \frac
+                    {%
+                        \partial\cablelengths
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \geometricjac\dot{\cablelengths}
+        \end{equation}
 
-		Similarly, the inverse kinematic model $\invkinematicmodel$ is found by
-		derivation of Equation~\ref{eq:cdpr_inverse_geometric_model}:
+		Similarly,	 the   \gls{ikm}   $\invkinematicmodel$    is	 found	  by
+        derivation of Equation~\ref{eq:cdpr_inverse_geometric_model}:
 
-		\begin{equation}
-			\dot{\cablelengths}
-				= 	\invkinematicmodel(\pose, \dot{\pose})
-				= 	\frac
-					{%
-						\partial\invgeometricmodel(\pose)
-					}
-					{%
-						\partial\timesym
-					}
-				= 	\frac
-					{%
-						\partial\invgeometricmodel(\pose)
-					}
-					{%
-						\partial\pose
-					}
-					\frac
-					{%
-						\partial\pose
-					}
-					{%
-						\partial\timesym
-					}
-				= 	\invgeometricjac\dot{\pose}
-		\end{equation}
+        \begin{equation}
+            \dot{\cablelengths}
+                =   \invkinematicmodel(\pose, \dot{\pose})
+                =   \frac
+                    {%
+                        \partial\invgeometricmodel(\pose)
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \frac
+                    {%
+                        \partial\invgeometricmodel(\pose)
+                    }
+                    {%
+                        \partial\pose
+                    }
+                    \frac
+                    {%
+                        \partial\pose
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \invgeometricjac\dot{\pose}
+        \end{equation}
 
 		Higher order kinematic models are found by successive derivations of the
-		above expressions.
+        above expressions.
 
-	\subsection{Static Poses}%
-	\label{sec:static_poses}
+    \subsection{Static Poses}%
+    \label{sec:static_poses}
 
-		When the robot is in static equilibrium, the following equations must
-		hold:
+		When the robot is in static equilibrium, the  following  equations	must
+        hold:
 
-		\begin{align}
-			\sum_{\indexi = 1}^{\numcables}
-				\force_{\indexi} +
-			\force_{\platform} &= \zerovec \\
-			%
-			\sum_{\indexi = 1}^{\numcables}
-				\distalanchor_{\indexi} \times \force_{\indexi} +
-			\torque_{\platform} &= \zerovec
-		\end{align}
+        \begin{align}
+            \sum_{\indexi = 1}^{\numcables}
+                \force_{\indexi} +
+            \force_{\platform} &= \zerovec \\
+            %
+            \sum_{\indexi = 1}^{\numcables}
+                \distalanchor_{\indexi} \times \force_{\indexi} +
+            \torque_{\platform} &= \zerovec
+        \end{align}
 
-		In matrix from, these become:
+        In matrix from, these become:
 
-		\begin{equation}
-			\left[
-				\begin{matrix}
-					\cableuvec_1 &\cdots &\cableuvec_{\numcables} \\
-					%
-					\distalanchor_1\times\cableuvec_1 &\cdots
-					&\distalanchor_{\numcables}\times\cableuvec_{\numcables}
-				\end{matrix}
-			\right]
-			\left[
-				\begin{matrix}
-					\forcemag_1 \\
-					\vdots \\
-					\forcemag_{\numcables}
-				\end{matrix}
-			\right]
-			+
-			\left[
-				\begin{matrix}
-					\force_{\platform} \\
-					\torque_{\platform}
-				\end{matrix}
-			\right]
-			=
-			\zerovec
-		\end{equation}
+        \begin{equation}
+            \left[
+                \begin{matrix}
+                    \cableuvec_1 &\cdots &\cableuvec_{\numcables} \\
+                    %
+                    \distalanchor_1\times\cableuvec_1 &\cdots
+                    &\distalanchor_{\numcables}\times\cableuvec_{\numcables}
+                \end{matrix}
+            \right]
+            \left[
+                \begin{matrix}
+                    \forcemag_1 \\
+                    \vdots \\
+                    \forcemag_{\numcables}
+                \end{matrix}
+            \right]
+            +
+            \left[
+                \begin{matrix}
+                    \force_{\platform} \\
+                    \torque_{\platform}
+                \end{matrix}
+            \right]
+            =
+            \zerovec
+        \end{equation}
 
-		Which can be condensed to the form:
+        Which can be condensed to the form:
 
-		\begin{equation}
-			\strucmat(\transvec, \rotmatbare)\forcemagvec +
-			\wrench_{\platform} = \zerovec
-			\label{eq:structure_equation}
-		\end{equation}
+        \begin{equation}
+            \strucmat(\transvec, \rotmatbare)\forcemagvec +
+            \wrench_{\platform} = \zerovec
+            \label{eq:structure_equation}
+        \end{equation}
 
-		This is known as the structure equation.
+        This is known as the structure equation.
 
-		\subsubsection{Wrench-Closure Poses}%
-		\label{sec:wrench_closure_poses}
+        \subsubsection{Wrench-Closure Poses}%
+        \label{sec:wrench_closure_poses}
 
-			Not every possible pose of the robot can be supported by the cables
-			in static equilibrium. A pose is said to be in wrench-closure if any
-			external platform wrench can be balanced by positive forces in the
-			cables. That is,
+			Not every possible pose of the robot can be supported by the  cables
+            in static equilibrium. A pose is said to be in wrench-closure if any
+			external platform wrench can be balanced by positive forces  in  the
+            cables. That is,
 
-			\begin{equation}
-				\forall
-					\left(
-						{\wrench}_{\platform}\in\Re^{\robotdof}
-					\right)
-				\exists
-					\left(
-						\forcemagvec\in\Re^{\numcables}
-					\right)
-				\quad\suchthat\quad
-					\left(
-						\strucmat(\transvec, \rotmatbare)\forcemagvec + \wrench_{\platform} = \zerovec
-					\right)
-					\wedge
-					\left(
-						\forcemagvec > \zerovec
-					\right)
-			\end{equation}
+            \begin{equation}
+                \forall
+                    \left(
+                        {\wrench}_{\platform}\in\Re^{\robotdof}
+                    \right)
+                \exists
+                    \left(
+                        \forcemagvec\in\Re^{\numcables}
+                    \right)
+                \quad\suchthat\quad
+                    \left(
+                        \strucmat(\transvec, \rotmatbare)\forcemagvec + \wrench_{\platform} = \zerovec
+                    \right)
+                    \wedge
+                    \left(
+                        \forcemagvec > \zerovec
+                    \right)
+                \label{eq:wrench_closure_constraint}
+            \end{equation}
 
-		\subsubsection{Wrench-Feasible Poses}%
-		\label{sec:wrench_feasible_poses}
+        \subsubsection{Wrench-Feasible Poses}%
+        \label{sec:wrench_feasible_poses}
 
-			Wrench feasibility is similar to wrench closure, except it takes
+			Wrench feasibility is similar to wrench  closure,  except  it  takes
 			into account the minimum and maximum cable forces of the \gls{cdpr}.
-			The maximum cable forces ensure that the cables do not fail in
-			tension, whereas the minimum cable forces are chosen to ensure that
-			there is no slack in the cables. A pose $\pose$ is wrench-feasible
-			for a set of wrenches $\setofwrenches$ if:
+			The maximum cable forces ensure that  the  cables  do  not	fail  in
+			tension, whereas the minimum cable forces are chosen to ensure	that
+			there is no slack in the cables.  A pose $\pose$ is  wrench-feasible
+            for a set of wrenches $\setofwrenches$ if:
 
-			\begin{equation}
-				\forall
-					\left(
-						{\wrench}_{\platform}\in\setofwrenches
-					\right)
-				\exists
-					\left(
-						\forcemagvec\in\Re^{\numcables}
-					\right)
-				\suchthat
-					\left(
-						\strucmat(\pose)\forcemagvec + \wrench_{\platform} = \zerovec
-					\right)
-					\wedge
-					\left(
-						0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
-						\quad\forall \indexi \in
-							\left\{
-								1,\ldots,\numcables
-							\right\}
-					\right)
-			\end{equation}
+            \begin{equation}
+                \forall
+                    \left(
+                        {\wrench}_{\platform}\in\setofwrenches
+                    \right)
+                \exists
+                    \left(
+                        \forcemagvec\in\Re^{\numcables}
+                    \right)
+                \suchthat
+                    \left(
+                        \strucmat(\pose)\forcemagvec + \wrench_{\platform} = \zerovec
+                    \right)
+                    \wedge
+                    \left(
+                        0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
+                        \quad\forall \indexi \in
+                            \left\{
+                                1,\ldots,\numcables
+                            \right\}
+                    \right)
+            \end{equation}
 
-			\todo{the following discussion is only relevant to CRPM and RRPM}
+			\todo{the following discussion is only relevant to	CRPM  and  RRPM}
 
-			\todo{$\mat{H}$ is not in the nomenclature}
+            \todo{$\mat{H}$ is not in the nomenclature}
 
-			The set of solutions of the structure
-			equation~\ref{eq:structure_equation} is:
+            The set of solutions of the structure
+            equation~\ref{eq:structure_equation} is:
 
-			\begin{equation}
-				\setsolstruceq =
-					\left\{
-						\forcemagvec =
-							-\pseudoinv{\strucmat}\wrench_{\platform} +
-							\mat{H}\vec{\gain}
-						\,\middle|\,
-							\vec{\gain \in \Re^{\degofredundancy}}
-					\right\}
-			\end{equation}
+            \begin{equation}
+                \setsolstruceq =
+                    \left\{
+                        \forcemagvec =
+                            -\pseudoinv{\strucmat}\wrench_{\platform} +
+                            \mat{H}\vec{\gain}
+                        \,\middle|\,
+                            \vec{\gain \in \Re^{\degofredundancy}}
+                    \right\}
+            \end{equation}
 
-			Where the vectors in $\mat{H}$ form a basis of $\ker{\strucmat}$.
+			Where the vectors in $\mat{H}$ form a  basis  of  $\ker{\strucmat}$.
 
-			The set of feasible force distributions is:
+            The set of feasible force distributions is:
 
-			\begin{equation}
-				\setoffeasibleforces =
-					\left\{
-						\forcemagvec \in \Re^{\numcables}
-					\,\middle|\,
-						0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
-							\quad\forall \indexi \in \{1,\ldots,\numcables\}
-					\right\}
-			\end{equation}
+            \begin{equation}
+                \setoffeasibleforces =
+                    \left\{
+                        \forcemagvec \in \Re^{\numcables}
+                    \,\middle|\,
+                        0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
+							\quad\forall  \indexi  \in	 \{1,\ldots,\numcables\}
+                    \right\}
+            \end{equation}
 
-			A pose is therefore wrench feasible if and only if:
+			A  pose   is   therefore   wrench	feasible   if	and   only	 if:
 
-			\begin{equation}
-				\setsolstruceq \cap \setoffeasibleforces \neq \emptyset
-			\end{equation}
+            \begin{equation}
+				\setsolstruceq	 \cap	\setoffeasibleforces   \neq    \emptyset
+            \end{equation}
 
-			The set $\setsolstruceq \cap \setoffeasibleforces$ is a convex
-			polyhedron. That is, if both $\forcemagvec_1$ and $\forcemagvec_2$
-			are feasible, than the force distribution
+			The set  $\setsolstruceq  \cap	\setoffeasibleforces$  is  a  convex
+			polyhedron.  That is, if both $\forcemagvec_1$ and	$\forcemagvec_2$
+            are feasible, than the force distribution
 
-			\begin{equation}
-				\forcemagvec = \gain\forcemagvec_1 + (1 - \gain)\forcemagvec_2,
-					\quad\forall\gain\in[0;1]
-				\label{eq:convexity_of_feasible_forces}
-			\end{equation}
+            \begin{equation}
+				\forcemagvec = \gain\forcemagvec_1 + (1 -  \gain)\forcemagvec_2,
+                    \quad\forall\gain\in[0;1]
+                \label{eq:convexity_of_feasible_forces}
+            \end{equation}
 
-			is also a feasible solution
+            is also a feasible solution
 
-		\subsection{Wrenches Generated by the Robot}%
-		\label{sec:wrenches_generated_by_the_robot}
+        \subsection{Wrenches Generated by the Robot}%
+        \label{sec:wrenches_generated_by_the_robot}
 
-			Similarly to the sets described in
-			Section~\ref{sec:wrench_feasible_poses}, the set of wrenches that
-			can be generated by the \gls{cdpr} can also be characterised.
-			Analogously to Equation~\ref{eq:convexity_of_feasible_forces}, the
-			set of wrenches $\setofwrenches$ that the robot can generate at a
-			pose $\pose$ is a convex polyhedron. That is, if it is known that a
-			robot can generate the discrete set of wrenches:
+            Similarly to the sets described in
+			Section~\ref{sec:wrench_feasible_poses}, the set  of  wrenches	that
+			can be generated  by  the  \gls{cdpr}  can	also  be  characterised.
+			Analogously to	Equation~\ref{eq:convexity_of_feasible_forces},  the
+			set of wrenches $\setofwrenches$ that the robot can  generate  at  a
+			pose $\pose$ is a convex polyhedron.  That is, if it is known that a
+			robot	can    generate    the	  discrete	  set	 of    wrenches:
 
-			\begin{equation}
-				\setofwrenches_{\discrete}(\pose) =
-					\left\{
-						\wrench_1, \ldots, \wrench_{\robotdof}
-					\right\}
-			\end{equation}
+            \begin{equation}
+                \setofwrenches_{\discrete}(\pose) =
+                    \left\{
+                        \wrench_1, \ldots, \wrench_{\robotdof}
+                    \right\}
+            \end{equation}
 
-			Then the full set of wrenches the robot is:
+            Then the full set of wrenches the robot is:
 
-			\begin{equation}
-				\setofwrenches(\pose) \supseteq \convexhull(\setofwrenches_{\discrete}(\pose))
-			\end{equation}
+            \begin{equation}
+                \setofwrenches(\pose) \supseteq \convexhull(\setofwrenches_{\discrete}(\pose))
+            \end{equation}
 
-			To ensure that $\setofwrenches$ can be generated, it is sufficient
-			to check the $2^{\dim\setofwrenches}$ corners of the set.
-			\todo{cite this section explicitly, p 95}
+			To ensure that $\setofwrenches$ can be generated, it  is  sufficient
+			to	check  the	$2^{\dim\setofwrenches}$   corners	 of   the	set.
+            \todo{cite this section explicitly, p 95}
 
-	\subsection{Singularities of \glsentrylongpl{cdpr}}%
-	\label{sec:singularities_of_cdprs}
+    \subsection{Singularities of \glsentrylongpl{cdpr}}%
+    \label{sec:singularities_of_cdprs}
 
 		The singularities of \glspl{cdpr} may be analysed by collecting the loop
-		closure equations~\ref{eq:cdpr_loop_closure} of each cable into the
-		form:
+		closure equations~\ref{eq:cdpr_loop_closure}  of  each	cable  into  the
+        form:
 
-		\begin{equation}
-			\loopclosureconstraints(\pose,\cablelengths) = \zerovec
-		\end{equation}
+        \begin{equation}
+            \loopclosureconstraints(\pose,\cablelengths) = \zerovec
+        \end{equation}
 
-		Differentiation of this expression leads to:
+		where $\loopclosureconstraints$ is a simple stacking  of  the  left-hand
+		side of Equation~\ref{eq:cdpr_loop_closure}  for  each	cable  $\indexi$
+        into a vector.
 
-		\begin{equation}
-			\frac
-			{%
-				\partial\loopclosureconstraints(\pose,\cablelengths)
-			}
-			{%
-				\partial\pose
-			}
-			\delta\pose
-			+
-			\frac
-			{%
-				\partial\loopclosureconstraints(\pose,\cablelengths)
-			}
-			{%
-				\partial\cablelengths
-			}
-			\delta\cablelengths
-			= \jac_A\delta\pose + \jac_B\delta\cablelengths
-			= \zerovec
-		\end{equation}
-		\todo{$\jac_A$ and $\jac_B$ are not in nomenclature}
+        Differentiation of this expression leads to:
 
-		Where
+        \begin{equation}
+            \frac
+            {%
+                \partial\loopclosureconstraints(\pose,\cablelengths)
+            }
+            {%
+                \partial\pose
+            }
+            \delta\pose
+            +
+            \frac
+            {%
+                \partial\loopclosureconstraints(\pose,\cablelengths)
+            }
+            {%
+                \partial\cablelengths
+            }
+            \delta\cablelengths
+            = \jac_A\delta\pose + \jac_B\delta\cablelengths
+            = \zerovec
+        \end{equation}
+        \todo{$\jac_A$ and $\jac_B$ are not in nomenclature}
 
-		\begin{equation}
-			\jac_A =
-				-\left[
-					\begin{matrix}
-						2\left(\proximalanchor_1 - \rotmatbare\distalanchor_1 - \transvec\right) &
-						\cdots &
-						2\left(\proximalanchor_{\robotdof} - \rotmatbare\distalanchor_{\robotdof} - \transvec\right) &
-						\\
+        Where
+
+        \begin{equation}
+            \jac_A =
+                -\left[
+                    \begin{matrix}
+                        2\left(\proximalanchor_1 - \rotmatbare\distalanchor_1 - \transvec\right) &
+                        \cdots &
+                        2\left(\proximalanchor_{\robotdof} - \rotmatbare\distalanchor_{\robotdof} - \transvec\right) &
+                        \\
+                        %
+                        2\rotmatbare\distalanchor_1 \times
+                            \left(
+                                \proximalanchor_1 - \rotmatbare\distalanchor_1 - \transvec
+                            \right) &
+                        \cdots &
+                        2\rotmatbare\distalanchor_{\robotdof} \times
+                            \left(
+                                \proximalanchor_{\robotdof} - \rotmatbare\distalanchor_{\robotdof} - \transvec
+                            \right)
+                    \end{matrix}
+                \right]
+        \end{equation}
+
+        and
+
+        \begin{equation}
+            \jac_B =
+                \left[
+                    \begin{matrix}
+                        2\cablelength_1 & & \\
+                        & \ddots & \\
+                        & & 2\cablelength_{\numcables}
+                    \end{matrix}
+                \right]
+        \end{equation}
+
+        The robot loses a degree of freedom if
+        \(
+            \det\jac_B = 0
+		\), that is, if a cable is fully retracted.  The robot loses its ability
+        to withstand certain wrenches if
+        \(
+            \det\jac_A = 0
+        \).
+
+		Since $\jac_A$ is not necessarily square,  a  necessary  and  sufficient
+        condition to test for its singularity is:
+
+        \begin{equation}
+            \rank \strucmat(\pose) < \robotdof
+			\label{eq:cond_singularity}
+        \end{equation}
+        \todo{cite page 145}
+
+    \subsection{The Workspace of a \glsentrylong{cdpr}}%
+    \label{sec:the_workspace_of_a_cdpr}
+
+        Characterising the workspace
+		$\workspace\subset\specialEuclideanGroup{3}$   of	a	\gls{cdpr}	  is
+        important for its operation. This section gives an overview of different
+		commonly used workspace subsets, as well as how  the  workspace  may  be
+        calculated and represented.
+
+        \subsubsection{Common Workspace Subsets}%
+        \label{sec:common_workspace_subsets}
+
+			A	brief	overview   of	workspace	subsets   is   given   here.
+			\todo{these   subscripts	are    not	  in	the    nomenclature}
+            \todo{cite p 178}
+
+            \paragraph{Constant Orientation Workspace}%
+            \label{sec:constant_orientation_workspace}
+
+				The constant orientation workspace is the set of points that can
+				be	 reached   without	 changing	the    robot	orientation:
+
+                \begin{equation}
+                    \workspace_{\mathrm{CO}}(\rotmatbare_0) =
+                        \left\{
+                            \transvec\in\Re^3
+                            \,\middle|\,
+                            \pose = (\transvec, \rotmatbare_0)
+                        \right\}
+                \end{equation}
+
+            \paragraph{Orientation Workspace}%
+            \label{sec:orientation_workspace}
+
+				The orientation workspace is the rotations that may  be  reached
+                at a given position:
+
+                \begin{equation}
+                    \workspace_{\mathrm{O}}(\transvec_0) =
+                        \left\{
+                            \rotmatbare\in\specialOrthonormalGroup{3}
+                            \,\middle|\,
+                            \pose = (\transvec_0, \rotmatbare)
+                        \right\}
+                \end{equation}
+
+            \paragraph{Inclusion Orientation Workspace}%
+            \label{sec:inclusion_orientation_workspace}
+
+				The inclusion orientation workspace is a generalisation  of  the
+				constant orientation workspace that includes a set of rotations,
+                $\setofrotationmatrices$:
+
+                \begin{equation}
+                    \workspace_{\mathrm{IO}}(\setofrotationmatrices) =
+                        \left\{
+                            \transvec \in \Re^3
+                            \,\middle|\,
+                            \pose = (\transvec, \rotmatbare),
+                            \rotmatbare\in\setofrotationmatrices
+                        \right\}
+                \end{equation}
+
+            \paragraph{Maximum Workspace}%
+            \label{sec:maximum_workspace}
+
+				The maximum workspace,	$\workspace_{\max}$,  is  the  inclusion
+				orientation   workspace    where	$\setofrotationmatrices    =
+                \specialOrthonormalGroup{3}$
+
+            \paragraph{Total Orientation Workspace}%
+            \label{sec:total_orientation_workspace}
+
+				The    total	orientation    workspace	is	  defined	 by:
+
+                \begin{equation}
+                    \workspace_{\mathrm{TO}}(\setofrotationmatrices) =
+                        \left\{
+                            \transvec \in \Re^3
+                            \,\middle|\,
+                            \pose = (\transvec, \rotmatbare)
+                            \quad\forall\rotmatbare\in\setofrotationmatrices
+                        \right\}
+                \end{equation}
+
+            \paragraph{Dextrous Workspace}%
+            \label{sec:dextroux_workspace}
+
+				The dextrous workspace, $\workspace_{\mathrm{D}}$, is the  total
+				orientation   workspace    where	$\setofrotationmatrices    =
+                \specialOrthonormalGroup{3}$.
+
+            \paragraph{Workspace Aspect}%
+            \label{sec:workspace_aspect}
+
+				Workspaces may be separated into different aspects just as	with
+				other types of parallel robots.  Aspects  may  be  separated  by
+				singularity  surfaces,	wrench	closure  and   wrench	feasible
+				regions.  However, computing  the  number  and	shape  of  these
+				aspects   remains	an	 open	 problem\todo{cite	  p    165}.
+
+		\subsubsection{Workspace Representation}%
+		\label{sec:workspace_representation}
+
+			The workspaces of Section~\ref{sec:common_workspace_subsets} need to
+			be represented in a manner suitable for computer manipulation. Some
+			methods are mentioned below\todo{cite p 182}.
+
+			\begin{enumerate}
+
+				\item Discrete Samples
+
+					The workspace may be  represented  as  a  simple  set  of
+					poses $\setofposes$:
+
+					\begin{equation}
+						\setofposes =
+							\left\{
+								\pose
+								\,\middle|\,
+								\pose\in\workspace
+							\right\}
+					\end{equation}
+
+					The workspace may be sampled as a grid, but  more
+					sophisticated methods, such as those mentioned in
+					Section~\ref{sec:sampling_strategies} may be used.
+
+				\item Solid Geometry
+
+					The workspace may be separated into simplex cells.	This
+					forms a continuous representation of the workspace and is
+					similar to the cells mentioned in
+					Section~\ref{sec:combinatorial_motion_planning}.
+
+				\item Polynomial Form
+
+					The workspace may be modelled with semi-algebraic models
+					such as those discussed in
+					Section~\ref{sec:semi_algebraic_representation_of_bodies}.
+
+			\end{enumerate}
+
+		\subsubsection{Criteria on Poses in the Workspace}%
+		\label{sec:criteria_on_poses_in_the_workspace}
+
+			To ensure that $\pose\in\workspace$, a	candidate  pose  needs	to
+			meet certain criteria.  These criteria may  include	the
+			following\todo{cite p 183}:
+
+			\begin{enumerate}
+
+				\item Wrench closure of the pose
+
+				\item Absence of Singularities at the pose
+
+				\item Self-Collision
+
+				\item Obstacle collision
+
+				\item Limits in allowable  angles  of  proximal  and  distal
+					cables
+
+				\item Cable length
+
+				%\item Spooling capacity
+				\todo{commented out}
+
+			\end{enumerate}
+
+			\paragraph{Wrench-Closure Workspace}%
+			\label{sec:wrench_closure_workspace}
+
+				The Wrench-Closure constraint,
+				Equation~\ref{eq:wrench_closure_constraint}, can be checked
+				using an analysis of the structure matrix $\strucmat$.
+
+				\todo{$\vec{k}$ and $\kappa$ are not in nomenclature}
+
+				Define $\vec{k} \in \ker(\strucmat)$.  A measure for the quality
+				of the force distribution of the cables, $\kappa$, can  be
+				defined  as follows:
+
+				\begin{equation}
+					\kappa  =
+						\begin{cases}
+							\frac
+							{%
+								\min{\vec{k}}
+							}
+							{%
+								\max{\vec{k}}
+							},
+							& \min{\vec{k}} > 0
+							\\
+							\frac
+							{%
+								\max{\vec{k}}
+							}
+							{%
+								\min{\vec{k}}
+							},
+							& \max{\vec{k}} < 0
+							\\
+							0, & \text{otherwise}
+						\end{cases}
+				\end{equation}
+
+				If	$\kappa  =	0$,  we  can  deduce  $\pose  \not\in
+				\workspace$.  $\kappa \in (0, 1]$ serves as a measure for the
+				quality of the force distribution, with $\kappa = 1$ being
+				optimal.
+
+			\paragraph{Cable Length}%
+			\label{sec:cable_length}
+
+				A constraint on the cable length can be written as:
+
+				\begin{equation}
+					\cablelengths_{\min}
+						\leq \invgeometricmodel(\transvec, \rotmatbare)
+						\leq \cablelengths_{\max}
+				\end{equation}
+
+				%This forms a convex polyhedron which may be verified by testing
+				its %vertices.
+
+				Such a constraint is straightforward to test.\todo{convex
+				polyhedron commented out}
+
+			%\subsubsection{Dynamic Workspace}%
+			%\label{sec:dynamic_workspace}
+			\todo{section on dynamic workspace should be here}
+
+			\paragraph{Singularities in Workspace}%
+			\label{sec:singularities_in_workspace}
+
+				For $\pose\in\workspace$ to hold true, the pose $\pose$ may not
+				be in singularity. The condition in
+				Equation~\ref{eq:cond_singularity} may be used to test for this.
+
+			\paragraph{Cable-Cable Interference and Cable-Platform Interference}%
+			\label{sec:cable_cable_interference_and_cable_platform_interference}
+
+				For a pose to belong to the workspace, the robot may not be in
+				self-collision. Most methods that detect such collisions are
+				dependent on specific \gls{cad} models. As such, they are not
+				collected here, but references may be found in\todo{ref page 188
+				and bookref there}.
+
+		\subsubsection{Determining the Workspace}%
+		\label{sec:determining_the_workspace}
+
+			Analogously to path planning, methods for determining the workspace
+			may be subdivided into discrete and continuous methods.
+
+			\paragraph{Discrete Workspace Determination}%
+			\label{sec:discrete_workspace_determination}
+
+				Workspaces may be characterised in a discrete fashion. The
+				procedure to determine a discrete workspace is the same as the
+				discrete representation of
+				Section~\ref{sec:workspace_representation}.
+
+			\paragraph{Continuous Workspace Determination}%
+			\label{sec:continuous_workspace_determination}
+
+				One method to evaluate the workspace is through the use of
+				interval analysis. This method breaks the workspace into
+				a finite set intervals within which it can guarantee all poses
+				to be inside or outside of the workspace.
+
+				Interval analysis solves the \gls{csp} problem. Constraints such
+				as those in Section~\ref{sec:criteria_on_poses_in_the_workspace}
+				can be solved with this technique by collecting them and
+				rewriting them into the form:
+
+				\begin{equation}
+					\cspfunc(\calcvars, \vervars) > \zerovec \quad\forall \vervars\in\verdomain
+				\end{equation}
+
+				For the purposes of the workspace analysis, the calculation
+				variables are the pose of the robot, that is, $\calcvars =
+				\pose$. $\vervars$ collects the verification variables of the
+				constraints. The domain of the problem is $\verdomain$. The
+				solution set of this \gls{csp} problem, $\cspsolutionset$, is
+				the workspace of the robot. That is, $\cspsolutionset =
+				\workspace$. In general, the solution set is given by:
+
+				\begin{equation}
+					\cspsolutionset =
+					\left\{
+						\calcvars \in \Re^{\robotdof}
+						\,\middle|\,
+						\cspfunc(\calcvars, \vervars) > \zerovec
+						\quad\forall\vervars\in\verdomain
+					\right\}
+				\end{equation}
+
+				The set of calculation variables considered forms the search
+				space, $\cspsearchspace$. The types of workspaces listed in
+				Section~\ref{sec:common_workspace_subsets} may be found by aptly
+				choosing $\cspsearchspace$ and $\verdomain$.
+
+				\todo{interval is broken in nomenclature}
+
+				\gls{csp} solvers look for intervals $\interval{\calcvars}$ for
+				which there is no change in the truth value of the statement:
+				\(
+					\cspfunc(\calcvars)>\zerovec
+						\quad\forall\calcvars\in\interval{\calcvars}
+				\).
+
+				A \gls{csp} solver may deduce the properties of an interval as
+				follows:
+
+				\begin{equation}
+					\begin{cases}
+						\inf(\cspfunc(\interval{\calcvars})) > 0, &
+							\cspfunc(\calcvars) > 0
+								\quad \forall\calcvars\in\interval{\calcvars}\\
 						%
-						2\rotmatbare\distalanchor_1 \times
-							\left(
-								\proximalanchor_1 - \rotmatbare\distalanchor_1 - \transvec
-							\right) &
-						\cdots &
-						2\rotmatbare\distalanchor_{\robotdof} \times
-							\left(
-								\proximalanchor_{\robotdof} - \rotmatbare\distalanchor_{\robotdof} - \transvec
-							\right)
-					\end{matrix}
-				\right]
-		\end{equation}
+						{\sup(\cspfunc(\interval{\calcvars})}_{\indexi}) < 0, &
+							\nexists\calcvars\in\interval{\calcvars}\,\suchthat\,
+								\cspfunc(\calcvars) > 0 \\
+						%
+						\text{Otherwise}, & \text{no conclusion}
+					\end{cases}
+				\end{equation}
 
-		and
+				An algorithm for a simple \gls{csp} solver is reported in
+				Algorithm~\ref{alg:interval_csp_solver}.\todo{ref page 198}
 
-		\begin{equation}
-			\jac_B =
-				\left[
-					\begin{matrix}
-						2\cablelength_1 & & \\
-						& \ddots & \\
-						& & 2\cablelength_{\numcables}
-					\end{matrix}
-				\right]
-		\end{equation}
+				\begin{algorithm}[ht]
+					\caption{Interval CSP Solver}\label{alg:interval_csp_solver}
+					\begin{algorithmic}[1]
+						\Procedure{IntervalCSPSolver}{$\cspsearchspace$}
 
-		The robot loses a degree of freedom if
-		\(
-			\det\jac_B = 0
-		\), that is, if a cable is fully retracted. The robot loses its ability
-		to withstand certain wrenches if
-		\(
-			\det\jac_A = 0
-		\).
+							\State{} Store approximation
+								$\{{\interval{\calcvars}}_1, \cdots
+								{\interval{\calcvars}}_n\}$
+								of the search space $\cspsearchspace$ in a queue
+								$\queue_T$
 
-		Since $\jac_A$ is not necessarily square, a necessary and sufficient
-		condition to test for its singularity is:
+							\State{} Create a queue $\queue_S$ for the solutions
 
-		\begin{equation}
-			\rank \strucmat(\pose) < \robotdof
-		\end{equation}
-		\todo{cite page 145}
+							\State{} Create a queue $\queue_I$ for invalid
+							intervals
 
-%	\subsection{\glsentrylong{dgm}}
+							\State{} Create a queue $\queue_U$ for undesirably
+							small intervals
+
+							\While{$\queue_T \neq \emptyset$}
+
+								\State{} $\interval{\calcvars} \gets \queue_T\code{.next}$
+
+								\If{$\diam(\interval{\calcvars}) < \threshold$}
+
+									\State{} $\queue_U\code{.add}(\interval{\calcvars})$
+
+								\Else{}
+									\State{} $\interval{\vec{h}} \gets \cspfunc(\interval{\calcvars}) $
+
+									\If{$\inf{\interval{\vec{h}}} > \zerovec$}
+										\State{} $\queue_S\code{.add}(\interval{\calcvars})$
+									\ElsIf{$\exists \indexi \suchthat {\sup\interval{\vec{h}}}_{\indexi} < 0$}
+										\State{} $\queue_I\code{.add}(\interval{\calcvars}$)
+									\Else{}
+										\State{} Split $\interval{\calcvars}$ into boxes
+										\(
+											\{
+												{\interval{\calcvars}}_1,
+												\cdots,
+												{\interval{\calcvars}}_m
+											\}
+										\) and put them into $\queue_T$
+									\EndIf{}
+								\EndIf{}
+							\EndWhile{}
+						\EndProcedure{}
+					\end{algorithmic}
+				\end{algorithm}
+
+CONTINUE WITH BISECTING BOXES SECTION OF NOTES
+
 %
-%	\subsection{\glsentrylong{igm}}
+%   \subsection{\glsentrylong{ddm}}
 %
-%	\subsection{\glsentrylong{dkm}}
+%   \subsection{\glsentrylong{idm}}
 %
-%	\subsection{\glsentrylong{ikm}}
-%
-%	\subsection{\glsentrylong{ddm}}
-%
-%	\subsection{\glsentrylong{idm}}
-%
-%	\subsection{Workspace Evaluation}
-%
-%	\subsection{Cable-Cable Collisions}
-%
-%	\subsection{Cable-Platform Collisions}
