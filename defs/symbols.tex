@@ -1,4 +1,260 @@
+% Dependencies:
+% 	mathabx: earth symbol
 \newglossary*{symbol}{Symbols}
+% ==============================================================================
+% Special Euclidean Group
+% ==============================================================================
+	\newglossaryentry{sym:specialEuclideanGroup}
+	{%
+		name=\ensuremath{\mathrm{SE}},
+		sort=se,
+		description=special euclidean group,
+		type=symbol
+	}
+	\newcommand{\specialEuclideanGroupbare}{\gls{sym:specialEuclideanGroup}}
+	\newcommand{\specialEuclideanGroup}[1]{\ensuremath{\specialEuclideanGroupbare_{#1}}}
+
+% ==============================================================================
+% Zero Vector
+% ==============================================================================
+	\newglossaryentry{sym:zerovec}
+	{%
+		name=\ensuremath{\vec{0}},
+		sort=0,
+		description=vector of zeros,
+		type=symbol
+	}
+	\newcommand{\zerovec}{\gls{sym:zerovec}}
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% CDPR
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+% ==============================================================================
+% Loop Closure Constraints
+% ==============================================================================
+	\newglossaryentry{sym:loopclosureconstraints}
+	{%
+		name=\ensuremath{\vec{\nu}},
+		sort=n,
+		description=loop closure constraints,
+		type=symbol
+	}
+	\newcommand{\loopclosureconstraints}{\gls{sym:loopclosureconstraints}}
+
+% ==============================================================================
+% Jacobian
+% ==============================================================================
+	\newglossaryentry{sym:jac}
+	{%
+		name=\ensuremath{\mat{J}},
+		sort=j,
+		description=Jacobian,
+		type=symbol
+	}
+	\newcommand{\jac}{\gls{sym:jac}}
+
+% ==============================================================================
+% Geometric Jacobian
+% ==============================================================================
+	\newglossaryentry{sym:geometricjac}
+	{%
+		%TODO this should somehow use \geometricmodel directly
+		name=\ensuremath{\mat{J}_{\func{g}}},
+		sort=jg,
+		description=Geometric Jacobian,
+		type=symbol
+	}
+	\newcommand{\geometricjac}{\gls{sym:geometricjac}}
+
+% ==============================================================================
+% Inverse Geometric Jacobian
+% ==============================================================================
+	\newglossaryentry{sym:invgeometricjac}
+	{%
+		%TODO this should somehow use \invgeometricmodel directly
+		name=\ensuremath{\mat{J}_{\func{g}^{-1}}},
+		sort=jg,
+		description=Inverse Geometric Jacobian,
+		type=symbol
+	}
+	\newcommand{\invgeometricjac}{\gls{sym:invgeometricjac}}
+
+% ==============================================================================
+% Proximal Anchor
+% ==============================================================================
+	\newglossaryentry{sym:proximalanchor}
+	{%
+		name=\ensuremath{\vec{a}},
+		sort=a,
+		description=proximal anchor,
+		type=symbol
+	}
+	\newcommand{\proximalanchor}{\gls{sym:proximalanchor}}
+
+% ==============================================================================
+% Distal Anchor
+% ==============================================================================
+	\newglossaryentry{sym:distalanchor}
+	{%
+		name=\ensuremath{\vec{b}},
+		sort=a,
+		description=distal anchor,
+		type=symbol
+	}
+	\newcommand{\distalanchor}{\gls{sym:distalanchor}}
+
+% ==============================================================================
+% Cable Vector
+% ==============================================================================
+	\newglossaryentry{sym:cablevec}
+	{%
+		name=\ensuremath{\vec{l}},
+		sort=l,
+		description=cable vector,
+		type=symbol
+	}
+	\newcommand{\cablevec}{\gls{sym:cablevec}}
+
+% ==============================================================================
+% Cable Unit Vector
+% ==============================================================================
+	\newglossaryentry{sym:cableuvec}
+	{%
+		name=\ensuremath{\vec{u}},
+		sort=u,
+		description=cable unit vector,
+		type=symbol
+	}
+	\newcommand{\cableuvec}{\gls{sym:cableuvec}}
+
+% ==============================================================================
+% Cable Length
+% ==============================================================================
+	\newglossaryentry{sym:cablelength}
+	{%
+		name=\ensuremath{l},
+		sort=l,
+		description=the lengths of a cable,
+		type=symbol
+	}
+	\newcommand{\cablelength}{\gls{sym:cablelength}}
+
+% ==============================================================================
+% Cable Lengths
+% ==============================================================================
+	\newglossaryentry{sym:cablelengths}
+	{%
+		name=\ensuremath{\mat{l}},
+		sort=l,
+		description=the lengths of the cables \ensuremath{\mat{l} = {\left[\begin{matrix}l_1 & \cdots & l_m \end{matrix}\right]}^T},
+		type=symbol
+	}
+	\newcommand{\cablelengths}{\gls{sym:cablelengths}}
+
+% ==============================================================================
+% Translation Vector
+% ==============================================================================
+	\newglossaryentry{sym:transvec}
+	{%
+		name=\ensuremath{\vec{t}},
+		sort=t,
+		description=translation vector,
+		type=symbol
+	}
+	\newcommand{\transvec}{\gls{sym:transvec}}
+
+% ==============================================================================
+% Rotation Matrix
+% ==============================================================================
+	\newglossaryentry{sym:rotmat}
+	{%
+		name=\ensuremath{\mat{R}},
+		sort=r,
+		description=rotaion matrix,
+		type=symbol
+	}
+	\newcommand{\rotmatbare}{\gls{sym:rotmat}}
+	\newcommand{\rotmat}[2]{{\project{\rotmatbare}{#1}}_{#2}}
+
+% ==============================================================================
+% Structure Matrix
+% ==============================================================================
+	\newglossaryentry{sym:strucmat}
+	{%
+		name=\ensuremath{{\mat{A}^T}},
+		sort=a,
+		description=structure matrix,
+		type=symbol
+	}
+	\newcommand{\strucmat}{\gls{sym:strucmat}}
+
+% ==============================================================================
+% Set of Solutions to Structure Equation
+% ==============================================================================
+	\newglossaryentry{sym:setsolstruceq}
+	{%
+		name=\ensuremath{\set{S}},
+		sort=s,
+		description=set of solutions to the structure equation,
+		type=symbol
+	}
+	\newcommand{\setsolstruceq}{\gls{sym:setsolstruceq}}
+
+% ==============================================================================
+% Set of Feasible Force Distributions
+% ==============================================================================
+	\newglossaryentry{sym:setoffeasibleforces}
+	{%
+		name=\ensuremath{\set{T}},
+		sort=t,
+		description=set of feasible force distributions in the cables,
+		type=symbol
+	}
+	\newcommand{\setoffeasibleforces}{\gls{sym:setoffeasibleforces}}
+
+% ==============================================================================
+% End Effector Pose
+% ==============================================================================
+	\newglossaryentry{sym:pose}
+	{%
+		name=\ensuremath{\vec{y}},
+		sort=y,
+		description=pose of the end-effector \ensuremath{\vec{y} = (\transvec, \rotmatbare)},
+		type=symbol
+	}
+	\newcommand{\pose}{\gls{sym:pose}}
+
+% ==============================================================================
+% Cartesian Frame
+% ==============================================================================
+	\newglossaryentry{sym:frame}
+	{%
+		name=\ensuremath{\mathscr{F}},
+		sort=f,
+		description=frame,
+		type=symbol
+	}
+	\newcommand{\framesym}{\gls{sym:frame}}
+
+% ==============================================================================
+% Platform
+% ==============================================================================
+	%TODO this should be in subscripts
+	\newglossaryentry{sym:platform}
+	{%
+		name=\ensuremath{\mathscr{P}},
+		sort=p,
+		description=platform,
+		type=symbol
+	}
+	\newcommand{\platform}{\gls{sym:platform}}
+	\newcommand{\platformframe}{\framesym_{\platform}}
+	\newcommand{\worldframe}{\framesym_{0}} %TODO this should have its own thing, also put Earth
 
 % ==============================================================================
 % Robot DOF
@@ -97,6 +353,42 @@
 	\newcommand{\queue}{\gls{sym:queue}}
 
 % ==============================================================================
+% Force Magnitude
+% ==============================================================================
+	\newglossaryentry{sym:forcemag}
+	{%
+		name=\ensuremath{f},
+		sort=f,
+		description=magnitude of force,
+		type=symbol
+	}
+	\newcommand{\forcemag}{\gls{sym:forcemag}}
+
+% ==============================================================================
+% Force Magnitude Vector
+% ==============================================================================
+	\newglossaryentry{sym:forcemagvec}
+	{%
+		name=\ensuremath{\mat{f}},
+		sort=f,
+		description=vector of force magnitudes,
+		type=symbol
+	}
+	\newcommand{\forcemagvec}{\gls{sym:forcemagvec}}
+
+% ==============================================================================
+% Force
+% ==============================================================================
+	\newglossaryentry{sym:force}
+	{%
+		name=\ensuremath{\vec{f}},
+		sort=f,
+		description=force,
+		type=symbol
+	}
+	\newcommand{\force}{\gls{sym:force}}
+
+% ==============================================================================
 % Torque
 % ==============================================================================
 	\newglossaryentry{sym:torque}
@@ -107,6 +399,42 @@
 		type=symbol
 	}
 	\newcommand{\torque}{\gls{sym:torque}}
+
+% ==============================================================================
+% Twist
+% ==============================================================================
+	\newglossaryentry{sym:twist}
+	{%
+		name=\ensuremath{\vec{\xi}},
+		sort=t,
+		description=twist,
+		type=symbol
+	}
+	\newcommand{\twist}{\gls{sym:twist}}
+
+% ==============================================================================
+% Wrench
+% ==============================================================================
+	\newglossaryentry{sym:wrench}
+	{%
+		name=\ensuremath{\vec{\zeta}},
+		sort=t,
+		description=wrench,
+		type=symbol
+	}
+	\newcommand{\wrench}{\gls{sym:wrench}}
+
+% ==============================================================================
+% Set of Wrenches
+% ==============================================================================
+	\newglossaryentry{sym:setofwrenches}
+	{%
+		name=\ensuremath{\set{Q}},
+		sort=q,
+		description=set of wrenches,
+		type=symbol
+	}
+	\newcommand{\setofwrenches}{\gls{sym:setofwrenches}}
 
 % ==============================================================================
 % Gain
@@ -705,3 +1033,15 @@
 		type=symbol
 	}
 	\newcommand{\vertex}{\gls{sym:vertex}}
+
+% ==============================================================================
+% Convex Hull
+% ==============================================================================
+	\newglossaryentry{sym:convexhull}
+	{%
+		name=\ensuremath{\func{Conv}},
+		sort=0,
+		description=convex hull of a set,
+		type=symbol
+	}
+	\newcommand{\convexhull}{\gls{sym:convexhull}}
