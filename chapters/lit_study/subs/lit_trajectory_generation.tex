@@ -260,11 +260,11 @@
 			\paragraph{Exponential Trajectories}%
 			\label{exponential_trajectories}
 
-				Exponential trajectories may be constructed such that the
-				degree of continuity of the trajectory may be adjusted.
-				\todo{quote bookref 14} These trajectories are exponential in
-				their velocity profiles, therefore their position profile is
-				given by the following expression:
+				Exponential trajectories may be constructed such that the degree
+				of continuity of the trajectory may be
+				adjusted~\cite{bib:traj:cam_mechanisms}.  These trajectories are
+				exponential in their velocity profiles, therefore their position
+				profile is given by the following expression:
 
 				\begin{equation}
 					\configuration(\timenorm) = v_c \int_{0}^{\timenorm}
@@ -272,7 +272,7 @@
 				\end{equation}
 				\todo{These parameters are not in the nomenclature}
 
-				A popular choice \todo{put reference here} for $f$ is:
+				A popular choice for $f$ is~\cite[][page 48]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 				\begin{equation}
 					f(\timenorm, \lambda) =
@@ -333,7 +333,7 @@
 			Section~\ref{sec:elementary_trajectories} may be combined to obtain
 			new trajectories. The problem is then to smoothly connect these
 			trajectories with trajectory segments referred to as
-			``bends''.\todo{make sure this sentence is not bullshit}
+			``bends''~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 
 			Many of the composition techniques break the trajectory into the
 			following parts:
@@ -448,9 +448,9 @@
 				using the polynomial trajectory method of
 				Section~\ref{sec:elementary_trajectories}.
 
-				\todo{for this section, reference bookref 17. The book
-				references it on page 117. This section is a combination of
-				various sections from the book}
+			%	\todo{for this section, reference bookref 17. The book
+			%	references it on page 117. This section is a combination of
+			%	various sections from the book}
 
 			\todo{maybe add a discussion on the trapezoidal trajectories?}
 
@@ -512,9 +512,10 @@
 			\label{sec:trigonometric_polynomials}
 
 				Trigonometric polynomials are similar to regular polynomials,
-				except they are suitable for periodic motions. By definition,
-				these trajectories are of type $\contdeg{\infty}$. They are
-				given by the expression:
+				except they are suitable for periodic
+				motions~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
+				By definition, these trajectories are of type
+				$\contdeg{\infty}$. They are given by the expression:
 
 				\begin{equation}
 					\configuration(\timesym) =
@@ -550,7 +551,7 @@
 				$\cardinality{\setofpoints} = 2\poldeg + 1$. The coefficients
 				are solved using the same method of polynomial trajectories. A
 				set of these polynomials may be joined to form a trigonometric
-				spline. \todo{ref book ref 27, 28, 29. See p 175}
+				spline. %\todo{ref book ref 27, 28, 29. See p 175}
 
 			\paragraph{Splines}%
 			\label{sec:splines}
@@ -615,7 +616,7 @@
 
 				An algorithm based on linear algebra techniques to solve
 				Equation~\ref{eq:smoothing_cubic_splines_criterion} can be found
-				in \todo{add reference here}.
+				in~\cite[][page 180]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 
 				The maximum approximation error can be guaranteed by performing
 				a simple search technique, such as binary search, on the
@@ -649,8 +650,9 @@
 			\label{sec:b_spines}
 
 				B-splines are a common method to interpolate between points
-				$\point$ in a given set $\setofpoints$. They are given by the
-				relation:
+				$\point$ in a given set
+				$\setofpoints$~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}\cite{bib:traj:handbook_on_splines_for_the_user}.
+				They are given by the relation:
 
 				\begin{equation}
 					\traj = \sum_{\indexi = 0}^{\cardinality{\setofpoints}}
@@ -716,10 +718,6 @@
 				continuity level of $\contdeggeom{\poldeg - 1}$.
 				\todo{continuity degree, geometric continuity degree are not
 				showing up in nomenclature}
-
-				\todo{reference book refs 38, 99, 100. See p 475 of book}
-				\todo{this section is actually taken from handbook on splines
-				for the user}
 
 		\subsubsection{Multi-Dimensional Approximation Trajectories}%
 		\label{sec:multi_dimensional_approximation_trajectories}
@@ -861,9 +859,12 @@
 				their following/preceding points by simple straight lines.
 
 				\begin{figure}[hb]
-					\missingfigure{graphic for linear interpolation with polynomial
-					bends}
-					\caption{Linear Interpolation with Polynomial Bends}%
+					\centering
+					\def\svgwidth{\columnwidth}
+					\import{res/img/}{linear_interpolation_with_polynomial_bends.pdf_tex}
+					\caption[Linear Interpolation with Polynomial Bends]
+						{Linear Interpolation with Polynomial Bends (adapted
+						from~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots})}%
 					\label{fig:linear_interpolation_with_polynomial_bends}
 				\end{figure}
 
@@ -926,8 +927,8 @@
 
 				Note that $\gain_{\indexi}$ may be set to change the
 				approximation error in some specific points. A methodology to
-				perform this minimisation can be found in \todo{put reference
-				here}.
+				perform this minimisation can be found in~\cite[][page
+				371]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}
 
 			\todo{Mixed Interpolation/Approximation, book p 375}
 
@@ -1014,14 +1015,10 @@
 							\right)
 						}^2\\
 						%
+						&\quad\quad\quad\quad\quad\quad\quad\vdots
 					\label{eq:kinematic_scaling_general}
 				\end{split}
 			\end{align}
-			\[
-				\vdots
-			\]
-			\todo{this is a hack. These equations should be put into a box
-			together}
 
 			A simple example for $f$ is the linear function:
 

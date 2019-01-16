@@ -84,7 +84,10 @@
         shows this model.  \todo{this isn't good wording}
 
         \begin{figure}[hb]
-            \missingfigure{geometry of CDPR}
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+            %\missingfigure{geometry of CDPR}
             \caption{Geometry of \gls{cdpr}}%
             \label{fig:geometry_of_cdpr}
         \end{figure}
@@ -206,11 +209,12 @@
             \end{itemize}
 
 			Since the \gls{dgm} is generally used in feedback laws for the
-			controller \todo{cite page 139} and is not directly required in path
-			planning, an overview of the algorithms for calculating
-			$\geometricmodel$ is outside the scope of this literature study. The
-			algorithms may be found in\todo{cite page
-			154}.
+			controller~\cite[][page
+			121]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}
+			and is not directly required in path planning, an overview of the
+			algorithms for calculating $\geometricmodel$ is outside the scope of
+			this literature study. The algorithms may be found in~\cite[][page
+			137]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
     \subsection{Kinematic Model}%
     \label{sec:kinematic_model}
@@ -327,7 +331,8 @@
 		$\skewmat{\quaternionimg}$ is the skew-symmetric matrix associated with
 		the imaginary vector part of the quaternion.
 
-		The dynamic model is then defined as \todo{cite p 254}:
+		The dynamic model is then defined
+		as~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}:
 
 		\begin{align}
 			\begin{split}
@@ -378,8 +383,8 @@
 		\end{equation}
 
 		collects the damping terms of the system. These can become significant
-		for high speed robots, but may be neglected for slower speeds\todo{ref p
-		254}.
+		for high speed robots, but may be neglected for slower
+		speeds~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
 		The Coriolis effects are collected in $\centripitalCoriolisVec$, given
 		by:
@@ -400,7 +405,8 @@
 		cables also exhibit dynamic effects such as elastic deformation, thermal
 		elongation, creep and vibration. These effects are more pronounced with
 		large scale robots or high speed robots and as such are not discussed
-		here. More details on these effects may be found in\todo{ref p 255}.
+		here. More details on these effects may be found in~\cite[][page
+		239]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
     \subsection{Static Poses}%
     \label{sec:static_poses}
@@ -683,13 +689,13 @@
         \).
 
 		Since $\jac_A$ is not necessarily square,  a  necessary  and  sufficient
-        condition to test for its singularity is:
+		condition to test for its singularity is~\cite[][page
+		127]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}:
 
         \begin{equation}
             \rank \strucmat(\pose) < \robotdof
 			\label{eq:cond_singularity}
         \end{equation}
-        \todo{cite page 145}
 
     \subsection{The Workspace of a \glsentrylong{cdpr}}%
     \label{sec:the_workspace_of_a_cdpr}
@@ -786,18 +792,20 @@
             \paragraph{Workspace Aspect}%
             \label{sec:workspace_aspect}
 
-				Workspaces may be separated into different aspects just as	with
-				other types of parallel robots.  Aspects  may  be  separated  by
-				singularity  surfaces,	wrench	closure  and   wrench	feasible
-				regions.  However, computing  the  number  and	shape  of  these
-				aspects   remains	an	 open	 problem\todo{cite	  p    165}.
+				Workspaces may be separated into different aspects just as with
+				other types of parallel robots. Aspects may be separated by
+				singularity surfaces, wrench closure and wrench feasible
+				regions. However, computing the number and shape of these
+				aspects remains an open
+				problem~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
 		\subsubsection{Workspace Representation}%
 		\label{sec:workspace_representation}
 
 			The workspaces of Section~\ref{sec:common_workspace_subsets} need to
 			be represented in a manner suitable for computer manipulation. Some
-			methods are mentioned below\todo{cite p 182}.
+			methods are mentioned
+			below~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}\cite{bib:planning:planning_algorithms}.
 
 			\begin{enumerate}
 
@@ -839,7 +847,7 @@
 
 			To ensure that $\pose\in\workspace$, a	candidate  pose  needs	to
 			meet certain criteria.  These criteria may  include	the
-			following\todo{cite p 183}:
+			following
 
 			\begin{enumerate}
 
@@ -938,8 +946,8 @@
 				For a pose to belong to the workspace, the robot may not be in
 				self-collision. Most methods that detect such collisions are
 				dependent on specific \gls{cad} models. As such, they are not
-				collected here, but references may be found in\todo{ref page 188
-				and bookref there}.
+				collected here, but references may be found in~\cite[][page
+				171]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
 		\subsubsection{Determining the Workspace}%
 		\label{sec:determining_the_workspace}
@@ -1022,7 +1030,7 @@
 				\end{equation}
 
 				An algorithm for a simple \gls{csp} solver is reported in
-				Algorithm~\ref{alg:interval_csp_solver}.\todo{ref page 198}
+				Algorithm~\ref{alg:interval_csp_solver}~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
 				\begin{algorithm}[ht]
 					\caption{Interval CSP Solver}\label{alg:interval_csp_solver}

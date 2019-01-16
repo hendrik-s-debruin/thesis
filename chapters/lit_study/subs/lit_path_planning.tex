@@ -162,8 +162,9 @@
 		primitive in Equation~\ref{eq:half_space_primitive} without changing the
 		validity of the model. Furthermore, it is worth noting that other
 		models, such as bitmaps, super quadratics and generalised cylinders may
-		be used to represent obstacles. A discussion on how to build these
-		models can be found in \todo{put reference here. Book around p 105}.
+		be used to represent obstacles. A short discussion on how to build these
+		models can be found in~\cite[][page
+		89]{bib:planning:planning_algorithms}.
 
 		\subsubsection{Rigid-Body Transformation}%
 		\label{sec:rigid_body_transformation}
@@ -244,9 +245,6 @@
 				\end{cases}
 			\end{equation}
 
-			\todo{hierarchical collision detection}
-			\todo{reference paper for detecting collision between polyhedra}
-
 			\paragraph{Hierarchical Collision Detection}%
 			\label{sec:hierarchical_collision_detection}
 
@@ -256,7 +254,9 @@
 				example.
 
 				\begin{figure}[hb]
-					\missingfigure{Hierarchical Collision Detection Tree}
+					\centering
+					\def\svgwidth{\columnwidth}
+					\import{res/img/}{hierarchical_collision_detection.pdf_tex}
 					\caption{Hierarchical Collision Detection Tree}%
 					\label{fig:hierarchical_collision_detection_tree}
 				\end{figure}
@@ -271,7 +271,9 @@
 						A simple bounding region, such as a sphere, is drawn
 						around the object. Spheres are easy to check for
 						collision, since they intersect if their centres are
-						closer than the sum of their radii.
+						closer than the sum of their radii. As a section step of
+						the broad phase, a bounding box may be drawn around the
+						objects.
 
 					\item Narrow phase:
 
@@ -282,16 +284,24 @@
 
 						In this case, the objects are decomposed into smaller
 						parts and the broad phase detection is applied to the
-						component sections.
+						component sections. As the tree deepens, narrower and
+						narrower bounding regions are applied to the constituent
+						objects.
 
-						As the tree deepens, narrower and narrower bounding
-						regions are applied to the constituent objects. At the
-						leaves, the polygonal shapes described in
-						Section~\ref{sec:semi_algebraic_representation_of_bodies}
-						need to be checked for collision directly. An algorithm
-						to perform this detection can be found in\todo{put
-						reference to polygon collision detection algorithm
-						here}.
+						%At the leaves, the polygonal shapes described in
+						%Section~\ref{sec:semi_algebraic_representation_of_bodies}
+						%need to be checked for collision directly. An algorithm
+						%to perform this detection can be found in\todo{put
+						%reference to polygon collision detection algorithm
+						%here}.
+
+					\item Exact phase:
+
+						As a final phase at the leaves of the tree, the objects
+						may be checked exactly for collisions. This is more
+						expensive than the previous phases. An algorithm to test
+						for collisions between polyhedra can be found
+						in~\cite{bib:planning:detecting_intersections_between_convex_polyhedra}.
 
 				\end{enumerate}
 
@@ -394,9 +404,9 @@
 		\todo{in this section, f is not in the nomenclature}
 
 		Many motion planning problems reduce to graph search.
-		Algorithm~\ref{alg:general_forward_search} \todo{reference where I got
-		this algorithm} illustrates the general framework to implement forward
-		search in a graph.
+		Algorithm~\ref{alg:general_forward_search}\cite[adapted
+		from][]{bib:planning:planning_algorithms} illustrates the general
+		framework to implement forward search in a graph.
 
 		\begin{algorithm}[ht]
 			\caption{General Forward Search}\label{alg:general_forward_search}
@@ -481,11 +491,11 @@
 		Finally, it is worth noting that changing the type of priority queue
 		$\queue$ in Algorithm~\ref{alg:general_forward_search} can be modified
 		to obtain different types of search algorithms. For instance, Breadth
-		First Search is obtained by setting $\queue$ to a \gls{fifo} queue, whereas
-		Depth First Search may be obtained by setting $\queue$ to a
-		stack\todo{reference this sentence p51}. The
-		well-known Dijkstra and $A^*$ algorithms can be seen as specialisations
-		of Algorithm~\ref{alg:general_forward_search}.
+		First Search is obtained by setting $\queue$ to a \gls{fifo} queue,
+		whereas Depth First Search may be obtained by setting $\queue$ to a
+		stack~\cite[][page 35]{bib:planning:planning_algorithms}. The well-known
+		Dijkstra and $A^*$ algorithms can be seen as specialisations of
+		Algorithm~\ref{alg:general_forward_search}.
 
 		\todo{mention bidirectional search}
 
@@ -520,7 +530,7 @@
 						This technique generates directions and orientations
 						separately from different random distributions.  A
 						random quaternion $\quaternion$ is generated from the
-						formula:\todo{reference the formula}
+						formula\cite{bib:planning:planning_algorithms}:
 
 						\begin{equation}
 							\quaternion =
@@ -712,8 +722,15 @@
 			in Figure~\ref{fig:example_2d_cell_decomposition}.
 
 			\begin{figure}[hb]
-				\missingfigure{Example 2D Cell Decomposition}
-				\caption{Example 2D Cell Decomposition}%
+				\centering
+				\def\svgwidth{\columnwidth}
+				\import{res/img/}{2d_cell_decomposition.pdf_tex}
+				\caption[Example 2D Cell Decomposition]
+				{%
+					Example 2D Cell Decomposition 
+					(adapted from~\cite[][page 269]
+						{bib:planning:planning_algorithms})
+				}%
 				\label{fig:example_2d_cell_decomposition}
 			\end{figure}
 
@@ -721,11 +738,12 @@
 			$\topologicalgraph$ which may be searched for paths using the
 			methodologies of Section~\ref{sec:discrete_case}.
 
-			It should be noted that \todo{reference here} warns that
-			combinatorial motion planning methods may be impractical in
-			practice. They are also not suitable for differential constraints.
-			As such, they are not explored further in this report. However, a
-			good reference for such algorithms can be found in \todo{reference}.
+			It should be noted that~\cite{bib:planning:planning_algorithms}
+			warns that combinatorial motion planning methods may be impractical
+			in practice. They are also not suitable for differential
+			constraints.  As such, they are not explored further in this report.
+			However, a good reference for such algorithms can be found
+			in~\cite{bib:planning:robot_motion_planning}.
 
 	\todo{Maybe mention Feedback Planning as a subsection}
 

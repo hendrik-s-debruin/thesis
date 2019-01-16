@@ -1,4 +1,4 @@
-\documentclass[final]{report}
+\documentclass[]{report}
 
     \usepackage{ifdraft}
     \usepackage[obeyFinal]{todonotes}
@@ -19,33 +19,46 @@
     \usepackage{algpseudocode}
 
     \usepackage{graphicx}
+		\graphicspath{{res/images/}}
+	\usepackage{import}
 
 	\usepackage{booktabs}
 
-    \usepackage[citestyle=authoryear,bibstyle=authortitle]{biblatex}
+    \usepackage[citestyle=numeric,bibstyle=numeric]{biblatex}
         \addbibresource{bib/cdpr.bib}
         \addbibresource{bib/path_planning.bib}
         \addbibresource{bib/trajectory_generation.bib}
+        \addbibresource{bib/math.bib}
+		\nocite{*}
 
     \input{props/layout.tex}
 
 	\usepackage[hidelinks]{hyperref}
     \usepackage[all]{hypcap}
 
-    \usepackage[section=section, acronyms]{glossaries}
+	% This should be used for full thesis
+    %\usepackage[section=section, acronyms]{glossaries}
+	% This should be used for literature study report
+    \usepackage[section=subsection, acronyms]{glossaries}
         \makenoidxglossaries{}
         \input{defs/notation.tex}
         \input{defs/symbols.tex}
         \input{defs/abbrevs.tex}
         \input{defs/glossary.tex}
         \input{defs/subscripts.tex}
+		\setlength{\glslistdottedwidth}{4cm}
         \setglossarystyle{listdotted}
         \ifdraft{\glsaddall}{}
 
+	\let\paragraph\subsubsection
+	\let\subsubsection\subsection
+	\let\subsection\section
+	\let\section\chapter
+
 \begin{document}
 
-%    \listoftodos{}
-%
+	\ifdraft{\listoftodos{}}{}
+
     \input{chapters/abstract}
 
     \clearpage
