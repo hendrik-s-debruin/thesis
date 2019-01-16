@@ -1,55 +1,66 @@
 \section{Path Planning}%
 \label{sec:path_planning}
 
-	\todo{talk about the things mentioned here}
+	A broad overview of path planning algorithms can be seen in
+	Figure~\ref{fig:path_planning_overview}. Algorithms can be separated into
+	discrete algorithms, which perform graph search over a discrete set of
+	possible states, and continuous algorithms, which look for a path in an
+	uncountable infinite search space. Continuous algorithms can further be
+	subdivided into complete and incomplete algorithms. Complete algorithms are
+	capable of finding a solution if one exists or reporting that there is no
+	path in finite time. Incomplete algorithms cannot detect whether that no
+	path exists. Instead, they may run forever. If a path exists, the
+	probability that the algorithm finds the path approaches unity as time
+	approaches infinity.
 
-	Complete algorithms
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{path_planning_overview.pdf_tex}
+		\caption{Path Planning Overview}%
+		\label{fig:path_planning_overview}
+	\end{figure}
 
-	Incomplete algorithms
-
-	\todo{discuss path here}
-	DISCUSS THIS
+	Path planning algorithms attempt to find a path $\pathsym$ that maps a
+	position in the path $\timenorm$ into the free configuration space
+	$\configurationspace_{\freeregion}$ of the system:
 
 	\begin{equation}
 		\pathsym : \timenorm \in [0, 1] \mapsto \configurationspace_{\freeregion}
 	\end{equation}
 
-	\subsection{Vector Spaces in Motion Planning}%
-	\label{sec:vector_spaces_in_motion_planning}
+	The free configuration space is defined in
+	Section~\ref{sec:vector_spaces_in_path_planning}.
 
-		\todo{Talk about the things here}
 
-		The reachable world the robot inhabits is denoted as $\world$. In
-		general it is defined as $\world \subseteq \Re^3$, but for planar robots
-		it is sufficient to assume $\world \subseteq \Re^2$.
+	\subsection{Vector Spaces in Path Planning}%
+	\label{sec:vector_spaces_in_path_planning}
 
-		State space $\statespace$.
+		Path planning deals with many different vector spaces. As such, an
+		overview of these spaces is briefly given here.
 
-		Phase Space $\phasespace$.
+		The reachable world that a robot $\robot$ inhabits is denoted as
+		$\world$. In general, the world is defined as $\world \subseteq \Re^3$,
+		but for planar robots it is sufficient to assume $\world \subseteq
+		\Re^2$.
 
-		The region of inevitable collision
-		$\phasespace_{\regionOfInevitableCollision}$ is the set of states that
-		will lead to a collision, regardless of the input given to the system.
-		This space is defined as:
+		For any state $\state$ of the robot, an action $\action$ may be applied.
+		In general, the set of actions that may be performed by the robot is
+		dependent on the current robot state. These actions are collected in the
+		action space $\actionspace(\state)$.
+
+		The state transition function $\statetransfunc$ changes the robot's
+		state based on some action $\action\in\actionspace(\state)$:
 
 		\begin{equation}
-			\phasespace_{\regionOfInevitableCollision} =
-				\left\{
-					\state(0) \in \phasespace |
-						\forall\action\in\actionspace,
-							\exists\timesym > 0
-					\suchthat
-						\state(\timesym) \in \phasespace{\obstacleregion}
-				\right\}
+			\state' = \statetransfunc(\state, \action)
+			\label{eq:state_transformation_function}
 		\end{equation}
 
-		Completely characterising this space remains an open problem, however.
-
-		Action space $\actionspace(\state)$
-
-		The position of a robot in space is a function of the robot's
-		configuration, $\robot(\configuration) \subset \world$. The
-		configuration space is the set of configurations a robot can reach:
+		A robot may be in a certain configuration $\configuration$. The position
+		of a robot in the world is a function of the robot's configuration,
+		$\robot(\configuration) \subset \world$. The configuration space is the
+		set of configurations a robot can reach:
 
 		\begin{equation}
 			\configurationspace =
@@ -105,6 +116,44 @@
 				\configurationspace_{\obstacleregion}
 		\end{equation}
 
+		The state $\state$ of a robot does not only contain its current
+		configuration, but also its velocities and higher configuration
+		derivatives $(\dot{\configuration},\cdots,\tdern{\configuration}{n})$.
+		The phase space $\phasespace$ is the set of all possible states the
+		robot may be in:
+
+		\begin{equation}
+			\phasespace =
+				\left\{%
+					\state |
+						\state\, \text{does not violate maximum joint positions
+						or velocities}
+				\right\}
+		\end{equation}
+
+		The obstacle phase space $\phasespace_{\obstacleregion}$ is the set of
+		states for which the robot is in collision. It is described by
+		Equation~\ref{eq:obstacle_configuration_space}, replacing
+		$\configurationspace$ with $\phasespace$.
+
+		The region of inevitable collision
+		$\phasespace_{\regionOfInevitableCollision}$ is the set of states that
+		will lead to a collision, regardless of the input given to the system.
+		This space is defined as:
+
+		\begin{equation}
+			\phasespace_{\regionOfInevitableCollision} =
+				\left\{
+					\state(0) \in \phasespace |
+						\forall\action\in\actionspace,
+							\exists\timesym > 0
+					\suchthat
+						\state(\timesym) \in \phasespace{\obstacleregion}
+				\right\}
+		\end{equation}
+
+		Completely characterising this space remains an open problem, however.
+
 	\subsection{Semi-Algebraic Representation of Bodies}%
 	\label{sec:semi_algebraic_representation_of_bodies}
 
@@ -118,24 +167,23 @@
 		of the plane and solving:
 
 		\begin{equation}
-			ax + by + cz + d = 0
+			a\xcoord + b\ycoord + c\zcoord + d = 0
 		\end{equation}
 
 		By setting
 		\(
-			f = ax + by +cz + d
+			\function = a\xcoord + b\ycoord +c\zcoord + d
 		\),
 		a half-space primitive may be defined as the set of points:
 
 		\begin{equation}
 			\halfspaceprimitive_{\indexi} =
 				\left\{
-					(x,y,z) \in \world |
-					f_{\indexi}(x,y,z) \leq 0
+					(\xcoord,\ycoord,\zcoord) \in \world |
+					\function_{\indexi}(\xcoord,\ycoord,\zcoord) \leq 0
 				\right\}
 				\label{eq:half_space_primitive}
 		\end{equation}
-		\todo{some of these are not in the nomenclature}
 
 		%Note here that $f_{\indexi}$ will be negative for the half-space that
 		%contains the polyhedron.
@@ -158,12 +206,12 @@
 				\label{eq:non_convex_obstacle}
 		\end{equation}
 
-		A polynomial function $f(x,y,z)$ may also be used to define the
-		primitive in Equation~\ref{eq:half_space_primitive} without changing the
-		validity of the model. Furthermore, it is worth noting that other
-		models, such as bitmaps, super quadratics and generalised cylinders may
-		be used to represent obstacles. A short discussion on how to build these
-		models can be found in~\cite[][page
+		A polynomial function $\function(\xcoord,\ycoord,\zcoord)$ may also be
+		used to define the primitive in Equation~\ref{eq:half_space_primitive}
+		without changing the validity of the model. Furthermore, it is worth
+		noting that other models, such as bitmaps, super quadratics and
+		generalised cylinders may be used to represent obstacles. A short
+		discussion on how to build these models can be found in~\cite[][page
 		89]{bib:planning:planning_algorithms}.
 
 		\subsubsection{Rigid-Body Transformation}%
@@ -202,7 +250,8 @@
 			An example of a translation function is simply:
 
 			\begin{equation}
-				\transform: (x, y, z) \mapsto (x + \Delta x, y + \Delta y, z + \Delta z)
+				\transform: (\xcoord, \ycoord, \zcoord) \mapsto (\xcoord +
+				\Delta\xcoord, \ycoord + \Delta\ycoord, \zcoord + \Delta\zcoord)
 			\end{equation}
 
 		\subsubsection{Collision Detection}%
@@ -253,7 +302,7 @@
 				Figure~\ref{fig:hierarchical_collision_detection_tree} for an
 				example.
 
-				\begin{figure}[hb]
+				\begin{figure}[htb]
 					\centering
 					\def\svgwidth{\columnwidth}
 					\import{res/img/}{hierarchical_collision_detection.pdf_tex}
@@ -392,11 +441,12 @@
 					\distance
 				\end{equation}
 
-	\subsection{Explicit Modelling of $\configurationspace_{\obstacleregion}$}%
-	\label{sec:explicit_modelling_of_obstacle_region_configuration_space}
+	%\subsection{Explicit Modelling of $\configurationspace_{\obstacleregion}$}%
+	%\label{sec:explicit_modelling_of_obstacle_region_configuration_space}
 
-		\todo{page 180 book}
-		SECTION 4.3.3
+	%	\todo{page 180 book}
+	%	SECTION 4.3.3
+	\todo{Explicit Modelling of Configuration Space}
 
 	\subsection{Discrete Case}%
 	\label{sec:discrete_case}
@@ -426,7 +476,7 @@
 						\EndIf{}
 
 						\ForAll{$\action \in \actionspace(\state)$}
-							\State{} $\state' \gets f(\state, \action)$
+							\State{} $\state' \gets \statetransfunc(\state, \action)$
 
 							\If{$\state'$ not visited}
 								\State{} Mark $\state'$ as visited
@@ -448,27 +498,17 @@
 		state for which all subsequent states have been visited.
 
 		Each active state is $\state$ is expanded to find new states $\state'$
-		by using the action $\action$ as follows:
-
-		\begin{equation}
-			\state' = f(\state, \action)
-		\end{equation}
+		by using the state transformation function,
+		Equation~\ref{eq:state_transformation_function}.
 
 		Sometimes the branching factor is lower when starting from the goal and
 		working backwards towards the initial position.
 		Algorithm~\ref{alg:general_forward_search} may be modified to a backward
 		search by making the substitutions shown in
-		Table~\ref{tab:switiching_between_forward_and_backward_search}.%following substitutions:
-
-		%\begin{align}
-		%	\begin{split}
-		%		\state_{\goal} &\leftrightarrow \state_{\initial} \\
-		%		\statespace_{\initial} &\leftrightarrow \statespace_{\goal} \\
-		%		\invaction &\leftrightarrow \action\\
-		%		\invactionspace &\leftrightarrow \actionspace\\
-		%		f^{-1} &\leftrightarrow f
-		%	\end{split}
-		%\end{align}
+		Table~\ref{tab:switiching_between_forward_and_backward_search}.
+		$\invaction$, $\invactionspace$ and $\invstatetransfunc$ are the inverse
+		action, inverse action space and inverse state transformation functions,
+		respectively.
 
 		\begin{table}[ht]
 			\centering
@@ -480,7 +520,7 @@
 				$\statespace_{\goal}$	&	$\statespace_{\initial}$	\\
 				$\action$ 				&	$\invaction$				\\
 				$\actionspace$ 			&	$\invactionspace$			\\
-				$f$ 					&	$f^{-1}$					\\
+				$\statetransfunc$ 		&	$\invstatetransfunc$		\\
 				%\bottomrule
 			\end{tabular}
 			\caption{Switching Between Forward and Backward Search}%
@@ -537,37 +577,37 @@
 								\left(
 									\sqrt
 									{%
-										1 - u_1
+										1 - \gain_1
 									}
 									\sin
-										2\pi u_2
+										2\pi \gain_2
 									,
 									\sqrt
 									{%
-										1 - u_1
+										1 - \gain_1
 									}
 									\cos
-										2\pi u_2
+										2\pi \gain_2
 									,
 									\sqrt
 									{%
-										u_1
+										\gain_1
 									}
 									\sin
-										2\pi u_3
+										2\pi \gain_3
 									,
 									\sqrt
 									{%
-										u_1
+										\gain_1
 									}
 									\cos
-										2\pi u_3
+										2\pi \gain_3
 								\right)
 						\end{equation}
 
 						Where
 						\(
-							(u_1, u_2, u_3) \in [0, 1]
+							(\gain_1, \gain_2, \gain_3) \in [0, 1]
 						\)
 						are chosen from a uniform distribution.
 
@@ -579,7 +619,8 @@
 						Gaussian distribution. The direction is normalised with:
 
 						\begin{equation}
-							\frac{\point}{\norm{\point}}
+							\point_{\mathrm{normalised}} =
+								\frac{\point}{\norm{\point}}
 						\end{equation}
 
 						and is used to choose which direction to take a step in
@@ -593,14 +634,12 @@
 						samples cannot be perfectly random, but they tend to
 						work better for motion planning.
 
-						\todo{these symbols are not in nomenclature}
-
 						Optimal dispersion is produced by partitioning
 						$\configurationspace$ into cubes and placing the sample
-						at the centre of each cube. Given $k$ samples, the
+						at the centre of each cube. Given $\gain$ samples, the
 						number of cubes per axis is then simply
 						\(
-							\floor*{k^{\frac{1}{\dim{\configurationspace}}}}
+							\floor*{\gain^{\frac{1}{\dim{\configurationspace}}}}
 						\).
 
 					%\item Low-Discrepancy Sampling
@@ -637,7 +676,6 @@
 
 						\glspl{rdt} incrementally construct a tree in
 						$\configurationspace$. The resolution of the tree
-						increases with time without the need for tuning
 						parameters. This makes them analogous in a sense to
 						space-filling curves. The well known \gls{rrt}
 						algorithms can be considered as a special case of
@@ -697,8 +735,23 @@
 			\paragraph{Smoothing Random Paths}%
 			\label{sec:smoothing_random_paths}
 
-				THERE IS A FORMULA IN SECTION 5.4.3 OF NOTES
+				Randomly samples will tend to lead to jagged paths. A path
+				$\pathsym$ may be smoothed to obtain $\pathsym'$ by choosing two
+				points in the original path and smoothly merging them. This is
+				achieved with the following formula, for instance:
 
+				\begin{equation}
+					\pathsym'(\timenorm) =
+						\begin{cases}
+							\pathsym(\timenorm) & \timenorm\in[0, \timenorm_1]\\
+							%
+							\relweight\pathsym(\timenorm_1) +
+								(1-\relweight)\pathsym(\timenorm_2)
+							& \timenorm\in(\timenorm_1,\timenorm_2)\\
+							%
+							\pathsym(\timenorm) & \timenorm\in[\timenorm_2, 1]\\
+						\end{cases}
+				\end{equation}
 		\subsubsection{Combinatorial Motion Planning}%
 		\label{sec:combinatorial_motion_planning}
 
@@ -727,7 +780,7 @@
 				\import{res/img/}{2d_cell_decomposition.pdf_tex}
 				\caption[Example 2D Cell Decomposition]
 				{%
-					Example 2D Cell Decomposition 
+					Example 2D Cell Decomposition
 					(adapted from~\cite[][page 269]
 						{bib:planning:planning_algorithms})
 				}%
@@ -805,7 +858,6 @@
 			$\phasespace$ instead of configuration space $\configurationspace$.
 			In general, the relation between the dimensions of these spaces is
 			given by:
-			\todo{discuss phase space}
 
 			\begin{equation}
 				\dim\phasespace = k\dim\configurationspace

@@ -2,34 +2,48 @@
 \label{sec:trajectory_generation}
 
 	The problem of trajectory generation can be categorised into one-dimensional
-	and multi-dimensional trajectories. Techniques exist to generate
+	and multi-dimensional trajectories. A schematic overview is shown in
+	Figure~\ref{fig:trajectory_generation_categories}. Techniques exist to generate
 	point-to-point trajectories, as well as to generate trajectories that visit
 	multiple points. The latter case can be further subdivided into trajectories
 	that visit each point exactly (known as interpolation techniques) and
 	trajectories that come within a specified tolerance of each point (know as
-	approximation techniques). \todo{maybe cite trajectory book p 2 here}
-	\todo{maybe give image representation of categories?}
+	approximation techniques).
+
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{trajectory_generation_categories.pdf_tex}
+		\caption[Trajectory Generation Categories]
+			{Trajectory Generation Categories (adapted
+			from~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots})}%
+		\label{fig:trajectory_generation_categories}
+	\end{figure}
+
+	Trajectories can be generated that have different levels of continuity,
+	denoted by $\contdeg{n}$, where $n$ denotes the degree of differentiability
+	of the trajectory. It is desirable to have a continuous profile in
+	acceleration, since discontinuities in the acceleration profile lead to
+	impulse forces in the robot. It is also possible to generate smooth profiles
+	in jerk and other higher time derivatives of position.
 
 	One-dimensional trajectories can often be generalised for the
 	multi-dimensional case. As such,
 	Section~\ref{sec:one_dimensional_trajectory_generation} gives an overview of
 	such techniques. Section~\ref{sec:multi_dimensional_trajectory_generation}
 	gives an overview of trajectory generation techniques that are directly
-	suited for the multi-dimensional case. Finally, trajectories may be subject
-	to constraints on maximum velocity, acceleration, jerk, or higher
-	derivatives.  Section~\ref{sec:trajectory_scaling} reviews methods to deal
-	such constraints.
+	suited for the multi-dimensional case. Finally,
+	Section~\ref{sec:trajectory_scaling} reviews methods to deal with
+	constraints on higher time derivatives of position.
 
 	\subsection{One Dimensional Trajectory Generation}%
 	\label{sec:one_dimensional_trajectory_generation}
 
-		There are several elementary trajectories that can be used to obtain a
-		desired one-dimensional behaviour. Trajectories can also be added
-		together to satisfy some other constraints. \todo{describe better}
-
-		\todo{Discuss need for continuity in position profile and its
-		derivatives up to a given order, need for boundary conditions. See
-		notes, section 2.4}
+		This section describes one dimensional trajectory generation.
+		Section~\ref{sec:elementary_trajectories} describes how to generate
+		trajectories between points, while
+		Section~\ref{sec:trajetory_composition} discusses how elementary
+		trajectories may be combined.
 
 		\subsubsection{Elementary Trajectories}%
 		\label{sec:elementary_trajectories}
@@ -37,26 +51,33 @@
 			\paragraph{Polynomial Trajectories}%
 			\label{sec:polynomial_trajectories}
 
-				Given the boundary conditions in position, velocity,
-				acceleration, jerk, or higher derivatives for $\timesym \in
-				\{\timesym_0, \timesym_{\final}\}$, a polynomial of higher
-				degree can be fitted to satisfy the conditions. \todo{wording}
-				\todo{what is the minimum degree?}
-
-				We can write the normalised polynomial as:
+				A polynomial $\polynomial$ may be fitted to a set of points
+				$\setofpoints$ describing the boundary conditions on
+				position $\configuration$,
+				velocity $\dot{\configuration}$, acceleration
+				$\ddot{\configuration}$, jerk $\tdern{\configuration}{3}$, or
+				higher derivatives of a trajectory $\configuration(\timenorm)$.
+				A condition of the polynomial is that:
 
 				\begin{equation}
-					\configuration(\timenorm) = \sum_{\indexi=0}^{\poldeg}
+					\deg\polynomial = \poldeg \geq \cardinality{\setofpoints}
+				\end{equation}
+
+				The polynomial may be written as:
+
+				\begin{equation}
+					\configuration(\timenorm)
+						= \polynomial
+						= \sum_{\indexi=0}^{\poldeg}
 						\coefficient_{\indexi} \timenorm^{\indexi}
 				\end{equation}
 
 				This may be rewritten in matrix form as follows:
 
 				\begin{equation}
-					\mat{M}\vec{\coefficient} = \vec{b}
+					\mat{M}\vec{\coefficient} = \boundaryconditions
 					\label{eq:polynomial_coefficient_equation}
 				\end{equation}
-				\todo{put these symbols into the nomenclature}
 
 				Where the coefficients to be solved are put into
 				\(
@@ -73,7 +94,7 @@
 				\),
 				the boundary conditions are
 				\(
-					\vec{b} =
+					\boundaryconditions =
 						{
 							\left[
 								\begin{matrix}
@@ -89,11 +110,9 @@
 							\right]
 						}^T
 				\)
-				and $\mat{M}$ is filled using the boundary conditions of the
-				polynomial.
+				and $\mat{M}$ is filled by factorising the polynomials.
 
-				In principle, we can then simply obtain the trajectory by
-				setting
+				In principle, the trajectory may be obtained by setting:
 
 				\begin{equation}
 					\vec{\coefficient} = {\mat{M}}^{-1}\vec{b}
@@ -102,8 +121,8 @@
 				However, taking the inverse of a matrix explicitly like this can
 				lead to numerical instability even for a low degree polynomial.
 				Other numerical techniques should be used for poorly conditioned
-				matrices. \todo{either explain one (p 41 ish), or say where to
-				get it}
+				matrices.
+
 
 			\paragraph{Trigonometric Trajectories}%
 			\label{trigonometric_trajectories}
@@ -115,14 +134,11 @@
 					\contdeg{\infty}
 				\), with non-zero derivatives
 				\(
-					\forall \timenorm \in [0, 1]
+					\forall \timesym \in [0, \timesym_{\final}]
 				\).
 				If proper care is taken in defining the boundary conditions,
 				these trajectories can be used for continuous cyclic motions.
-				\todo{fix continuity degree in nomenclature definition}
 
-				\todo{change layout here}
-				\todo{maybe normalise the equations}
 				\begin{itemize}
 
 					\item %HARMONIC
@@ -186,10 +202,10 @@
 											1 -
 											\frac
 											{%
-												n^2 - 1
+												\gain^2 - 1
 											}
 											{%
-												n^2
+												\gain^2
 											}
 											\sin^2\frac
 											{%
@@ -202,14 +218,10 @@
 									}
 								\right)
 						\end{equation}
-						\todo{$n$ here is not in nomenclature}
 
-						Here, $n$ may be tuned. Higher values of $n$ lead to
-						higher values maxima in the time derivatives of
-						position.
-						\todo{what is the point of this trajectory?}
-						\todo{explain why I call it time derivatives of
-						position, and not acceleration etc.}
+						$\gain$ denotes a tunable parameter. Higher values of
+						$\gain$ lead to higher values maxima in the time
+						derivatives of position.
 
 					\item %CYCLOIDAL
 
@@ -267,15 +279,15 @@
 				profile is given by the following expression:
 
 				\begin{equation}
-					\configuration(\timenorm) = v_c \int_{0}^{\timenorm}
-						e^{-\sigma f(\timenorm, \lambda)} \der \timenorm
+					\configuration(\timenorm) = \gain_1\int_{0}^{\timenorm}
+						e^{-\gain_2 f(\timenorm, \gain_3)} \der \timenorm
 				\end{equation}
-				\todo{These parameters are not in the nomenclature}
 
-				A popular choice for $f$ is~\cite[][page 48]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
+				A popular choice for $f$ is~\cite[][page
+				48]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 				\begin{equation}
-					f(\timenorm, \lambda) =
+					f(\timenorm, \gain_3) =
 						\frac
 						{%
 							{(2\timenorm)}^2
@@ -285,15 +297,13 @@
 								\left|
 									1 - {(2\timenorm)}^2
 								\right|
-							}^\lambda
+							}^{\gain_3}
 						}
 				\end{equation}
-				\todo{These parameters are not in the nomenclature}
 
-				$\sigma$ and $\lambda$\todo{nomenclature} may be chosen to
-				minimise high frequency components in the acceleration. By
-				tuning these parameters, vibrations induced by the trajectory
-				can be lowered.
+				$\gain_2$ and $\gain_3$ may be chosen to minimise high frequency
+				components in the acceleration. By tuning these parameters,
+				vibrations induced by the trajectory can be lowered.
 
 			\paragraph{Trajectories Based on Fourier Series Expansion}%
 			\label{trajectories_based_on_fourier_series_expansion}
@@ -315,16 +325,14 @@
 
 					\item
 
-						Take the first $n$ terms of this series and use it to
+						Take the first $\gain$ terms of this series and use it to
 						define a new trajectory $\configuration'(\timesym)$.
-				\end{enumerate}
-				\todo{$n$ is not in nomenclature}
 
-				The number of terms, $n$, of the expansion to use compromises a
-				trade-off: higher $n$ leads to lower maximum acceleration, but
-				higher frequency components. $n$ in this case is a tuning
-				parameter.
-				\todo{$n$ is not in nomenclature}
+				\end{enumerate}
+
+				The number of terms, $\gain$, of the expansion to use
+				compromises a trade-off: higher $\gain$ leads to lower maximum
+				acceleration, but higher frequency components.
 
 		\subsubsection{Trajectory Composition}%
 		\label{sec:trajetory_composition}
@@ -335,19 +343,8 @@
 			trajectories with trajectory segments referred to as
 			``bends''~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 
-			Many of the composition techniques break the trajectory into the
-			following parts:
-
-			\begin{enumerate}
-
-				\item acceleration phase
-
-				\item trajectory phase
-
-				\item deceleration phase
-
-			\end{enumerate}
-			\todo{this list is probably stupid}
+			Many of the composition techniques break the trajectory into an
+			acceleration phase, a trajectory phase, and a deceleration phase.
 
 			\paragraph{Circular Bends}%
 			\label{circular_bends}
@@ -377,13 +374,13 @@
 							\right)
 							+ \configuration_0
 							%
-							& \timesym \in [\timesym_0, \timesym_a]
+							& \timesym \in [\timesym_0, \timesym_1]
 							%
 							\\
 							%
 							\configuration(\timesym)
 							%
-							& \timesym \in [\timesym_a, \timesym_b]
+							& \timesym \in [\timesym_1, \timesym_2]
 							%
 							\\
 							%
@@ -396,31 +393,29 @@
 										{(\timesym_{\final} - \timesym)}^2
 									}
 							%
-							& \timesym \in [\timesym_b, \timesym_{\final}]
+							& \timesym \in [\timesym_2, \timesym_{\final}]
 						\end{cases}
 				\end{equation}
-				\todo{$a$ and $b$ are not in nomenclature}
 
 				The time intervals must be chosen such that:
 
 				\begin{equation}
 					\begin{cases}
 						\configuration'(\timesym \in [\timesym_0,
-							\timesym_a])|_{\timesym_a}
+							\timesym_1])|_{\timesym_1}
 							=
-							\configuration'(\timesym \in [\timesym_a,
-								\timesym_b])|_{\timesym_a}
+							\configuration'(\timesym \in [\timesym_1,
+								\timesym_2])|_{\timesym_1}
 						%
 						\\
 						%
 						\dot{\configuration}'(\timesym \in [\timesym_0,
-							\timesym_a])|_{\timesym_a}
+							\timesym_1])|_{\timesym_1}
 							=
-							\dot{\configuration}'(\timesym \in [\timesym_a,
-								\timesym_b])|_{\timesym_a}
+							\dot{\configuration}'(\timesym \in [\timesym_1,
+								\timesym_2])|_{\timesym_1}
 					\end{cases}
 				\end{equation}
-				\todo{$a$ and $b$ are not in nomenclature}
 
 			\paragraph{Polynomial Bends}%
 			\label{polynomial_bends}
@@ -436,13 +431,12 @@
 				\begin{equation}
 					\configuration'(\timesym) =
 					\begin{cases}
-						\configuration_a(\timesym) & \timesym \in [\timesym_0, \timesym_a] \\
-						\configuration(\timesym) & \timesym \in [\timesym_a, \timesym_b] \\
-						\configuration_b(\timesym) & \timesym \in [\timesym_b, \timesym_{\final}] \\
+						\configuration_1(\timesym) & \timesym \in [\timesym_0, \timesym_1] \\
+						\configuration(\timesym) & \timesym \in [\timesym_1, \timesym_2] \\
+						\configuration_2(\timesym) & \timesym \in [\timesym_2, \timesym_{\final}] \\
 					\end{cases}
 					\label{eq:polynomial_bends}
 				\end{equation}
-				\todo{$a$ and $b$ are not in nomenclature}
 
 				Here, $\configuration_a$ and $\configuration_b$ may be computed
 				using the polynomial trajectory method of
@@ -464,10 +458,9 @@
 
 				Again, the new trajectory $\configuration'(\timesym)$ is given
 				by Equation~\ref{eq:polynomial_bends}, where
-				$\configuration_a(\timesym)$ and $\configuration_b(\timesym)$
+				$\configuration_1(\timesym)$ and $\configuration_2(\timesym)$
 				are now one of the trigonometric functions of
 				Section~\ref{sec:elementary_trajectories}.
-				\todo{$a$ and $b$ are not in nomenclature}
 
 	\subsection{Multipoint Trajectories}%
 	\label{sec:multipoint_trajectories}
@@ -478,8 +471,10 @@
 		documents methods to generate a trajectory that goes through all the
 		points $\point$ in a given set of points $\setofpoints$.
 
-		\todo{Say that there are trajectories which interpolate, as well as
-		trajectories which approximate. Todo, write about these}
+		Trajectories that interpolate points exactly are discussed in
+		Section~\ref{sec:interpolation_techniques}, while trajectories that
+		approximate points can be found in
+		Section~\ref{sec:approximation_techniques}.
 
 		One approach to multipoint trajectories is to define a set of primitive
 		trajectories, such as straight lines or circles, and then to connect
@@ -491,17 +486,16 @@
 		\subsubsection{Interpolation Techniques}%
 		\label{sec:interpolation_techniques}
 
+			The current section summarises some multipoint interpolation
+			techniques.
+
 			\paragraph{Multipoint Polynomial Trajectories}%
 			\label{sec:multipoint_polynomial_trajectories}
-
 
 				The polynomial method of
 				Section~\ref{sec:polynomial_trajectories} can be extended to
 				exactly interpolate a set of points. This is done by simply
-				adjusting the vector \todo{this vector is not in the
-				nomenclature and is the same symbol as used in the other
-				polynomial section. If it is added to nomencl there/changed
-				there, the same must be done here} $\vec{b}$ to also include the
+				adjusting the vector $\boundaryconditions$ to also include the
 				intermediate points. A polynomial of degree $\poldeg$ can be
 				used to interpolate $\poldeg + 1$ points.
 
@@ -574,6 +568,9 @@
 		\subsubsection{Approximation Techniques}%
 		\label{sec:approximation_techniques}
 
+			Multipoint approximation techniques are summarised in the current
+			section.
+
 			\todo{orthogonal polynomials --- p 165}
 
 			\paragraph{Smoothing Cubic Splines}%
@@ -589,7 +586,7 @@
 				$\polynomial$ satisfying:
 
 				\begin{equation}
-					\arg\min_{\polynomial}
+					\argmin_{\polynomial}
 					\left\{
 						\relweight
 						\underbrace{%
@@ -612,7 +609,8 @@
 					\right\}
 					\label{eq:smoothing_cubic_splines_criterion}
 				\end{equation}
-				\todo{fix argmin}
+
+				$\relweight\in[0, 1]$ denotes the relative weight of a factor.
 
 				An algorithm based on linear algebra techniques to solve
 				Equation~\ref{eq:smoothing_cubic_splines_criterion} can be found
@@ -716,10 +714,6 @@
 
 				Setting the degree of the B-spline curve to $\poldeg$ imposes a
 				continuity level of $\contdeggeom{\poldeg - 1}$.
-				\todo{continuity degree, geometric continuity degree are not
-				showing up in nomenclature}
-
-		\subsubsection{Multi-Dimensional Approximation Trajectories}%
 		\label{sec:multi_dimensional_approximation_trajectories}
 
 			\paragraph{Linear Interpolation with Polynomial Bends}%
@@ -728,7 +722,7 @@
 				Linear interpolation with polynomial bends is a very simple way
 				to approximate the points $\point\in\setofpoints$ to within a
 				specifiable tolerance $\tol$ and a specified degree of
-				smoothness. Consider an ordered set of points $\setofpoints$
+				smoothness.  Consider an ordered set of points $\setofpoints$
 				such that $\point_{\indexi} \prec \point_{\indexj} \iff \indexi
 				\leq \indexj$. For the internal points the following basic
 				algorithm can be used to generate an interpolation
@@ -855,8 +849,10 @@
 				\end{enumerate}
 
 				The end points of $\setofpoints$,  points $\point_0$ and
-				$\point_{\cardinality{\setofpoints}}$, may be connected to
-				their following/preceding points by simple straight lines.
+				$\point_{\cardinality{\setofpoints}}$, may be connected to their
+				following/preceding points by simple straight lines.
+				Figure~\ref{fig:linear_interpolation_with_polynomial_bends}
+				shows a schematic of the effect achieved with this procedure.
 
 				\begin{figure}[hb]
 					\centering
@@ -889,7 +885,7 @@
 
 				\begin{equation}
 					\approximation{\setofpoints} =
-					\arg\min_{\approximation{\setofpoints}}
+					\argmin_{\approximation{\setofpoints}}
 					\left\{
 						\relweight
 						\underbrace{%
@@ -923,7 +919,6 @@
 					\right\}
 					\label{eq:smoothing_b_splines_criterion}
 				\end{equation}
-				\todo{fix argmin}
 
 				Note that $\gain_{\indexi}$ may be set to change the
 				approximation error in some specific points. A methodology to
@@ -951,10 +946,9 @@
 			$\timesym'$ related to $\timesym$ through some relation:
 
 			\begin{equation}
-				\timesym = f(\timesym')
+				\timesym = \function(\timesym')
 				\label{eq:time_scaling}
 			\end{equation}
-			\todo{$f$ is not in nomenclature. Used throughout this section}
 
 			Where $f$ is a strictly increasing function. The new trajectory
 			$\configuration'(\timesym')$ and its higher derivates are given by
@@ -962,19 +956,19 @@
 
 			\begin{align}
 				\begin{split}
-					\configuration'(\timesym') &= \configuration(f(\timesym'))\\
+					\configuration'(\timesym') &= \configuration(\function(\timesym'))\\
 					%
 					\dot{\configuration}'(\timesym') &=
 						\frac
 						{%
-							\der \configuration(f)
+							\der \configuration(\function)
 						}
 						{%
-							\der f
+							\der \function
 						}
 						\frac
 						{%
-							\der f(\timesym')
+							\der \function(\timesym')
 						}
 						{%
 							\der \timesym'
@@ -983,14 +977,14 @@
 					\ddot{\configuration}'(\timesym') &=
 						\frac
 						{%
-							\der \configuration(f)
+							\der \configuration(\function)
 						}
 						{%
-							\der f
+							\der \function
 						}
 						\frac
 						{%
-							\der^2 f(\timesym')
+							\der^2 \function(\timesym')
 						}
 						{%
 							\der \timesym'^2
@@ -998,7 +992,7 @@
 						+
 						\frac
 						{%
-							\der^2 \configuration(f)
+							\der^2 \configuration(\function)
 						}
 						{%
 							\der \configuration^2
@@ -1007,7 +1001,7 @@
 							\left(
 								\frac
 								{%
-									\der f(\timesym')
+									\der \function(\timesym')
 								}
 								{%
 									\der \timesym'
@@ -1020,7 +1014,7 @@
 				\end{split}
 			\end{align}
 
-			A simple example for $f$ is the linear function:
+			A simple example for $\function$ is the linear function:
 
 			\begin{equation}
 				\timesym = \gain\timesym'
@@ -1031,10 +1025,9 @@
 			to:
 
 			\begin{equation}
-				\tdern{\configuration'}{n}(\timesym') = \gain^{n}
-					\tdern{\configuration}{n}(\timesym)
+				\tdern{\configuration'}{\indexi}(\timesym') = \gain^{\indexi}
+					\tdern{\configuration}{\indexi}(\timesym)
 			\end{equation}
-			\todo{$n$ here is not in nomenclature}
 
 			Now, given a set of constraints $\setofconstraints$ on the maximum
 			velocity, acceleration, or higher derivatives of a trajectory,
@@ -1063,8 +1056,8 @@
 
 			Where $\constraint_{\indexi}$ is the constraint on the $\indexi$th
 			derivative of position. This will ensure that $\configuration'$ does
-			not exceed these constraints.
-			\todo{I think the book had its own references here too}
+			not exceed these constraints. Here, the 1st root, $\sqrt[1]{\cdot}$,
+			is defined to return its argument without change.
 
 		\subsubsection{Dynamic Scaling}%
 		\label{sec:dynamic_scaling}
@@ -1101,9 +1094,6 @@
 
 			Since $\invdynamicmodel$ is a sum of matrix multiplications,
 			$\gain$ may be chosen to ensure $\torque' < \torque$.
-			\todo{make sure I didn't confuse direct and indirect models in this
-			section}
-
 
 		\subsubsection{Variable Scaling}%
 		\label{sec:variable_scaling}

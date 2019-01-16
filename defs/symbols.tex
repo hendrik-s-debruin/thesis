@@ -2,6 +2,83 @@
 % 	mathabx: earth symbol
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% coords
+% ==============================================================================
+	\newglossaryentry{sym:xcoord}
+	{%
+		name=\ensuremath{x},
+		sort=x,
+		description=position along x-axis,
+		type=symbol
+	}
+	\newcommand{\xcoord}{\gls{sym:xcoord}}
+
+	\newglossaryentry{sym:ycoord}
+	{%
+		name=\ensuremath{y},
+		sort=y,
+		description=position along y-ayis,
+		type=symbol
+	}
+	\newcommand{\ycoord}{\gls{sym:ycoord}}
+
+	\newglossaryentry{sym:zcoord}
+	{%
+		name=\ensuremath{z},
+		sort=z,
+		description=position along z-azis,
+		type=symbol
+	}
+	\newcommand{\zcoord}{\gls{sym:zcoord}}
+
+% ==============================================================================
+% generic function
+% ==============================================================================
+	\newglossaryentry{sym:function}
+	{%
+		name=\ensuremath{f},
+		sort=f,
+		description=a function,
+		type=symbol
+	}
+	\newcommand{\function}{\gls{sym:function}}
+% ==============================================================================
+% state transition function
+% ==============================================================================
+	\newglossaryentry{sym:statetransfunc}
+	{%
+	name=\ensuremath{\vecfunc{f\!s}},
+		sort=fs,
+		description=state transition function,
+		type=symbol
+	}
+	\newcommand{\statetransfunc}{\gls{sym:statetransfunc}}
+
+% ==============================================================================
+% inverse state transition function
+% ==============================================================================
+	\newglossaryentry{sym:invstatetransfunc}
+	{%
+		name=\ensuremath{\vecfunc{f\!s}^{-1}},
+		sort=fs1,
+		description=inverse state transition function,
+		type=symbol
+	}
+	\newcommand{\invstatetransfunc}{\gls{sym:invstatetransfunc}}
+
+% ==============================================================================
+% Boundary Conditions
+% ==============================================================================
+	\newglossaryentry{sym:boundaryconditions}
+	{%
+		name=\ensuremath{\vec{b}},
+		sort=b,
+		description=boundary conditions,
+		type=symbol
+	}
+	\newcommand{\boundaryconditions}{\gls{sym:boundaryconditions}}
+
+% ==============================================================================
 % Identity Matrix
 % ==============================================================================
 	\newglossaryentry{sym:id}
@@ -623,7 +700,7 @@
 	{%
 		name={\ensuremath{\lambda}},
 		sort=l,
-		description=A tunable gain,
+		description=A gain or a variable that may be chosen freely,
 		type=symbol
 	}
 	\newcommand{\gain}{\gls{sym:gain}}
@@ -1305,3 +1382,29 @@
 		type=symbol
 	}
 	\newcommand{\cspsolutionset}{\gls{sym:cspsolutionset}}
+
+% ==============================================================================
+% Continuity Degree
+% ==============================================================================
+	\newglossaryentry{sym:contdegbare}
+	{%
+		name=\ensuremath{C},
+		sort=c,
+		description=Degree of differentiablity,
+		type=symbol
+	}
+	\newcommand{\contdegbare}{\ensuremath{\gls{sym:contdegbare}}}
+	\newcommand{\contdeg}[1]{\ensuremath{\contdegbare^{#1}}}
+
+% ==============================================================================
+% Geometric Continuity Degree
+% ==============================================================================
+	\newglossaryentry{sym:contdeggeombare}
+	{%
+		name=\ensuremath{G},
+		sort=g,
+		description=Geometric degree of differentiablity,
+		type=symbol
+	}
+	\newcommand{\contdeggeombare}{\ensuremath{\gls{sym:contdeggeombare}}}
+	\newcommand{\contdeggeom}[1]{\ensuremath{\contdeggeombare^{#1}}}
