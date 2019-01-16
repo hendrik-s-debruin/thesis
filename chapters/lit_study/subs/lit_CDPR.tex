@@ -205,12 +205,12 @@
 
             \end{itemize}
 
-			Since  the	\gls{dgm}	is	 generally	 used	in	 feedback	laws
-			for  the  controller  \todo{cite  page	139}  and  is  not	directly
-			required in  path  planning,  an  overview	of	the  algorithms  for
-			calculating  $\geometricmodel$	is	outside  the   scope   of	this
-			literature study.  The algorithms may  be  found  in\todo{cite	page
-            154}.
+			Since the \gls{dgm} is generally used in feedback laws for the
+			controller \todo{cite page 139} and is not directly required in path
+			planning, an overview of the algorithms for calculating
+			$\geometricmodel$ is outside the scope of this literature study. The
+			algorithms may be found in\todo{cite page
+			154}.
 
     \subsection{Kinematic Model}%
     \label{sec:kinematic_model}
@@ -279,6 +279,128 @@
 
 		Higher order kinematic models are found by successive derivations of the
         above expressions.
+
+	\subsection{Dynamic Model}%
+	\label{sec:dynamic_model}
+
+		For this section, the robot pose $\pose$ is defined in terms of its
+		translation $\transvec$ with respect to the world frame $\worldframe$,
+		as well as a quaternion $\quaternion$ as follows:
+
+		\begin{equation}
+			\pose =
+				\left[
+					\begin{matrix}
+						\transvec \\
+						\quaternion
+					\end{matrix}
+				\right]
+		\end{equation}
+
+		Note that a quaternion may be related to the Ration matrix $\rotmatbare$
+		in the previous representation $\pose = (\transvec, \rotmatbare)$ as
+		follows:
+
+		\begin{equation}
+			\rotmatbare =
+				\id + 2\quaternionre\skewmat{\quaternionimg} +
+					2\skewmat{\quaternionimg}^T\skewmat{\quaternionimg}
+		\end{equation}
+
+		The angular velocity $\avel$ is related to the quaternion $\quaternion$
+		through the transformation:
+
+		\begin{equation}
+			\avel = \quaternionToAvelTrans\dot{\quaternion}
+		\end{equation}
+
+		Where
+		\(
+			\quaternionToAvelTrans=
+				2\left[
+					\begin{matrix}
+						-\quaternionimg & \quaternionre\id + \skewmat{\quaternionimg}
+					\end{matrix}
+				\right]
+		\),
+		$\quaternionre$ is the real part of the quaternion, and
+		$\skewmat{\quaternionimg}$ is the skew-symmetric matrix associated with
+		the imaginary vector part of the quaternion.
+
+		The dynamic model is then defined as \todo{cite p 254}:
+
+		\begin{align}
+			\begin{split}
+				\massmat\transformationmat\ddot{\pose} -
+					\dampingmat\transformationmat\dot{\pose} +
+					\centripitalCoriolisVec
+				&=
+				\strucmat\forcemagvec + {\wrench_{\platform}}
+				\label{eq:dynamic_model}
+				\\
+				\quaternion^2 - 1 &= 0
+			\end{split}
+		\end{align}
+
+		Here, the mass matrix $\massmat$ is defined in terms of the mass of the
+		platform $\mass_{\platform}$ and its inertia $\inertiamat_{\platform}$ as:
+
+		\begin{equation}
+			\massmat =
+				\left[
+					\begin{matrix}
+						\mass_{\platform}\id	& \zerovec \\
+						\zerovec 				& \inertiamat_{\platform}
+					\end{matrix}
+				\right]
+		\end{equation}
+
+		The transformation matrix $\transformationmat$ is:
+
+		\begin{equation}
+			\transformationmat =
+				\left[
+					\begin{matrix}
+						\id & \zerovec \\
+						\zerovec & \quaternionToAvelTrans
+					\end{matrix}
+				\right]
+		\end{equation}
+
+		The matrix
+
+		\begin{equation}
+			\dampingmat =
+				\diag(
+					\dampingmat_{\mathrm{linear}},
+					\dampingmat_{\mathrm{rotational}}
+				)
+		\end{equation}
+
+		collects the damping terms of the system. These can become significant
+		for high speed robots, but may be neglected for slower speeds\todo{ref p
+		254}.
+
+		The Coriolis effects are collected in $\centripitalCoriolisVec$, given
+		by:
+
+		\begin{equation}
+			\centripitalCoriolisVec =
+			\left[
+				\begin{matrix}
+					\zerovec \\
+					%
+					\inertiamat_{\platform}\dot{\quaternionToAvelTrans}\dot{\quaternionimg} +
+					\skewmat{\avel}\inertiamat_{\platform}\avel
+				\end{matrix}
+			\right]
+		\end{equation}
+
+		Note that the above discussion models the dynamics of the platform. The
+		cables also exhibit dynamic effects such as elastic deformation, thermal
+		elongation, creep and vibration. These effects are more pronounced with
+		large scale robots or high speed robots and as such are not discussed
+		here. More details on these effects may be found in\todo{ref p 255}.
 
     \subsection{Static Poses}%
     \label{sec:static_poses}
@@ -908,7 +1030,7 @@
 						\Procedure{IntervalCSPSolver}{$\cspsearchspace$}
 
 							\State{} Store approximation
-								$\{{\interval{\calcvars}}_1, \cdots
+								$\{{\interval{\calcvars}}_1, \cdots,
 								{\interval{\calcvars}}_n\}$
 								of the search space $\cspsearchspace$ in a queue
 								$\queue_T$
@@ -952,8 +1074,8 @@
 					\end{algorithmic}
 				\end{algorithm}
 
-CONTINUE WITH BISECTING BOXES SECTION OF NOTES
-
+				\todo{bisecting box section, p 203, could go here, but leaving
+				out for now}
 %
 %   \subsection{\glsentrylong{ddm}}
 %

@@ -2,6 +2,18 @@
 % 	mathabx: earth symbol
 \newglossary*{symbol}{Symbols}
 % ==============================================================================
+% Identity Matrix
+% ==============================================================================
+	\newglossaryentry{sym:id}
+	{%
+		name=\ensuremath{\mathds{1}},
+		sort=1,
+		description=Identity matrix,
+		type=symbol
+	}
+	\newcommand{\id}{\gls{sym:id}}
+
+% ==============================================================================
 % Special Orthonormal Group
 % ==============================================================================
 	\newglossaryentry{sym:specialOrthonormalGroup}
@@ -46,6 +58,89 @@
 % ==============================================================================
 % ==============================================================================
 % ==============================================================================
+
+% ==============================================================================
+% Angular Velocity
+% ==============================================================================
+	\newglossaryentry{sym:avel}
+	{%
+		name=\ensuremath{\vec{\omega}},
+		sort=o,
+		description=angular velocity,
+		type=symbol
+	}
+	\newcommand{\avel}{\gls{sym:avel}}
+
+% ==============================================================================
+% Mass Matrix
+% ==============================================================================
+	\newglossaryentry{sym:transformationmat}
+	{%
+		name=\ensuremath{\mat{T}},
+		sort=t,
+		description=transformation matrix,
+		type=symbol
+	}
+	\newcommand{\transformationmat}{\gls{sym:transformationmat}}
+
+% ==============================================================================
+% Centripetal and Coriolis Vector
+% ==============================================================================
+	\newglossaryentry{sym:centripitalCoriolisVec}
+	{%
+		name=\ensuremath{\vec{g}^c},
+		sort=gc,
+		description=generalised centripetal and coriolis vector,
+		type=symbol
+	}
+	\newcommand{\centripitalCoriolisVec}{\gls{sym:centripitalCoriolisVec}}
+
+% ==============================================================================
+% Inertia Matrix
+% ==============================================================================
+	\newglossaryentry{sym:inertiamat}
+	{%
+		name=\ensuremath{\mat{I}},
+			sort=i,
+			description=inertia matrix,
+			type=symbol
+		}
+		\newcommand{\inertiamat}{\gls{sym:inertiamat}}
+% ==============================================================================
+% Mass Matrix
+% ==============================================================================
+	\newglossaryentry{sym:massmat}
+	{%
+		name=\ensuremath{\mat{M}},
+		sort=m,
+		description=mass matrix,
+		type=symbol
+	}
+	\newcommand{\massmat}{\gls{sym:massmat}}
+
+% ==============================================================================
+% Mass
+% ==============================================================================
+	\newglossaryentry{sym:mass}
+	{%
+		name=\ensuremath{m},
+		sort=m,
+		description=mass,
+		type=symbol
+	}
+	\newcommand{\mass}{\gls{sym:mass}}
+
+% ==============================================================================
+% Damping Matrix
+% ==============================================================================
+	\newglossaryentry{sym:dampingmat}
+	{%
+		name=\ensuremath{\mat{D}},
+		sort=d,
+		description=damping matrix,
+		type=symbol
+	}
+	\newcommand{\dampingmat}{\gls{sym:dampingmat}}
 
 % ==============================================================================
 % Workspace
@@ -215,8 +310,8 @@
 		sort=r,
 		description=set of rotaion matrices,
 		type=symbol
-	}
-	\newcommand{\setofrotationmatrices}{\gls{sym:setofrotationmatrices}}
+}
+\newcommand{\setofrotationmatrices}{\gls{sym:setofrotationmatrices}}
 
 % ==============================================================================
 % Structure Matrix
@@ -388,6 +483,42 @@
 		type=symbol
 	}
 	\newcommand{\quaternion}{\gls{sym:quaternion}}
+
+% ==============================================================================
+% Quaternion Imaginary part
+% ==============================================================================
+	\newglossaryentry{sym:quaternionimg}
+	{%
+		name=\ensuremath{\vec{h}_{\mathrm{Im}}}, %TODO should be in subscripts
+		sort=h,
+		description=imaginary vector part of a quaterion,
+		type=symbol
+	}
+	\newcommand{\quaternionimg}{\gls{sym:quaternionimg}}
+
+% ==============================================================================
+% Quaternion Real Part
+% ==============================================================================
+	\newglossaryentry{sym:quaternionre}
+	{%
+		name=\ensuremath{h_{\mathrm{Re}}}, %TODO should be in subscripts
+		sort=h,
+		description=Scalar real part of a quaternion,
+		type=symbol
+	}
+	\newcommand{\quaternionre}{\gls{sym:quaternionre}}
+
+% ==============================================================================
+% Quaternion Derivative to Angular Velocity Transformation
+% ==============================================================================
+	\newglossaryentry{sym:quaternionToAvelTrans}
+	{%
+		name=\ensuremath{\mat{P}}, %TODO should be in subscripts
+		sort=p,
+		description=transformation matrix relating quaternion derivative to angular velocity,
+		type=symbol
+	}
+	\newcommand{\quaternionToAvelTrans}{\gls{sym:quaternionToAvelTrans}}
 
 % ==============================================================================
 % Queue
