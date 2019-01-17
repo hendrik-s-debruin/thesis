@@ -1,4 +1,4 @@
-\documentclass[]{report}
+\documentclass[final]{report}
 
     \usepackage{ifdraft}
     \usepackage[obeyFinal]{todonotes}
@@ -11,7 +11,6 @@
     \usepackage{amssymb}
     \usepackage{dsfont}
 	\usepackage{amsmath}
-%	\usepackage{mathabx}
     \usepackage{mathtools}
     % these next 1 packages are temp
     \usepackage{relsize}
@@ -37,9 +36,9 @@
 	\usepackage[hidelinks]{hyperref}
     \usepackage[all]{hypcap}
 
-	% This should be used for full thesis
+	% This should be used for full thesis:
     %\usepackage[section=section, acronyms]{glossaries}
-	% This should be used for literature study report
+	% This should be used for literature study report:
     \usepackage[section=subsection, acronyms]{glossaries}
         \makenoidxglossaries{}
         \input{defs/notation.tex}
@@ -51,10 +50,11 @@
         \setglossarystyle{listdotted}
         \ifdraft{\glsaddall}{}
 
-	\let\paragraph\subsubsection
-	\let\subsubsection\subsection
-	\let\subsection\section
-	\let\section\chapter
+	% redefine sections for literature report only
+	\let\paragraph\subsubsection%
+	\let\subsubsection\subsection%
+	\let\subsection\section%
+	\let\section\chapter%
 
 \begin{document}
 

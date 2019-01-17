@@ -96,7 +96,7 @@
 	\newglossaryentry{sym:specialOrthonormalGroup}
 	{%
 		name=\ensuremath{\mathrm{SO}},
-		sort=se,
+		sort=so,
 		description=special orthonormal group,
 		type=symbol
 	}
@@ -275,7 +275,7 @@
 	{%
 		%TODO this should somehow use \invgeometricmodel directly
 		name=\ensuremath{\mat{J}_{\func{g}^{-1}}},
-		sort=jg,
+		sort=jg1,
 		description=Inverse Geometric Jacobian,
 		type=symbol
 	}
@@ -298,8 +298,8 @@
 % ==============================================================================
 	\newglossaryentry{sym:distalanchor}
 	{%
-		name=\ensuremath{\vec{b}},
-		sort=a,
+		name=\ensuremath{\vec{d}},
+		sort=d,
 		description=distal anchor,
 		type=symbol
 	}
@@ -396,7 +396,7 @@
 	\newglossaryentry{sym:strucmat}
 	{%
 		name=\ensuremath{{\mat{A}^T}},
-		sort=a,
+		sort=at,
 		description=structure matrix,
 		type=symbol
 	}
@@ -543,7 +543,7 @@
 	\newglossaryentry{sym:distance}
 	{%
 		name=\ensuremath{d},
-		sort=h,
+		sort=d,
 		description=distance,
 		type=symbol
 	}
@@ -567,7 +567,7 @@
 	\newglossaryentry{sym:quaternionimg}
 	{%
 		name=\ensuremath{\vec{h}_{\mathrm{Im}}}, %TODO should be in subscripts
-		sort=h,
+		sort=him,
 		description=imaginary vector part of a quaterion,
 		type=symbol
 	}
@@ -579,7 +579,7 @@
 	\newglossaryentry{sym:quaternionre}
 	{%
 		name=\ensuremath{h_{\mathrm{Re}}}, %TODO should be in subscripts
-		sort=h,
+		sort=hre,
 		description=Scalar real part of a quaternion,
 		type=symbol
 	}
@@ -663,7 +663,7 @@
 	\newglossaryentry{sym:twist}
 	{%
 		name=\ensuremath{\vec{\xi}},
-		sort=t,
+		sort=x,
 		description=twist,
 		type=symbol
 	}
@@ -675,7 +675,7 @@
 	\newglossaryentry{sym:wrench}
 	{%
 		name=\ensuremath{\vec{\zeta}},
-		sort=t,
+		sort=z,
 		description=wrench,
 		type=symbol
 	}
@@ -825,7 +825,7 @@
 	\newglossaryentry{sym:geometricmodel}
 	{%
 		name={\ensuremath{\vecfunc{g}}},
-		sort=G,
+		sort=g,
 		description=Geometric Model,
 		type=symbol
 	}
@@ -837,7 +837,7 @@
 	\newglossaryentry{sym:invgeometricmodel}
 	{%
 		name={\ensuremath{{\vecfunc{g}^{-1}}}},
-		sort=G,
+		sort=g1,
 		description=Inverse Geometric Model,
 		type=symbol
 	}
@@ -848,7 +848,7 @@
 	\newglossaryentry{sym:kinematicmodel}
 	{%
 		name={\ensuremath{\vecfunc{k}}},
-		sort=K,
+		sort=k,
 		description=Kinematic Model,
 		type=symbol
 	}
@@ -860,7 +860,7 @@
 	\newglossaryentry{sym:invkinematicmodel}
 	{%
 		name={\ensuremath{{\vecfunc{k}^{-1}}}},
-		sort=K,
+		sort=k1,
 		description=Inverse Kinematic Model,
 		type=symbol
 	}
@@ -883,7 +883,7 @@
 	\newglossaryentry{sym:invdynamicmodel}
 	{%
 		name={\ensuremath{{\vecfunc{d}^{-1}}}},
-		sort=d,
+		sort=d1,
 		description=Inverse Dynamic Model,
 		type=symbol
 	}
@@ -1000,7 +1000,7 @@
 	\newglossaryentry{sym:invaction}
 	{%
 		name=\ensuremath{\vec{u}^{-1}},
-		sort=u,
+		sort=u1,
 		description=the inverse action  of the robot,
 		type=symbol
 	}
@@ -1035,7 +1035,7 @@
 	\newglossaryentry{sym:invactionspace}
 	{%
 		name=\ensuremath{\vecspace{U}^{-1}},
-		sort=u,
+		sort=u1,
 		description=the inverse action space of the robot,
 		type=symbol
 	}
@@ -1285,7 +1285,7 @@
 	\newglossaryentry{sym:vertex}
 	{%
 		name=\ensuremath{\vec{v}},
-		sort=e,
+		sort=v,
 		description=vertex of a graph,
 		type=symbol
 	}
@@ -1297,7 +1297,7 @@
 	\newglossaryentry{sym:convexhull}
 	{%
 		name=\ensuremath{\func{Conv}},
-		sort=0,
+		sort=conv,
 		description=convex hull of a set,
 		type=symbol
 	}
@@ -1329,7 +1329,7 @@
 	\newglossaryentry{sym:calcvars}
 	{%
 		name=\ensuremath{\vec{c}},
-		sort=f,
+		sort=c,
 		description=calculation variables of CSP,
 		type=symbol
 	}
@@ -1341,7 +1341,7 @@
 	\newglossaryentry{sym:vervars}
 	{%
 		name=\ensuremath{\vec{v}},
-		sort=f,
+		sort=v,
 		description=verification variables of CSP,
 		type=symbol
 	}
@@ -1353,7 +1353,7 @@
 	\newglossaryentry{sym:verdomain}
 	{%
 		name=\ensuremath{\set{X}_{v}},
-		sort=f,
+		sort=xv,
 		description=verification domain of CSP,
 		type=symbol
 	}
@@ -1365,7 +1365,7 @@
 	\newglossaryentry{sym:cspsearchspace}
 	{%
 		name=\ensuremath{\set{X}_{s}},
-		sort=f,
+		sort=xs,
 		description=search space of CSP,
 		type=symbol
 	}
@@ -1377,7 +1377,7 @@
 	\newglossaryentry{sym:cspsolutionset}
 	{%
 		name=\ensuremath{\set{X}_{c}},
-		sort=f,
+		sort=xc,
 		description=solution set of CSP,
 		type=symbol
 	}
@@ -1408,3 +1408,39 @@
 	}
 	\newcommand{\contdeggeombare}{\ensuremath{\gls{sym:contdeggeombare}}}
 	\newcommand{\contdeggeom}[1]{\ensuremath{\contdeggeombare^{#1}}}
+
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% THINGS THAT WERE IN NOTATION SECTION
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+% ==============================================================================
+
+% ==============================================================================
+% Relation Operator
+% ==============================================================================
+	\newglossaryentry{sym:relop}
+	{%
+		name=\ensuremath{\bowtie},
+		description=an operator in the set \ensuremath{\{<, \leq, =, \geq, >\}},
+		type=symbol
+	}
+	\newcommand{\relop}{\gls{sym:relop}}
+
+% ==============================================================================
+% Such That
+% ==============================================================================
+	\newglossaryentry{sym:suchthat}
+	{%
+		name={\ensuremath{\backepsilon}},
+		description=such that,
+		type=symbol
+	}
+	\newcommand{\suchthat}{\gls{sym:suchthat}}

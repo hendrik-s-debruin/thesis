@@ -82,11 +82,11 @@
     \label{sec:geometric_model}
 
 		\glspl{cdpr} differ from classical parallel mechanisms in that they have
-		the additional constraint that the cables have to be  in  tension.	 The
-        ideal model of a \gls{cdpr} assumes that cables are straight lines. That
+		the additional constraint that the cables need to be  in  tension.	 The
+		ideal model of a \gls{cdpr} assumes that cables are straight lines. That
 		is, effects such as sagging are disregarded.   Geometric  equations  are
-		derived under  the	standard  model.   Figure~\ref{fig:geometry_of_cdpr}
-        shows this model.  \todo{this isn't good wording}
+		derived under  this	standard  model.   Figure~\ref{fig:geometry_of_cdpr}
+		shows a schematic of model.
 
         \begin{figure}[hb]
 			\centering
@@ -530,9 +530,7 @@
                     \right)
             \end{equation}
 
-			\todo{the following discussion is only relevant to	CRPM  and  RRPM}
-
-            \todo{$\mat{H}$ is not in the nomenclature}
+%			\todo{the following discussion is only relevant to	CRPM  and  RRPM}
 
             The set of solutions of the structure
             equation~\ref{eq:structure_equation} is:
@@ -604,9 +602,10 @@
                 \setofwrenches(\pose) \supseteq \convexhull(\setofwrenches_{\discrete}(\pose))
             \end{equation}
 
-			To ensure that $\setofwrenches$ can be generated, it  is  sufficient
-			to	check  the	$2^{\dim\setofwrenches}$   corners	 of   the	set.
-            \todo{cite this section explicitly, p 95}
+			To ensure that $\setofwrenches$ can be generated, it is sufficient
+			to check the $2^{\dim\setofwrenches}$ corners of the
+			set~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
+
 
     \subsection{Singularities of \glsentrylongpl{cdpr}}%
     \label{sec:singularities_of_cdprs}
@@ -646,7 +645,7 @@
             = \jac_A\delta\pose + \jac_B\delta\cablelengths
             = \zerovec
         \end{equation}
-        \todo{$\jac_A$ and $\jac_B$ are not in nomenclature}
+%        \todo{$\jac_A$ and $\jac_B$ are not in nomenclature}
 
         Where
 
@@ -716,8 +715,6 @@
         \label{sec:common_workspace_subsets}
 
 			A	brief	overview   of	workspace	subsets   is   given   here.
-			\todo{these   subscripts	are    not	  in	the    nomenclature}
-            \todo{cite p 178}
 
             \paragraph{Constant Orientation Workspace}%
             \label{sec:constant_orientation_workspace}
@@ -726,7 +723,7 @@
 				be	 reached   without	 changing	the    robot	orientation:
 
                 \begin{equation}
-                    \workspace_{\mathrm{CO}}(\rotmatbare_0) =
+                    \workspace_{\constantOrientation}(\rotmatbare_0) =
                         \left\{
                             \transvec\in\Re^3
                             \,\middle|\,
@@ -741,7 +738,7 @@
                 at a given position:
 
                 \begin{equation}
-                    \workspace_{\mathrm{O}}(\transvec_0) =
+                    \workspace_{\orientation}(\transvec_0) =
                         \left\{
                             \rotmatbare\in\specialOrthonormalGroup{3}
                             \,\middle|\,
@@ -757,7 +754,7 @@
                 $\setofrotationmatrices$:
 
                 \begin{equation}
-                    \workspace_{\mathrm{IO}}(\setofrotationmatrices) =
+                    \workspace_{\inclusionOrientation}(\setofrotationmatrices) =
                         \left\{
                             \transvec \in \Re^3
                             \,\middle|\,
@@ -779,7 +776,7 @@
 				The    total	orientation    workspace	is	  defined	 by:
 
                 \begin{equation}
-                    \workspace_{\mathrm{TO}}(\setofrotationmatrices) =
+                    \workspace_{\totalOrientation}(\setofrotationmatrices) =
                         \left\{
                             \transvec \in \Re^3
                             \,\middle|\,
@@ -791,7 +788,7 @@
             \paragraph{Dextrous Workspace}%
             \label{sec:dextroux_workspace}
 
-				The dextrous workspace, $\workspace_{\mathrm{D}}$, is the  total
+				The dextrous workspace, $\workspace_{\dextrous}$, is the  total
 				orientation   workspace    where	$\setofrotationmatrices    =
                 \specialOrthonormalGroup{3}$.
 
@@ -870,9 +867,6 @@
 
 				\item Cable length
 
-				%\item Spooling capacity
-				\todo{commented out}
-
 			\end{enumerate}
 
 			\paragraph{Wrench-Closure Workspace}%
@@ -881,8 +875,6 @@
 				The Wrench-Closure constraint,
 				Equation~\ref{eq:wrench_closure_constraint}, can be checked
 				using an analysis of the structure matrix $\strucmat$.
-
-				\todo{$\vec{k}$ and $\kappa$ are not in nomenclature}
 
 				Define $\vec{k} \in \ker(\strucmat)$.  A measure for the quality
 				of the force distribution of the cables, $\kappa$, can  be
@@ -930,7 +922,7 @@
 				\end{equation}
 
 				%This forms a convex polyhedron which may be verified by testing
-				its %vertices.
+				%its vertices.
 
 				Such a constraint is straightforward to test.\todo{convex
 				polyhedron commented out}
@@ -1016,7 +1008,8 @@
 				\(
 					\cspfunc(\calcvars)>\zerovec
 						\quad\forall\calcvars\in\interval{\calcvars}
-				\).
+				\). Here, the bracket over a symbol indicates that it is an
+				interval variable.
 
 				A \gls{csp} solver may deduce the properties of an interval as
 				follows:
