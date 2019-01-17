@@ -810,13 +810,13 @@
 			\label{eq:implicit_dif_constraint}
 		\end{equation}
 
-		Such a constraint may for instance indicate that the velocity may not
-		exceed a certain threshold. In such a case,
+		Where $\relop$ represents an operator in the set \ensuremath{\{<, \leq,
+		=, \geq, >\}}.  Such a constraint may for instance indicate that the
+		velocity may not exceed a certain threshold. In such a case,
 		equation~\ref{eq:implicit_dif_constraint} takes the form
-		$\norm{\dot{\configuration}} < \threshold$.
-
-		However, planning algorithms require differential constraints to be
-		expressed in the parametric form:
+		$\norm{\dot{\configuration}} < \threshold$.  However, planning
+		algorithms require differential constraints to be expressed in the
+		parametric form:
 
 		\begin{equation}
 			\dot{\configuration} = f(\configuration, \action)

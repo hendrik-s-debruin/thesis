@@ -1,11 +1,37 @@
 \chapter{Introduction}%
 \label{chap:introduction}
 
-	\todo{Describe context, describe CDPRs, describe path planning need etc}
+	\glspl{cdpr} are a class of robot where the end-effector is suspended and
+	supported by cables. The cables are connected to spools. Through actuation
+	of the spools, the end-effector's pose in space may be controlled.
 
-	\todo{Give overview of later sections}
+	Using cables for end-effector manipulation has some benefits over
+	traditional serial and parallel robots. Cables are very lightweight. A
+	\gls{cdpr} therefore tends to require smaller motors and are consequently
+	inexpensive as compared to similar traditional robots. Furthermore, since
+	cables are flexible, \glspl{cdpr} can be designed to be easily portable and
+	reconfigurable. Due to their inexpensive and lightweight topology,
+	\glspl{cdpr} can be made to cover very vast workspaces and are able to
+	obtain very high velocities and accelerations.
 
+	The added flexibility of this class of robot comes at a cost, however. When
+	compared to traditional parallel robots, \glspl{cdpr} have the added
+	constraint that all cables need to be in tension. That is, it is not
+	possible to have a link push the end-effector as is the case with
+	traditional robots. Furthermore, \glspl{cdpr} exhibit further new
+	challenges, such as cable sagging and vibration.
 
+	\glspl{cdpr} have seen few practical applications to date. However, due to
+	their potential, they have started attracting more interest in the research
+	community. A common problem in robotics is the generation of trajectories.
+	When generating non-trivial trajectories for \glspl{cdpr}, care must be
+	taken to avoid any obstacles in the workspace. This is complicated by the
+	fact that the cables which support the robot can span large sections of the
+	workspace.  Rotational trajectories can also cause cable-cable or
+	cable-platform collisions. The proposed project is therefore to investigate
+	ways of generating non-trivial trajectories and guaranteeing their safety.
+
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	\todo{this paragraph must be removed for the thesis. A corresponding
 	paragraph is given in the literature review, but is commented out for the
 	literature review report. Uncomment later and delete this}
@@ -17,3 +43,5 @@
 	Chapter~\ref{sec:modelling_of_cable_driven_parallel_robots} gives an
 	overview of the important aspects in modelling \glspl{cdpr}.
 
+	A proposed work plan can be found in Chapter~\ref{sec:proposed_plan}.
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
