@@ -1,6 +1,18 @@
 % Dependencies:
 % 	mathabx: earth symbol
 \newglossary*{symbol}{Symbols}
+
+% ==============================================================================
+% Real Numbers
+% ==============================================================================
+	\newglossaryentry{sym:Re}
+	{%
+		name=\ensuremath{\mathds{R}},
+		sort=re,
+		description=real numbers,
+		type=symbol
+	}
+	\renewcommand{\Re}{\gls{sym:Re}}
 % ==============================================================================
 % coords
 % ==============================================================================
@@ -475,7 +487,7 @@
 	}
 	\newcommand{\platform}{\gls{sym:platform}}
 	\newcommand{\platformframe}{\framesym_{\platform}}
-	\newcommand{\worldframe}{\framesym_{0}} %TODO this should have its own thing, also put Earth
+	\newcommand{\worldframe}{\framesym_{\world}} %TODO this should have its own thing, also put Earth
 
 % ==============================================================================
 % Robot DOF

@@ -56,7 +56,7 @@
     \put(0,0){\includegraphics[width=\unitlength,page=1]{geometry_of_cdpr.pdf}}%
     \put(0.20236268,0.1766877){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Proximal Anchor\end{tabular}}}}%
     \put(0.20236268,0.33327476){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}Distal Anchor\end{tabular}}}}%
-    \put(0.75424397,0.03821151){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\worldframe$\end{tabular}}}}%
+    \put(0.76878662,0.03821151){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\worldframe$\end{tabular}}}}%
     \put(0.89603623,0.25166447){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\platformframe$\end{tabular}}}}%
     \put(0.68022338,0.10596962){\color[rgb]{0.01176471,0.01960784,0.06666667}\rotatebox{-1.244334}{\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$(\transvec, \rotmatbare)$\end{tabular}}}}}%
     \put(0.83179089,0.39684659){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\force_{\platform}$\end{tabular}}}}%

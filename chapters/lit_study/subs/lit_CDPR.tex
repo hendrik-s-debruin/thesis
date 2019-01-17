@@ -2,17 +2,16 @@
 \label{sec:modelling_of_cable_driven_parallel_robots}
 
 	The current section gives a brief overview of various aspects of \gls{cdpr}
-	modelling.
-	Section~\ref{sec:cdpr_classification} gives an overview of the classes of
-	\glspl{cdpr}. The geometric, kinematic and dynamic models are discussed in
-	Sections~\ref{sec:geometric_model},~\ref{sec:kinematic_model}
+	modelling.  Section~\ref{sec:cdpr_classification} gives an overview of the
+	classes of \glspl{cdpr}. The geometric, kinematic and dynamic models are
+	discussed in Sections~\ref{sec:geometric_model},~\ref{sec:kinematic_model}
 	and~\ref{sec:dynamic_model}, respectively. The workspace of a \gls{cdpr} is
 	discussed in Section~\ref{sec:the_workspace_of_a_cdpr}.
 
     \subsection{\glsentrylong{cdpr} Classification}%
     \label{sec:cdpr_classification}
 
-		\glspl{cdpr} can be classified in different ways.	One  way  to  is  to
+		\glspl{cdpr} can be classified in different ways.	One  way  is  to
 		classify such robots by their degrees of  freedom  $\robotdof$	and  the
 		number of cables, $\numcables$.  Using these parameters, the  degree  of
         redundancy, $\degofredundancy$, is defined as:
@@ -134,7 +133,7 @@
         \subsubsection{Inverse Geometric Model}%
         \label{sec:inverse_geometric_model}
 
-            The \gls{igm} $\invgeometricmodel(\pose)$, takes the
+            The \gls{igm}, $\invgeometricmodel(\pose)$, takes the
 			pose $\pose = (\transvec,  \rotmatbare)$  of  the  end-effector  and
 			returns   the	lengths   of   the	 cables   of   the	 \gls{cdpr},
             $\cablelengths$. It is found by solving for
@@ -874,7 +873,8 @@
 
 				The Wrench-Closure constraint,
 				Equation~\ref{eq:wrench_closure_constraint}, can be checked
-				using an analysis of the structure matrix $\strucmat$.
+				using an analysis of the structure matrix
+				$\strucmat$~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
 				Define $\vec{k} \in \ker(\strucmat)$.  A measure for the quality
 				of the force distribution of the cables, $\kappa$, can  be

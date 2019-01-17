@@ -60,7 +60,7 @@
 				A condition of the polynomial is that:
 
 				\begin{equation}
-					\deg\polynomial = \poldeg \geq \cardinality{\setofpoints}
+					\deg\polynomial = \poldeg \geq \cardinality{\setofpoints} - 1
 				\end{equation}
 
 				The polynomial may be written as:
@@ -137,7 +137,9 @@
 					\forall \timesym \in [0, \timesym_{\final}]
 				\).
 				If proper care is taken in defining the boundary conditions,
-				these trajectories can be used for continuous cyclic motions.
+				these trajectories can be used for continuous cyclic motions. A
+				brief overview of different trigonometric trajectories is
+				presented in the following.
 
 				\begin{itemize}
 
@@ -438,7 +440,7 @@
 					\label{eq:polynomial_bends}
 				\end{equation}
 
-				Here, $\configuration_a$ and $\configuration_b$ may be computed
+				Here, $\configuration_1$ and $\configuration_2$ may be computed
 				using the polynomial trajectory method of
 				Section~\ref{sec:elementary_trajectories}.
 
@@ -923,7 +925,7 @@
 				Note that $\gain_{\indexi}$ may be set to change the
 				approximation error in some specific points. A methodology to
 				perform this minimisation can be found in~\cite[][page
-				371]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}
+				371]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 
 			\todo{Mixed Interpolation/Approximation, book p 375}
 
@@ -1077,7 +1079,8 @@
 			Equation~\ref{eq:inv_dynamic_model_scaling} can usually be expressed
 			as a linear combination of the terms $\configuration,
 			\dot{\configuration}, \ddot{\configuration}$ with matrix
-			coefficients. If this is the case, a substitution such as
+			coefficients~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
+			If this is the case, a substitution such as
 			Equation~\ref{eq:linear_time_scaling} may be made to obtain a new
 			trajectory $\configuration'$ and associated actuator torques
 			$\torque'$ of the form:
@@ -1102,7 +1105,7 @@
 			and~\ref{sec:dynamic_scaling} rely on slowing down the execution of
 			the trajectory to avoid saturation limits. It is worth noting that,
 			instead of slowing down the global trajectory, a smart approach
-			might be to only slow down only those sections of the trajectory
-			that are too close to the saturation limits.  This will ensure that
-			the constraints are met, while still avoiding unnecessarily slow
+			might be to slow down only those sections of the trajectory that are
+			too close to the saturation limits.  This will ensure that the
+			constraints are met, while still avoiding unnecessarily slow
 			motions.

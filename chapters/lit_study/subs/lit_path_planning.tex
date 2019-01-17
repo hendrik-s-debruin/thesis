@@ -8,10 +8,10 @@
 	uncountable infinite search space. Continuous algorithms can further be
 	subdivided into complete and incomplete algorithms. Complete algorithms are
 	capable of finding a solution if one exists or reporting that there is no
-	path in finite time. Incomplete algorithms cannot detect whether that no
-	path exists. Instead, they may run forever. If a path exists, the
-	probability that the algorithm finds the path approaches unity as time
-	approaches infinity.
+	path in finite time. Incomplete algorithms cannot detect whether no path
+	exists. Instead, they may run forever. If a path exists, the probability
+	that the algorithm finds the path approaches unity as time approaches
+	infinity.
 
 	\begin{figure}[hb]
 		\centering
@@ -49,7 +49,7 @@
 		dependent on the current robot state. These actions are collected in the
 		action space $\actionspace(\state)$.
 
-		The state transition function $\statetransfunc$ changes the robot's
+		The state transition function, $\statetransfunc$, changes the robot's
 		state based on some action $\action\in\actionspace(\state)$:
 
 		\begin{equation}
@@ -157,9 +157,9 @@
 	\subsection{Semi-Algebraic Representation of Bodies}%
 	\label{sec:semi_algebraic_representation_of_bodies}
 
-		A common way of representing a robot $\robot$ or obstacle $\obstacle$ is
-		by the use of convex polyhedra. The following discussion will be based
-		on obstacles, but the same representation can be made for a robot.
+		A common way of representing a robot $\robot$ or an obstacle $\obstacle$
+		is by the use of convex polyhedra. The following discussion will be
+		based on obstacles, but the same representation can be made for a robot.
 
 		A polyhedron may be built up by the use of a set of half-space
 		primitives $\halfspaceprimitive$ that each define a face of the
@@ -320,7 +320,7 @@
 						A simple bounding region, such as a sphere, is drawn
 						around the object. Spheres are easy to check for
 						collision, since they intersect if their centres are
-						closer than the sum of their radii. As a section step of
+						closer than the sum of their radii. As a second step of
 						the broad phase, a bounding box may be drawn around the
 						objects.
 
@@ -357,7 +357,8 @@
 			\paragraph{Path Segment Collision Detection}%
 			\label{sec:path_segment_collision_detection}
 
-				Hierarchical Collision Detection checks a single point to ensure
+				Hierarchical Collision Detection checks a single point of a
+				path to ensure
 
 				\begin{equation}
 					\configuration \in \configurationspace_{\freeregion}
@@ -367,8 +368,9 @@
 				not in collision, that is:
 				\begin{equation}
 					\configuration \in
-						\traj(\timenorm \in [0, 1])
-							\in \configurationspace_{\freeregion}
+							\configurationspace_{\freeregion}
+					\quad
+						\forall\configuration\in\traj(\timenorm \in [0, 1])
 				\end{equation}
 
 				One method is to choose an increment $\Delta\configuration$, and
@@ -452,7 +454,7 @@
 	\label{sec:discrete_case}
 
 		Many motion planning problems reduce to graph search.
-		Algorithm~\ref{alg:general_forward_search}\cite[adapted
+		Algorithm~\ref{alg:general_forward_search}~\cite[adapted
 		from][]{bib:planning:planning_algorithms} illustrates the general
 		framework to implement forward search in a graph.
 
@@ -552,9 +554,9 @@
 			\paragraph{Sampling Strategies}%
 			\label{sec:sampling_strategies}
 
-				These algorithms differ in the way that they sample
-				$\configurationspace$. As they sample, they may build a
-				topological graph \( \topologicalgraph(\vertex, \edge \in
+				$\configurationspace$ may be sampled in different ways. As
+				algorithms take sample of $\configurationspace$, they may build
+				a topological graph \( \topologicalgraph(\vertex, \edge \in
 				\configurationspace_{\freeregion}) \) which can be used with the
 				algorithms from Section~\ref{sec:discrete_case} to obtain a path
 				$\pathsym$.  Sampling strategies are required to produce dense
@@ -627,10 +629,11 @@
 					\item Low-Dispersion Sampling
 
 						Low-Dispersion Sampling is a bit more sophisticated than
-						Random Sampling. It tries to place the samples such that
-						the largest uncovered area is minimised. Obviously, such
-						samples cannot be perfectly random, but they tend to
-						work better for motion planning.
+						Random Sampling. This technique tries to place the
+						samples such that the largest uncovered area is
+						minimised. Obviously, such samples cannot be perfectly
+						random, but they tend to work better for motion
+						planning.
 
 						Optimal dispersion is produced by partitioning
 						$\configurationspace$ into cubes and placing the sample
@@ -674,11 +677,11 @@
 
 						\glspl{rdt} incrementally construct a tree in
 						$\configurationspace$. The resolution of the tree
-						parameters. This makes them analogous in a sense to
-						space-filling curves. The well known \gls{rrt}
-						algorithms can be considered as a special case of
-						\glspl{rdt}. The basic \gls{rdt} algorithm is shown in
-						Algorithm~\ref{alg:basic_rdt}.
+						increases as time progresses. This makes them analogous
+						in a sense to space-filling curves. The well known
+						\gls{rrt} algorithms can be considered as a special case
+						of \glspl{rdt}. The basic \gls{rdt} algorithm is shown
+						in Algorithm~\ref{alg:basic_rdt}.
 
 						\begin{algorithm}[ht]
 							\caption{Basic \gls{rdt} Algorithm}%
@@ -766,10 +769,10 @@
 			\begin{equation}
 				\point\in\configurationspace_{\freeregion},
 				\quad
-				\forall\point\in\cell \, \text{and} \, \forall\cell\in\world
+				\forall\point\in\cell \, \text{and} \, \forall\cell\in\configurationspace
 			\end{equation}
 
-			An example cell decomposition for $\world\subseteq\Re^2$ can be seen
+			An example cell decomposition for $\configurationspace\subseteq\Re^2$ can be seen
 			in Figure~\ref{fig:example_2d_cell_decomposition}.
 
 			\begin{figure}[hb]
