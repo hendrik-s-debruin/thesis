@@ -1,0 +1,90 @@
+%% Creator: Inkscape inkscape 0.92.2, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'proposed_architecture.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{438.33668054bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.5648706)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{proposed_architecture.pdf}}%
+    \put(0.05382013,0.28284002){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Robot \end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{proposed_architecture.pdf}}%
+    \put(0.19899188,0.35712481){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Build Robot \end{tabular}}}}%
+    \put(0.42077763,0.35712481){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Enumerate \end{tabular}}}}%
+    \put(0.64256337,0.35712481){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Build World \end{tabular}}}}%
+    \put(0.8649395,0.3630278){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Sample \end{tabular}}}}%
+    \put(0.86434912,0.25696227){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Build  \end{tabular}}}}%
+    \put(0.64315365,0.25696227){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Solve \end{tabular}}}}%
+    \put(0.42136791,0.25696227){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Smooth \end{tabular}}}}%
+    \put(0.19945386,0.25788627){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Generate \end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{proposed_architecture.pdf}}%
+    \put(0.2000209,0.44951918){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Begin\end{tabular}}}}%
+    \put(0.19899188,0.15180358){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Post Process \end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{proposed_architecture.pdf}}%
+    \put(0.20008568,0.03887672){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}End\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{proposed_architecture.pdf}}%
+    \put(0.64496559,0.54536504){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}World\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{proposed_architecture.pdf}}%
+    \put(-2.40201295,8.30104122){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{4.33667691\unitlength}\centering \end{minipage}}}%
+    \put(0.20010531,0.12091585){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Trajectory\end{tabular}}}}%
+    \put(0.20010531,0.22557564){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Trajectory\end{tabular}}}}%
+    \put(0.20008025,0.32419508){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Model\end{tabular}}}}%
+    \put(0.42252868,0.33009807){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Workspace\end{tabular}}}}%
+    \put(0.42180662,0.21967265){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Path\end{tabular}}}}%
+    \put(0.64365177,0.32419508){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Model\end{tabular}}}}%
+    \put(0.86610022,0.33009807){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\configurationspace$\end{tabular}}}}%
+    \put(0.86552031,0.22557564){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\topologicalgraph$\end{tabular}}}}%
+    \put(0.05493356,0.25576395){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Topology\end{tabular}}}}%
+    \put(0.64381424,0.51549901){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Obstacles\end{tabular}}}}%
+    \put(0.64359237,0.21967265){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Path\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{proposed_architecture.pdf}}%
+    \put(2.41023022,-0.95269933){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\begin{minipage}{0.7116941\unitlength}\centering \end{minipage}}}%
+  \end{picture}%
+\endgroup%
