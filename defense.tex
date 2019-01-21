@@ -1,0 +1,341 @@
+\documentclass{beamer}
+
+	\title{Path Planning for Cable Driven Parallel Robots}
+	\author{Hendrik Scheepers de Bruin}
+	\institute{École Centrale de Nantes, Università degli Studi di Genova}
+	\date{January 2019}
+
+    \usepackage{graphicx}
+		\graphicspath{{res/img/}}
+	\usepackage{import}
+
+    \usepackage{mathrsfs}
+    \usepackage{amsfonts}
+    \usepackage{amssymb}
+    \usepackage{dsfont}
+	\usepackage{amsmath}
+    \usepackage{mathtools}
+    \usepackage{ifdraft}
+    \usepackage[section=subsection, acronyms]{glossaries}
+        \makenoidxglossaries{}
+        \input{defs/notation.tex}
+        \input{defs/symbols.tex}
+        \input{defs/abbrevs.tex}
+        \input{defs/glossary.tex}
+        \input{defs/subscripts.tex}
+
+	\let\beameraction\action
+
+	\usepackage{caption}
+
+\begin{document}
+
+% ==============================================================================
+% Introduction
+% ==============================================================================
+
+	\frame{\titlepage}
+
+	\begin{frame}
+		\frametitle{Problem Statement}
+
+		Investigate trajectory generation methods for a Cable Driven Parallel
+		Robot.
+		\\~\
+
+		\begin{minipage}{\textwidth}
+			\begin{minipage}{0.5\textwidth}
+				\centering
+				\includegraphics[width=.9\textwidth]{acrobotHD}
+				\captionof{figure}{ACROBOT}
+			\end{minipage}
+			\begin{minipage}{0.5\textwidth}
+
+				Proposed work plan:
+
+				\begin{enumerate}
+
+					\item
+
+						Simulate planar CDPR for the translational case
+
+					\item
+
+						Investigate planar CDPR with $SE_2$ motion.
+
+					\item
+
+						Generalise to 3D case.
+
+					\item
+
+						Perform experimental validation on Acrobot
+
+				\end{enumerate}
+			\end{minipage}
+		\end{minipage}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Main Relevant Fields}
+
+		\begin{enumerate}
+
+			\item
+
+				Path Planning:
+
+				Find a path $\pathsym$ in space that is free of collisions:
+
+				\begin{equation}
+					\pathsym : \timenorm \in [0, 1] \mapsto \configurationspace_{\freeregion}
+				\end{equation}
+
+
+			\item
+
+				Trajectory Generation:
+
+				Define a trajectory $\timenorm$ that follows this path:
+
+				\begin{equation}
+					\timenorm = \function(\timesym)
+				\end{equation}
+
+				Subject to dynamic and kinematic constraints
+
+			\item
+
+				Modelling of CDPRs:
+
+				Provides geometric, kinematic, dynamic and workspace models for
+				the other two sections
+
+		\end{enumerate}
+	\end{frame}
+
+% ==============================================================================
+% Path Planning
+% ==============================================================================
+	\begin{frame}
+		\frametitle{Path Planning}
+
+		Give overview of sections of Path planning here
+	\end{frame}
+
+	% ------------------------------------------------------------------------------
+	% Representation of Bodies
+	% ------------------------------------------------------------------------------
+		\begin{frame}
+			\frametitle{Representation of Bodies}
+
+			\begin{itemize}
+
+				\item
+
+					For path planning, robots cannot be considered a simple
+					collection of frames.
+
+				\item
+
+					Instead, represented as infinite sets of points.
+
+			\end{itemize}
+
+			\begin{figure}[h]
+				\includegraphics[height=4cm]{object_primitives_1}
+			\end{figure}
+
+		\end{frame}
+
+		\begin{frame}
+			\frametitle{Representation of Bodies}
+
+			Build a polyhedron representation of the robot with a half-space
+			primitive.
+
+			\begin{figure}[h]
+				\includegraphics[height=4cm]{object_primitives_2}
+			\end{figure}
+
+			\begin{equation}
+				\halfspaceprimitive_{\indexi} =
+					\left\{
+						(\xcoord,\ycoord,\zcoord) \in \world |
+						\function_{\indexi}(\xcoord,\ycoord,\zcoord) \leq 0
+					\right\}
+			\end{equation}
+
+		\end{frame}
+
+		\begin{frame}
+			\frametitle{Representation of Bodies}
+
+			A convex polyhedron is then a collection of half-space primitives.
+
+			\begin{figure}[h]
+				\includegraphics[height=4cm]{object_primitives_3}
+			\end{figure}
+
+			\begin{equation}
+				\robot =
+					\halfspaceprimitive_1 \cap \halfspaceprimitive_2 \cap \cdots \cap
+					\halfspaceprimitive_{\cardinality{\robot}}
+					\label{eq:convex_robot}
+			\end{equation}
+
+		\end{frame}
+
+		\begin{frame}
+
+			\frametitle{Representation of Bodies}
+
+			Complex robot shapes may be built up of a set of convex polyhedra.
+
+			\begin{figure}[h]
+				\includegraphics[height=4cm]{object_primitives_4}
+			\end{figure}
+
+			\begin{equation}
+				\robot =
+					\robot_1 \cup \robot_2 \cup \cdots \cup \robot_{\cardinality{\robot}}
+					\label{eq:non_convex_robot}
+			\end{equation}
+
+		\end{frame}
+
+	\begin{frame}
+		\frametitle{Point Collision Detection}
+
+		A point $\point$ may be tested for collision by defining:
+
+		\begin{equation}
+			\logicalpredicate_{\indexi} =
+				\begin{cases}
+					\true, & f_{\indexi} \leq 0 \\
+					\false, & f_{\indexi} > 0
+				\end{cases}
+		\end{equation}
+
+		\begin{figure}[h]
+			\includegraphics[height=4cm]{object_primitives_4}
+		\end{figure}
+
+		\begin{equation}
+			\logicalpredicate(\point) =
+				\bigvee_{\robot_{\indexi} \in \robot}
+					\left(
+						\bigwedge_{\halfspaceprimitive_{\indexj} \in \robot_{\indexi}}
+							\logicalpredicate_{\indexj}
+					\right)
+			=
+			\begin{cases}
+				\true,  &\point \in\robot \\
+				\false, &\point \not\in \robot
+			\end{cases}
+		\end{equation}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Hierarchical Collision Detection}
+
+		\begin{figure}[htb]
+			\centering
+			\includegraphics[width=\textwidth]{hierarchical_collision_detection.png}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Path Segment Collision Detection}
+
+		Sample points along path, test for collisions.
+
+		\begin{figure}
+			\includegraphics[width=0.8\textwidth]{path_collision_detection.png}
+		\end{figure}
+
+		\begin{itemize}
+
+			\item
+
+				Points spaced $\Delta \configuration$ apart
+
+			\item
+
+				$\Delta\configuration$ determined experimentally, or from
+				minimum distance to nearest obstacle from collision detection
+				algorithms.
+
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Sampling Configuration Space}
+		\begin{figure}
+			\includegraphics[width=0.8\textwidth]{sampling_methods}
+		\end{figure}
+
+		\begin{itemize}
+			\item
+
+				Sample Configuration Space
+
+			\item
+
+				Connect samples to obtain topological graph $\topologicalgraph$.
+
+			\item
+
+				Use graph search techniques to find path
+		\end{itemize}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Searching Sampled Space}
+	\end{frame}
+
+% ==============================================================================
+% Trajectory Generation
+% ==============================================================================
+	\begin{frame}
+		\frametitle{Overview of Trajectory Generation}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Elementary Trajectories}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Point-to-point Trajectories}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Multipoint Interpolation}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Multipoint Approximation}
+	\end{frame}
+% ==============================================================================
+% CDPR Modelling
+% ==============================================================================
+
+% ==============================================================================
+% Conclusion
+% ==============================================================================
+
+	\begin{frame}
+		\frametitle{Proposed Architecture}
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			%\import{res/img/}{proposed_architecture.pdf_tex}
+			\caption{Proposed Architecture}%
+			\label{fig:proposed_architecture}
+		\end{figure}
+	\end{frame}
+
+
+\end{document}
