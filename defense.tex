@@ -1,6 +1,6 @@
 \documentclass{beamer}
 
-	\title{Path Planning for Cable Driven Parallel Robots}
+	\title{Path Planning for Cable Driven Parallel Robots\\Literature Study}
 	\author{Hendrik Scheepers de Bruin}
 	\institute{École Centrale de Nantes, Università degli Studi di Genova}
 	\date{January 2019}
@@ -118,11 +118,11 @@
 % ==============================================================================
 % Path Planning
 % ==============================================================================
-	\begin{frame}
-		\frametitle{Path Planning}
+	%\begin{frame}
+	%	\frametitle{Path Planning}
 
-		Give overview of sections of Path planning here
-	\end{frame}
+	%	Give overview of sections of Path planning here
+	%\end{frame}
 
 	% ------------------------------------------------------------------------------
 	% Representation of Bodies
@@ -293,7 +293,69 @@
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Searching Sampled Space}
+		\frametitle{Random Trees}
+
+		\begin{itemize}
+
+			\item
+
+				Resolution increases as time increases
+
+			\item
+
+				Can be used under differential constraints
+
+		\end{itemize}
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.7\textwidth]{RRT}
+		\end{figure}
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.5\textwidth]{RRT_denseness}
+			\caption{[Planning Algorithms, S.M. LaValle]}
+		\end{figure}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Smoothing Random Paths}
+
+		\begin{enumerate}
+
+			\item
+
+				Choose two points on the path
+
+			\item
+
+				Merge them smoothly
+
+			\item
+
+				Test new path for collisions
+		\end{enumerate}
+
+		\begin{equation}
+			\pathsym'(\timenorm) =
+				\begin{cases}
+					\pathsym(\timenorm) & \timenorm\in[0, \timenorm_1]\\
+					%
+					\relweight\pathsym(\timenorm_1) +
+						(1-\relweight)\pathsym(\timenorm_2)
+					& \timenorm\in(\timenorm_1,\timenorm_2)\\
+					%
+					\pathsym(\timenorm) & \timenorm\in[\timenorm_2, 1]\\
+				\end{cases}
+		\end{equation}
+
+		\begin{figure}[h]
+			\centering
+			\includegraphics[width=0.8\textwidth]{smoothing_random_paths}
+		\end{figure}
+
 	\end{frame}
 
 % ==============================================================================
@@ -301,22 +363,253 @@
 % ==============================================================================
 	\begin{frame}
 		\frametitle{Overview of Trajectory Generation}
+
+		\begin{itemize}
+
+			\item
+
+				Path $\pathsym(\timenorm)$ has been found
+
+			\item
+
+				Find trajectory $\timenorm = \function(\timesym)$ along this
+				path
+		\end{itemize}
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{trajectory_generation_categories.pdf_tex}
+		\end{figure}
 	\end{frame}
 
 	\begin{frame}
 		\frametitle{Elementary Trajectories}
+
+		\begin{itemize}
+
+			\item
+
+				Polynomial
+
+				\begin{itemize}
+
+				%	\item
+
+				%		Most basic
+
+					\item
+
+						Higher derivatives become zero
+
+				\end{itemize}
+
+				\begin{equation}
+					\timenorm(\timesym)
+						= \polynomial
+						= \sum_{\indexi=0}^{\poldeg}
+						\coefficient_{\indexi} \timesym^{\indexi}
+				\end{equation}
+
+			\item
+
+				Trigonometric
+
+				\begin{itemize}
+
+					\item
+
+						Good for continuous cyclic motions
+
+					\item
+
+						Of type $\contdeg{\infty}$
+				\end{itemize}
+
+				\begin{equation}
+					\timenorm(\timesym) =
+						\frac{%
+								\timenorm_{\final} - \timenorm_0
+							}
+							{%
+								2
+							}
+						\left(
+							1 - \cos
+								\frac{%
+										\pi(\timesym - \timesym_0)
+									}
+									{%
+										\timesym_{\final} - \timesym_0
+									}
+						\right)
+						+ \timenorm_0
+				\end{equation}
+
+			\item
+
+				Exponential
+
+				\begin{itemize}
+
+					\item
+
+						Exponential in velocity profile
+
+					\item
+
+						Degree of continuity may be chosen by setting parameters
+				\end{itemize}
+
+				\begin{equation}
+					\timenorm(\timesym) = \gain_1\int_{0}^{\timesym}
+						e^{-\gain_2 f(\timesym, \gain_3)} \der \timesym
+				\end{equation}
+
+		\end{itemize}
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Point-to-point Trajectories}
+		\frametitle{Trajectory Composition}
+
+		Elementary trajectories may be combined with bends.
+
+		\begin{itemize}
+
+			\item
+
+				Circular bends
+
+			\item
+
+				Polynomial bends
+
+				Forms the basis of spline interpolation techniques
+
+			\item
+
+				Trigonometric bends
+
+		\end{itemize}
+
+		\begin{figure}
+			\includegraphics[width=\textwidth]{trajectory_composition}
+		\end{figure}
+
+		Type of bend determines level of continuity at transitions
+
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Multipoint Interpolation}
+		\frametitle{Approximation Techniques}
+
+		Smoothing Splines
+
+		\begin{itemize}
+			\item
+
+				Find a polynomial $\polynomial$ that balances the error in
+				approximation to the total curvature
+
+			\item
+
+				Do binary search over $\relweight$ to guarantee maximum error
+		\end{itemize}
+
+		\begin{equation}
+			\argmin_{\polynomial}
+			\left\{
+				\relweight
+				\underbrace{%
+					\sum_{\indexi = 0}^{\cardinality{\setofpoints}}
+						\gain_{\indexi}
+						{%
+							\left(
+								\polynomial(\timesym_{\indexi}) -
+								\point_{\indexi}
+							\right)
+						}^2
+				}_{\text{error in approximation}}
+				+
+				(1 - \relweight)
+				\underbrace{%
+					\int_{\timesym_0}^{\timesym_{\cardinality{\setofpoints}}}
+						\ddot{\polynomial}^2
+					\der \timesym
+				}_{\text{curvature}}
+			\right\}
+			\label{eq:smoothing_cubic_splines_criterion}
+		\end{equation}
 	\end{frame}
 
 	\begin{frame}
-		\frametitle{Multipoint Approximation}
+		\frametitle{Approximation Techniques}
+
+		Polynomial bends
+
+		\begin{itemize}
+			\item
+
+				Simple for straigh-line trajectories
+
+			\item
+
+				Easy to guarantee an accuracy tolerance $\tol$
+		\end{itemize}
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{linear_interpolation_with_polynomial_bends.pdf_tex}
+		\end{figure}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Trajectory Scaling}
+
+		By changing the duration of the trajectory in certain sections of the
+		path, one can avoid exceeding kinematic constraints.
+
+
+		Make a substitution:
+
+		\begin{equation}
+			\timesym = \gain\timesym'
+			\label{eq:linear_time_scaling}
+		\end{equation}
+
+		This effects the derivatives:
+
+		\begin{equation}
+			\tdern{\configuration'}{\indexi}(\timesym') = \gain^{\indexi}
+				\tdern{\configuration}{\indexi}(\timesym)
+		\end{equation}
+
+		$\gain$ has a direct impact on the maximum value of
+		$\configuration(\timesym)$.
+
+		\begin{equation}
+			\gain = \min
+				\left\{
+					\sqrt[\indexi]
+					{%
+						\frac
+						{%
+							\constraint_{\indexi}
+						}
+						{%
+								\norm
+								{%
+									\tdern{\configuration}{\indexi}(\timesym)
+								}_{\max}
+						}
+					}
+					\quad
+					\forall \constraint_{\indexi} \in \setofconstraints
+				\right\}
+		\end{equation}
+
+
 	\end{frame}
 % ==============================================================================
 % CDPR Modelling
