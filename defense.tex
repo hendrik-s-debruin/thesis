@@ -24,9 +24,17 @@
         \input{defs/glossary.tex}
         \input{defs/subscripts.tex}
 
-	\let\beameraction\action
+	\let\beameraction\action%
 
 	\usepackage{caption}
+
+	\AtBeginSection[]
+	{%
+	  \begin{frame}
+		\frametitle{Table of Contents}
+		\tableofcontents[currentsection]
+	  \end{frame}
+	}
 
 \begin{document}
 
@@ -123,6 +131,8 @@
 
 	%	Give overview of sections of Path planning here
 	%\end{frame}
+
+\section{Path Planning}
 
 	% ------------------------------------------------------------------------------
 	% Representation of Bodies
@@ -361,6 +371,9 @@
 % ==============================================================================
 % Trajectory Generation
 % ==============================================================================
+
+\section{Trajectory Generation}
+
 	\begin{frame}
 		\frametitle{Overview of Trajectory Generation}
 
@@ -436,8 +449,7 @@
 							}
 						\left(
 							1 - \cos
-								\frac{%
-										\pi(\timesym - \timesym_0)
+								\frac{% \pi(\timesym - \timesym_0)
 									}
 									{%
 										\timesym_{\final} - \timesym_0
@@ -615,6 +627,276 @@
 % CDPR Modelling
 % ==============================================================================
 
+\section{CDPR Modelling}
+
+	\begin{frame}
+		\frametitle{CDPR Geometric Model}
+        \begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+        \end{figure}
+
+		Loop Closure:
+
+		\begin{equation}
+			\project{%
+				\proximalanchor_{\indexi}
+			}{\world}
+			- \transvec
+			- \rotmat{\world}{\platform}
+				\project{%
+					\distalanchor_{\indexi}
+				}{\platform}
+			- \cablevec_{\indexi}
+			=
+			\zerovec
+			\label{eq:cdpr_loop_closure}
+		\end{equation}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{CDPR Geometric Model}
+        \begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+        \end{figure}
+
+		Leads directly to inverse geometric model:
+
+		\begin{equation}
+			\cablelengths
+				= \left[
+					\begin{matrix}
+						\norm{\cablevec_1} \\
+						\vdots \\
+						\norm{\cablevec_{\numcables}}
+					\end{matrix}
+				\right]
+				= \invgeometricmodel(\pose)
+				= \left[
+					\begin{matrix}
+						\norm
+						{%
+							\project{\proximalanchor_1}{\world}
+							- \transvec
+							- \rotmat{\world}{\platform}\project{\distalanchor_1}{\platform}
+						}
+						\\
+						\vdots
+						\\
+						\norm
+						{%
+							\project{\proximalanchor_{\numcables}}{\world}
+							- \transvec
+							- \rotmat{\world}{\platform}\project{\distalanchor_{\numcables}}{\platform}
+						}
+					\end{matrix}
+				\right]
+			\label{eq:cdpr_inverse_geometric_model}
+		\end{equation}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Inverse Kinematic Model}
+
+        \begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+        \end{figure}
+
+		Found through derivation of the inverse geometric model:
+
+        \begin{equation}
+            \dot{\cablelengths}
+                =   \invkinematicmodel(\pose, \dot{\pose})
+                =   \frac
+                    {%
+                        \partial\invgeometricmodel(\pose)
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \frac
+                    {%
+                        \partial\invgeometricmodel(\pose)
+                    }
+                    {%
+                        \partial\pose
+                    }
+                    \frac
+                    {%
+                        \partial\pose
+                    }
+                    {%
+                        \partial\timesym
+                    }
+                =   \invgeometricjac\dot{\pose}
+        \end{equation}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Wrench Closure}
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+		\end{figure}
+
+		For Equilibrium:
+
+        \begin{align}
+            \sum_{\indexi = 1}^{\numcables}
+                \force_{\indexi} +
+            \force_{\platform} &= \zerovec \\
+            %
+            \sum_{\indexi = 1}^{\numcables}
+                \distalanchor_{\indexi} \times \force_{\indexi} +
+            \torque_{\platform} &= \zerovec
+        \end{align}
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Wrench Closure}
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{geometry_of_cdpr.pdf_tex}
+		\end{figure}
+
+		In matrix form:
+
+        \begin{equation}
+            \strucmat(\transvec, \rotmatbare)\forcemagvec +
+            \wrench_{\platform} = \zerovec
+            \label{eq:structure_equation}
+        \end{equation}
+
+	\end{frame}
+
+	\begin{frame}
+
+		Equilibrium:
+
+        \begin{align}
+            \sum_{\indexi = 1}^{\numcables}
+                \force_{\indexi} +
+            \force_{\platform} &= \zerovec \\
+            %
+            \sum_{\indexi = 1}^{\numcables}
+                \distalanchor_{\indexi} \times \force_{\indexi} +
+            \torque_{\platform} &= \zerovec
+        \end{align}
+
+		Matrix form:
+
+        \begin{equation}
+            \strucmat(\transvec, \rotmatbare)\forcemagvec +
+            \wrench_{\platform} = \zerovec
+            \label{eq:structure_equation}
+        \end{equation}
+
+		Some poses cannot be supported by the platform.
+
+		Cables need to be in tension
+
+		Wrench-Closure condition:
+
+		\begin{equation}
+			\forall
+				\left(
+					{\wrench}_{\platform}\in\Re^{\robotdof}
+				\right)
+			\exists
+				\left(
+					\forcemagvec\in\Re^{\numcables}
+				\right)
+			\quad\suchthat\quad
+				\left(
+					\strucmat(\transvec, \rotmatbare)\forcemagvec + \wrench_{\platform} = \zerovec
+				\right)
+				\wedge
+				\left(
+					\forcemagvec > \zerovec
+				\right)
+			\label{eq:wrench_closure_constraint}
+		\end{equation}
+
+	\end{frame}
+
+	\begin{frame}
+		\frametitle{Workspace of CDPR}
+
+		\begin{columns}
+			\column{0.5\textwidth}
+			Criteria on poses in the workspace:
+
+			\begin{itemize}
+				\item
+
+					In Wrench-Closure
+
+				\item
+
+					Not in singular configuration
+
+				\item
+
+					Not in self-collision
+
+				\item
+
+					Does not exceed maximum cable lengths
+
+				\item
+
+					\ldots
+			\end{itemize}
+
+			\column{0.5\textwidth}
+
+			Main approaches:
+
+			\begin{itemize}
+
+				\item
+
+					Discrete samples
+
+					\begin{itemize}
+						\item
+
+							Easy to compute
+
+						\item
+
+							Makes no guarantee on points between samples
+					\end{itemize}
+
+				\item
+
+					Interval Analysis
+
+					\begin{itemize}
+
+						\item
+
+							Expensive to compute
+
+						\item
+
+							Perfectly guarantees points within interval bounds
+
+					\end{itemize}
+			\end{itemize}
+		\end{columns}
+	\end{frame}
+
+
 % ==============================================================================
 % Conclusion
 % ==============================================================================
@@ -622,13 +904,13 @@
 	\begin{frame}
 		\frametitle{Proposed Architecture}
 		\begin{figure}[hb]
+			\footnotesize
 			\centering
 			\def\svgwidth{\columnwidth}
-			%\import{res/img/}{proposed_architecture.pdf_tex}
-			\caption{Proposed Architecture}%
-			\label{fig:proposed_architecture}
+			\import{res/img/}{proposed_architecture.pdf_tex}
 		\end{figure}
 	\end{frame}
+
 
 
 \end{document}
