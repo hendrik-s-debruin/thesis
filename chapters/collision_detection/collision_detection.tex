@@ -1,0 +1,47 @@
+\chapter{Collision Detection}%
+\label{chap:collision_detection}
+
+	There are several types of collision that may occur in a \glspl{cdpr}. These
+	are:
+
+	\begin{enumerate}
+
+		\item Cable-Cable collisions
+
+		\item Cable-Obstacle collisions
+
+		\item Cable-End-Effector collisions
+
+		\item End-Effector-Obstacle collisions
+
+	\end{enumerate}
+
+	The following assumptions were made for the collision-detection
+	algorithms:\todo{wording}
+
+	\begin{enumerate}
+
+		\item
+
+			Cables are modelled as straight lines. If the tension in the cables
+			is sufficiently high, this assumption is satisfied. The current
+			collision-detection algorithms make no attempt to detect collisions
+			in sagging cables.
+
+		\item
+
+			The end-effector and the obstacles are approximated as convex
+			polyhedra. To ensure a safety margin, obstacles are usually modelled
+			to be slightly larger than they are in reality. This justifies the
+			use of convex  shapes to approximate them. For cases where modelling
+			an obstacle as a convex shape is unnecessarily wasteful, a
+			non-convex obstacle can be built up out of the union of convex
+			obstacles.
+
+	\end{enumerate}
+
+	\input{chapters/collision_detection/subs/cable_cable}
+	\input{chapters/collision_detection/subs/cable_obstacle}
+	\input{chapters/collision_detection/subs/cable_end_effector}
+	\input{chapters/collision_detection/subs/end_effector_obstacle}
+

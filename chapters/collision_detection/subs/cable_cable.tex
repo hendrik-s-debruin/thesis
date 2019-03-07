@@ -1,0 +1,126 @@
+\section{Cable-Cable Collisions}%
+\label{sec:cable_cable_collisions}
+
+	To facilitate collision detection, the cables are modelled as parametric
+	lines. As a brief recall, a line $\linevec$ between two points $\point_A$
+	and $\point_B$ may be written in parametric form as:
+
+	\begin{equation}
+		\linevec = \point_A + \timenorm(\point_B - \point_A)
+	\end{equation}
+
+	Where $\timenorm \in [0, 1]$.
+
+	To detect whether two cables are in collision, consider
+	Figure~\ref{fig:cable_cable_collision_detection}.
+
+	\begin{figure}[hb]
+		\missingfigure{cable cable collision}
+		\caption{Cable-Cable Collision Detection}
+		\label{fig:cable_cable_collision_detection}
+	\end{figure}
+	\todo{Figure from hand written notes. These are two cables $\cable_i$
+	ranging from $\distalanchor_i$ to $\proximalanchor_i$}
+
+	The equations of the cables in the figure are:
+
+	\todo{The glossary entry for cable should probably say point on cable}
+	\begin{equation}
+		\cable_i = \distalanchor_i + \timenorm_i(\proximalanchor_i -
+		\distalanchor_i)
+	\end{equation}
+
+	for $i = \{1, 2\}$. Considering for now the two-dimensional case and
+	assuming the cables are of infinite length, their intersection point may be
+	found by solving:
+
+	\begin{align}
+		\cable_1 &= \cable_2 \\
+		\distalanchor_1 + \timenorm_1(\proximalanchor_1 - \distalanchor_1) &=
+			\distalanchor_2 + \timenorm_2(\proximalanchor_2 - \distalanchor_2)
+	\end{align}
+
+	This may be put into matrix form:
+
+	\begin{align}
+		\left[
+			\begin{matrix}
+				\proximalanchor_1 - \distalanchor_1 &
+				\distalanchor_2 - \proximalanchor_2
+			\end{matrix}
+		\right]
+		\left[
+			\begin{matrix}
+				\timenorm_1 \\
+				\timenorm_2 \\
+			\end{matrix}
+		\right]
+		&=
+		\left[
+			\begin{matrix}
+				\distalanchor_2 - \distalanchor_1
+			\end{matrix}
+		\right]
+		%
+		\\
+		%
+		\mat{A}\vec{\timenorm} &= \vec{b}%
+		\label{eq:cable_cable_interference}
+	\end{align}
+	\todo{Matrix symbols are not in nomenclature, but are not referenced
+	in another section. Temporary symbols}
+
+	In the two-dimensional case, we have that $\dim\mat{A} = 2\times2$ and
+	$\dim\vec{\timenorm} = \dim\vec{b} = 2\times1$.
+	Equation~\ref{eq:cable_cable_interference} can thus be solved by simply
+	taking:
+
+	\begin{equation}
+		\vec{\timenorm} = {\mat{A}}^{-1}\vec{b}
+	\end{equation}
+
+	Assuming for now zero-width, the cables are in collision if and only if
+	$\timenorm_i \in [0, 1]$.
+
+	In the three-dimensional case, infinite lines may not lie in the same plane.
+	This is reflected by the fact that $\dim\mat{A} = 3\times2$,
+	$\dim\vec{\timenorm} = 2\times1$ and $\dim\vec{b} = 2\times1$. The system
+	can therefore not be solved by taking the inverse of $\mat{A}$. Instead, the
+	closest points on the two cables can be found by solving
+	Equation~\ref{eq:cable_cable_interference} in the least squares sense:
+
+	\begin{equation}
+		\vec{\timenorm} = \pseudoinv{\mat{A}}\vec{b}
+	\end{equation}
+
+	Note that this will give the closest points on infinite lines. To find the
+	closest points on the finite cables, it is therefore necessary to clamp the
+	values in $\vec{\timenorm}$:
+
+	\begin{equation}
+		\timenorm_i =
+		\begin{cases}
+			0, \quad \timenorm_i < 0 \\
+			1, \quad \timenorm_i > 1 \\
+			\timenorm_i, \quad \text{otherwise}
+		\end{cases}
+	\end{equation}
+
+	The cables are considered to be in collision if the nearest point is closer
+	than some predefined tolerance:
+
+	\begin{equation}
+		\norm{\cable_1(\timenorm_1) - \cable_2(\timenorm_2)} < \tol
+	\end{equation}
+
+	A safety margin can be ensured by choosing the tolerance sufficiently larger
+	than the diameter of a single cable.
+
+	Note that some \gls{cdpr} designs place either the proximal or distal anchor
+	of two or more cables at the same point to reduce the risk of
+	collision\todo{cite this}. For such cases, cables can be considered
+	collision-free if:
+
+	\begin{equation}
+		\timenorm_i = 0 \quad\text{or}\quad \timenorm_i = 1
+	\end{equation}

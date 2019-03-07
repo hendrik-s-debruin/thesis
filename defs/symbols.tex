@@ -1,6 +1,33 @@
 % Dependencies:
 % 	mathabx: earth symbol
+
+%\newcommand\Tau{\mathrm{T}}
+\newcommand\Tau{{T}}
+
 \newglossary*{symbol}{Symbols}
+% ==============================================================================
+% Cable
+% ==============================================================================
+	\newglossaryentry{sym:cable}
+	{%
+		name=\ensuremath{\vec{c}},
+		sort=l,
+		description=a cable,
+		type=symbol
+	}
+	\newcommand{\cable}{\gls{sym:cable}}
+
+% ==============================================================================
+% Line
+% ==============================================================================
+	\newglossaryentry{sym:linevec}
+	{%
+		name=\ensuremath{\vec{l}},
+		sort=l,
+		description=a line in space,
+		type=symbol
+	}
+	\newcommand{\linevec}{\gls{sym:linevec}}
 
 % ==============================================================================
 % Real Numbers
@@ -1027,7 +1054,8 @@
 		description=the action  of the robot,
 		type=symbol
 	}
-	\renewcommand{\action}{\gls{sym:action}}
+	%\renewcommand{\action}{\gls{sym:action}}
+	\newcommand{\action}{\gls{sym:action}}
 
 % ==============================================================================
 % Action Space

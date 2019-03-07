@@ -1,4 +1,4 @@
-\documentclass[final]{report}
+\documentclass[draft]{report}
 
     \usepackage{ifdraft}
     \usepackage[obeyFinal]{todonotes}
@@ -36,9 +36,9 @@
     \usepackage[all]{hypcap}
 
 	% This should be used for full thesis:
-    %\usepackage[section=section, acronyms]{glossaries}
+    \usepackage[section=section, acronyms]{glossaries}
 	% This should be used for literature study report:
-    \usepackage[section=subsection, acronyms]{glossaries}
+    %\usepackage[section=subsection, acronyms]{glossaries}
         \makenoidxglossaries{}
         \input{defs/notation.tex}
         \input{defs/symbols.tex}
@@ -50,33 +50,38 @@
         \ifdraft{\glsaddall}{}
 
 	% redefine sections for literature report only
-	\let\paragraph\subsubsection%
-	\let\subsubsection\subsection%
-	\let\subsection\section%
-	\let\section\chapter%
+	%\let\paragraph\subsubsection%
+	%\let\subsubsection\subsection%
+	%\let\subsection\section%
+	%\let\section\chapter%
 
 \begin{document}
 
 	\ifdraft{\listoftodos{}}{}
 
-	\pagenumbering{gobble}
-	\input{chapters/title_page}
-    \input{chapters/abstract}
+%	\pagenumbering{gobble}
+%	\input{chapters/title_page}
+%    \input{chapters/abstract}
+%
+%    \clearpage
+%    \pagenumbering{roman}
+%
+%    \tableofcontents
+%    \listoffigures
+%    \listoftables
+%    \listofalgorithms{}
+%    \input{defs/nomenclature.tex}
+%
+%    \clearpage
+%    \pagenumbering{arabic}
+%    \input{chapters/intro/intro}
+%    \input{chapters/lit_study/lit_study}
+%	\input{chapters/proposed_plan/proposed_plan}
 
-    \clearpage
-    \pagenumbering{roman}
-
-    \tableofcontents
-    \listoffigures
-    \listoftables
-    \listofalgorithms{}
-    \input{defs/nomenclature.tex}
-
-    \clearpage
-    \pagenumbering{arabic}
-    \input{chapters/intro/intro}
-    \input{chapters/lit_study/lit_study}
-	\input{chapters/proposed_plan/proposed_plan}
+	\input{chapters/collision_detection/collision_detection}
+	\input{chapters/sampling/sampling}
+	\input{chapters/path_processing/path_processing}
+	\input{chapters/motion_law/motion_law}
 
     \printbibliography{}
 
