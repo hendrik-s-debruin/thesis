@@ -5,13 +5,26 @@
 \newcommand\Tau{{T}}
 
 \newglossary*{symbol}{Symbols}
+
+% ==============================================================================
+% Cable
+% ==============================================================================
+	\newglossaryentry{sym:face}
+	{%
+		name=\ensuremath{\set{F}},
+		sort=f,
+		description=a face of a polyhedron,
+		type=symbol
+	}
+	\newcommand{\face}{\gls{sym:face}}
+
 % ==============================================================================
 % Cable
 % ==============================================================================
 	\newglossaryentry{sym:cable}
 	{%
 		name=\ensuremath{\vec{c}},
-		sort=l,
+		sort=c,
 		description=a cable,
 		type=symbol
 	}
@@ -28,6 +41,18 @@
 		type=symbol
 	}
 	\newcommand{\linevec}{\gls{sym:linevec}}
+
+% ==============================================================================
+% Plane
+% ==============================================================================
+	\newglossaryentry{sym:plane}
+	{%
+		name=\ensuremath{\vec{\pi}},
+		sort=p,
+		description=a plane in space,
+		type=symbol
+	}
+	\newcommand{\plane}{\gls{sym:plane}}
 
 % ==============================================================================
 % Real Numbers
@@ -1326,7 +1351,7 @@
 	{%
 		name=\ensuremath{\vec{v}},
 		sort=v,
-		description=vertex of a graph,
+		description=vertex of a graph or object,
 		type=symbol
 	}
 	\newcommand{\vertex}{\gls{sym:vertex}}

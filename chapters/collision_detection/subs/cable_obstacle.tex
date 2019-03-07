@@ -1,0 +1,123 @@
+\section{Cable-Obstacle Collisions}%
+\label{sec:cable_obstacle_collisions}
+
+	The approach used for cable-obstacle collision detection is based on the
+	intersection of parametric lines and parametric planes. Similarly to the
+	parametric line in Equation~\ref{eq:parametric_line}, a parametric plane
+	$\plane$ through three points $\point_1, \point_2, \point_3$ can be
+	expressed as:
+
+	\begin{equation}
+		\plane = \point_1 + \timenorm_1(\point_2 - \point_1) +
+		\timenorm_2(\point_3 - \point_1)
+	\end{equation}
+
+	Where $\tau_1, \tau_2 \in \Re$.
+
+	To detect whether a cable is in collision with an obstacle, consider
+	Figure~\ref{fig:cable_obstacle_collision_detection}.
+
+	\begin{figure}[hb]
+		\missingfigure{Cable Obstacle Collision}
+		\caption{Cable-Obstacle Collision Detection}%
+		\label{fig:cable_obstacle_collision_detection}
+	\end{figure}
+
+	A convex polyhedron object $\obstacle$ consists of multiple faces,
+	${\face}_i$. A cable is in collision with such an object if it intersects
+	with any one of these faces.  The following procedure is therefore run for
+	every face of the polyhedron.
+
+	To detect a collision between a face and a cable, the face is first
+	approximated as an infinite parametric plane through any three vertices
+	$\vertex_i$ on the face. The equations for the cable and infinite plane are:
+
+	\todo{I changed the direction of the cable here to be consistent with the
+	standard. Check that the equations are still correct}
+	\begin{align}
+		\cable &= \distalanchor + \timenorm_1(\proximalanchor - \distalanchor)\\
+		\plane &= \vertex_1 + \timenorm_2(\vertex_2 - \vertex_1) +
+		\timenorm_3(\vertex_3 - \vertex_1)
+	\end{align}
+
+	Equating the points and manipulating yields the following expressions:
+
+	\begin{align}
+		\cable &= \plane
+		%%
+		\\
+		%%
+		\left[
+			\begin{matrix}
+				\proximalanchor - \distalanchor &
+				\vertex_1 - \vertex_2 &
+				\vertex_1 - \vertex_2
+			\end{matrix}
+		\right]
+		\left[
+			\begin{matrix}
+				\timenorm_1 \\
+				\timenorm_2 \\
+				\timenorm_3
+			\end{matrix}
+		\right]
+		&=
+		\left[
+			\begin{matrix}
+				\vertex_1 - \distalanchor
+			\end{matrix}
+		\right]
+		%%
+		\\
+		%%
+		\mat{A}\vec{\timenorm} &= \vec{b}
+	\end{align}
+	\todo{temp symbols not referenced later or in nomenclature}
+
+	Since $\dim\mat{A} = 3\times3$, $\dim\vec{\timenorm} = 3\times1$ and
+	$\dim\vec{b} = 3\times1$, the intersection of an infinite cable with an
+	infinite plane is simply:
+
+	\begin{equation}
+		\vec{\timenorm} = {\mat{A}}^{-1}\vec{b}
+	\end{equation}
+
+	Now, a necessary condition for collision is that:
+
+	\begin{equation}
+		\timenorm_1 \in [0, 1]
+	\end{equation}
+
+	If $\timenorm_1 \not\in [0,1]$, it means that the cable stops before hitting
+	the plane. In such a case, the collision detection algorithm may return
+	early.
+
+	For the special case where the face of the polyhedron is a rectangle, a
+	sufficient condition for collision is $\timenorm_i \in [0, 1], \quad i =
+	\{1, 2, 3\}$.  However, in the general case, when $\timenorm_1 \in [0, 1]$,
+	it is not sufficient to test that $\timenorm_2,\timenorm_3 \in [0, 1]$. This
+	is because the section of the infinite plane $\plane$ described by the range
+	$\timenorm_2, \timenorm_3 \in [0, 1]$ is the regular parallelogram defined
+	by the vertices $\vertex_1, \vertex_2, \vertex_3$.\todo{input figure that
+	explains this last sentence}
+
+	The cable intersects the plane containing the current face of the polyhedron
+	at point $\cable(\timenorm_1)$. It is therefore sufficient to check that
+	$\cable(\timenorm_1) \in \face_i$. This is done by use of the logical
+	predicate in Equation~\ref{eq:collision_point_with_obstacle},
+	page~\pageref{eq:collision_point_with_obstacle}.
+	\todo{This needs to be implemented fully in code. Also then document how
+	went from 3d to 2d}
+
+	The complete condition for collision is then given by:
+
+	\begin{equation}
+		\begin{cases}
+			\timenorm_1 &\in [0, 1]\\
+			\cable(\timenorm_1) &\in \face_i
+		\end{cases}
+		\quad \forall i \in \{1, \ldots, \norm{\obstacle}\}
+		\label{eq:cable_obstacle_collision_condition}
+	\end{equation}
+
+	Where the norm denotes the number of faces of the obstacle $\obstacle$.

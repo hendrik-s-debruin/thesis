@@ -1,0 +1,21 @@
+\section{Cable-End-Effector Collisions}%
+\label{sec:cable_end_effector_collisions}
+
+	Similarly to obstacles, the end-effector $\robot$ is modelled as a convex
+	polyhedron. As a result, the same procedure of
+	Section~\ref{sec:cable_obstacle_collisions} can be largely applied for this
+	case.
+
+	One small difference is that the cables are always touching the
+	end-effector. Therefore, simply following the procedure from before would
+	result in collisions always being detected. This is avoided by adjusting
+	Equation~\ref{eq:cable_obstacle_collision_condition} slightly to obtain:
+
+	\begin{equation}
+		\begin{cases}
+			\timenorm_1 &\in [0, 1)\\
+			\cable(\timenorm_1) &\in \face_i
+		\end{cases}
+		\quad \forall i \in \{1, \ldots, \norm{\robot}\}
+		\label{eq:cable_robot_collision_condition}
+	\end{equation}
