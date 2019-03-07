@@ -1,0 +1,42 @@
+\section{End-Effector-Obstacle Collisions}%
+\label{sec:end_effector_obstacle_collisions}
+
+	Collisions between the end-effector and obstacles are detected using the
+	well-known
+	\gls{sat}~\cite{bib:planning:hierarchical_structure_for_rapid_interference_detection}
+	theorem. \gls{sat} is not the fastest collision detection algorithm for two
+	convex polyhedra. A superior algorithm may be found
+	in~\cite{bib:planning:detecting_intersections_between_convex_polyhedra}.
+	However, \gls{sat} is considerably simpler to implement. Furthermore, for
+	the planning problems addressed by the current thesis, there are few
+	obstacles that are modelled in such a way as to have few faces each. Under
+	these conditions, \gls{sat} was found to perform sufficiently fast to not
+	cause any bottle-neck in the overall architecture.
+
+	For the sake of completeness, the algorithm is briefly described in
+	Algorithm~\ref{alg:sat}. Essentially, it looks for a line that passes
+	between the objects without intersecting them. It is sufficient to only test
+	the normals of the faces of both objects.
+
+	\todo{replace cross with times in code}
+	\begin{algorithm}[ht]
+		\caption{Separating Axis Theorem Collision Detection}%
+		\label{alg:sat}
+		\begin{algorithmic}[1]
+			\Procedure{sat}{$\robot$, $\obstacle$}
+				\State{}Put the normalised normal $n$ of every face $\face \in \robot\cup\obstacle$ into a queue $\queue$
+				\ForAll{$n \in \queue$}
+					\ForAll{vertex $\vertex \in \robot$}
+						\State{}Project $\vertex$ onto $n$, keeping track of the highest and lowest values
+					\EndFor{}
+					\ForAll{vertex $\vertex \in \obstacle$}
+						\State{}Project $\vertex$ onto $n$, keeping track of the highest and lowest values
+					\EndFor{}
+					\If{the intervals do not overlap}
+						\State{} Return $\code{no\_collision}$
+					\EndIf{}
+				\EndFor{}
+				\State{}Return $\code{collision}$
+			\EndProcedure{}
+		\end{algorithmic}
+	\end{algorithm}
