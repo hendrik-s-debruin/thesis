@@ -1,2 +1,172 @@
 \chapter{Path Processing}%
 \label{chap:path_processing}
+
+	The sampling algorithm (Algorithm~\ref{alg:sampling_planning_overview})
+	exits when it manages to attach the goal pose to the graph
+	$\topologicalgraph$. At this point, a Dijkstra-search is performed on
+	$\topologicalgraph$ to find an ordered set $\setofposes$ of poses $\pose$
+	using the distance function in Equation~\ref{eq:distance_measure} as the
+	cost-to-go criterion.
+
+	After this step, a collision-free path $\pathsym$ from the start to the goal
+	pose may be found by taking points along the convex hull of subsequent
+	points in the set $\setofposes$. The issue now becomes that the convex hull
+	between two points is a straight line, which means that different segments
+	of $\pathsym$ do not blend smoothly. Furthermore, due to the random nature
+	of the sampling algorithm, the set $\setofposes$ may contain superfluous
+	poses that will cause $\pathsym$ to be unnecessarily complicated. For this
+	reason, several post-processing steps were developed and are discussed in
+	the current chapter.
+
+	\section{Path Simplification}%
+	\label{sec:path_simplifcation}
+
+		A schematic example of the effect on $\pathsym$ of superfluous poses in
+		$\setofposes$ can be seen in the left-hand side of
+		Figure~\ref{fig:superfluous_poses}. The algorithms discussed here
+		transform such a path into something more closely related to the
+		right-hand side of the figure.
+
+		Algorithms were developed to:
+
+		\begin{enumerate}
+
+			\item
+
+				Remove unnecessary poses
+
+			\item
+
+				Remove corners from the path
+
+		\end{enumerate}
+
+		\begin{figure}[hb]
+			\caption{Superfluous Poses}%
+			\label{fig:superfluous_poses}
+			\missingfigure{}
+		\end{figure}
+
+		\subsection{Pose Removal}%
+		\label{sec:pose_removal}
+
+			A simple recursive algorithm was developed to remove poses from
+			$\setofposes$. The pseudocode is given in
+			Algorithm~\ref{alg:pose_removal}.
+
+			\begin{algorithm}[ht]
+				\caption{Pose Removal}
+				\label{alg:pose_removal}
+				\begin{algorithmic}[1]
+					\Procedure{Remove\_Poses}{}
+						\State{}\code{simplified = false}
+						\For{$\indexi \in [0, |\setofposes| -2]$}
+							\If{$\dist(\pose_{\indexi}, \pose_{\indexi+2}) >
+							\dist(\pose_{\indexi}, \pose_{\indexi+1})$}%
+							\label{alg:pose_removal:distance_check}
+								\If{$\code{Farthest\_Collision\_Free\_Point}(\pose_{\indexi},
+								\pose_{\indexi+2}) = \pose_{\indexi+2}$}
+									\State{}Remove $\pose_{\indexi+1}$ from
+									$\setofposes$
+									\State{}$\code{simplifed = true}$
+								\EndIf{}
+							\EndIf{}
+						\EndFor{}
+						\If{\code{simplified}}
+							\State{}\code{Remove\_Poses}
+						\EndIf{}
+					\EndProcedure{}
+				\end{algorithmic}
+			\end{algorithm}
+
+			This algorithm simply removes an intermediate pose if the pose
+			before and after it in the sequence in $\setofposes$ can be
+			connected by a straight line. However, since a Euclidean distance
+			measure (Equation~\ref{eq:euclidean_distance}) is not used, a path
+			may actually be \textit{shorter} if an additional intermediate point
+			is inserted between two points. For this reason, the algorithm only
+			removes points if this would reduce the total travelled distance
+			of the path. This is achieved by using the distance measure
+			(Equation~\ref{eq:distance_measure}) in
+			Line~\ref{alg:pose_removal:distance_check}.
+
+		\subsection{Corner Removal}%
+		\label{sec:corner_removal}
+
+			\todo{this is not yet properly implemented in the code}
+
+			In some instances, a path cannot be shortened by removing a pose
+			from $\setofposes$, since the resulting path would be in collision.
+			In such cases, the path may often contain a corner that may is far
+			away from the rest of the path. Figure~\ref{fig:path_corner} shows
+			a schematic example of this case. To deal with this, an algorithm
+			was developed to remove such corners.
+
+			\begin{figure}[hb]
+				\caption{Path Corner}
+				\label{fig:path_corner}
+				\missingfigure{}
+			\end{figure}
+
+			The algorithm tries to find the points $\pose_a, \pose_b$ that
+			minimises the total distance travelled along the segment:
+
+			\begin{equation}
+				(\pose_a, \pose_b) = \argmin
+					(
+						\dist(\pose_1, \pose_a) +
+						\dist(\pose_a, \pose_b) +
+						\dist(\pose_b, \pose_3)
+					)
+			\end{equation}
+
+			Subject to the constraint:
+
+			\begin{equation}
+				\forall
+					\obstacle
+				\forall
+				(
+					\pose\in
+					\convexhull(\pose_1, \pose_a) \cup \convexhull(\pose_a,
+					\pose_b) \cup \convexhull(\pose_b, \pose_3)
+				)
+				\quad\robot(\pose) \cap \obstacle = \emptyset
+			\end{equation}
+
+			This is done by writing the convex hull between two poses as a
+			parametric line:
+
+			\begin{align}
+				\linevec_1 &= \pose_1 + \timenorm_a(\pose_2 - \pose_1)\\
+				\linevec_2 &= \pose_3 + \timenorm_b(\pose_2 - \pose_3)\\
+			\end{align}
+
+			Now, using a simple linear search on both $\timenorm_a$ and
+			$\timenorm_b$, find the minimum values, $\timenorm_a',
+			\timenorm_b'$, for which:
+
+			\begin{align}
+				\robot(\convexhull(\pose_1, \linevec_2(\timenorm_b))) \cap
+					\obstacle = \emptyset\\
+				\robot(\convexhull(\pose_3, \linevec_1(\timenorm_a))) \cap
+					\obstacle = \emptyset
+			\end{align}
+
+			Now, a two-dimensional binary search is performed on $\timenorm_a$
+			and $\timenorm_b$ in the ranges:
+
+			\begin{align}
+				\timenorm_a \in [\timenorm_a', 1]\\
+				\timenorm_b \in [\timenorm_b', 1]
+			\end{align}
+
+			Which produce the poses $\pose_a$ and $\pose_b$ which minimises the
+			distance expression and satisfies the constraints of the problem.
+
+	\section{Smooth Interpolation}%
+	\label{sec:smooth_interpolation}
+
+	\section{Sample Path Processing Output}%
+	\label{sec:sample_path_processing_output}
+

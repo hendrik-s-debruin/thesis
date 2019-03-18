@@ -102,13 +102,28 @@
 			\item
 
 				A translation vector $\transvec$ is drawn from a normal
-				distribution such that its $x, y$ and $z$ components are within
-				the ranges of the workspace of the robot.
+				distribution such that:
+				\label{item:sample_strategy:translation}
+
+				\begin{enumerate}
+
+					\item
+
+						The median of the distribution is the centre of the
+						workspace.
+
+					\item
+
+						The edges of the workspace are three standard deviations
+						away from the median.
+				\end{enumerate}
 
 			\item
 
-				An angle $\theta$ is drawn from a normal distribution within the
-				range $(0, \pi)$.
+				An angle $\theta$ is drawn from a normal distribution with
+				median $\pi/2$ and standard deviation $\pi/6$.
+
+				\label{item:sample_strategy:angle}
 
 			\item
 
@@ -119,8 +134,10 @@
 						\cos(\theta/2)
 				\end{equation}
 
-				This produces a rotation of angle $\theta$ around the $y$
-				axis.\todo{explain that y axis is pointing up}
+				\label{item:sample_strategy:quaternion}
+
+				%This produces a rotation of angle $\theta$ around the $y$
+				%axis.\todo{explain that y axis is pointing up}
 
 			\item
 
@@ -128,27 +145,56 @@
 
 		\end{enumerate}
 
-		The reason that rotations are only drawn around the $y$ axis is
-		two-fold. The first reason is that experimentation has shown that the
-		architecture performs faster when only drawing rotations around a single
-		axis\todo{back this up with numbers}. The second reason is that, by only
-		drawing rotations around the $y$ axis, the robot is guaranteed to be
-		upright during its trajectory. This helps to avoid unnecessarily
-		complicated rotations during the robot's motion.
+		\subsection{Justification of Sampling Strategy}%
+		\label{sec:justification_of_sampling_strategy}
 
-		Following this approach, given an arbitrary start and end pose, the
-		architecture finds a path through several poses in such a way that,
-		while moving from the start pose to the first sampled pose, the robot is
-		turned upright. Then, while in the middle of its trajectory, the robot
-		stays upright. Finally, as the robot approaches its final pose, it
-		performs any required arbitrary rotations to reach the desired goal
-		pose. This is shown schematically in Figure~\ref{fig:pose_sampling}.
+			\glspl{cdpr} have a higher capacity margin towards the centre of
+			their workspace\todo{cite something here}. This led to the decision
+			to use a normal distribution to sample translations as described in
+			Item~\ref{item:sample_strategy:translation} above. In doing so,
+			the sampling algorithm has a higher probability to choose
+			translations closer to the centre of the workspace, thereby
+			increasing the average stability of the trajectory found.
 
-		\begin{figure}[hb]
-			\missingfigure{}
-			\caption{Pose Sampling}%
-			\label{fig:pose_sampling}
-		\end{figure}
+			Items~\ref{item:sample_strategy:angle}
+			and~\ref{item:sample_strategy:quaternion} in the list above generate
+			a rotation $\theta$ around the $y$-axis. The reason that rotations
+			are only drawn around the $y$ axis is two-fold. The first reason is
+			that experimentation has shown that the architecture performs faster
+			when only drawing rotations around a single axis\todo{back this up
+			with numbers}. The second reason is that, by only drawing rotations
+			around the $y$ axis, the robot is guaranteed to be upright during
+			its trajectory. This produces simpler trajectories, as generating
+			completely random quaternions would have the robot change its
+			orientation unpredictably.
+
+			The mean and standard deviation as defined in
+			Item~\ref{item:sample_strategy:angle} are chosen such that 99.7\% of
+			the sampled rotations lie within the range $\theta \in [0, \pi]$.
+			The effect of using a uniform distribution within this range instead
+			of the distribution of Item~\ref{item:sample_strategy:angle} was
+			also investigated. This, however, was deemed an inefficient
+			approach, as the end-effector was found to have a tendency to
+			unnecessarily swing back and forth around the $y$-axis as it
+			progressed through its trajectory. By instead biassing the
+			end-effector's orientation towards a certain median position, the
+			need for a post-processing operation to simplify the orientation's
+			progression was eliminated.
+
+			Following this approach, given an arbitrary start and end pose, the
+			architecture finds a path through several poses in such a way that,
+			while moving from the start pose to the first sampled pose, the
+			robot is turned upright. Then, while in the middle of its
+			trajectory, the robot stays upright. Finally, as the robot
+			approaches its final pose, it performs any required arbitrary
+			rotations to reach the desired goal pose. This is shown
+			schematically in Figure~\ref{fig:pose_sampling}.
+
+			\begin{figure}[hb]
+				\missingfigure{}
+				\caption{Pose Sampling}%
+				\label{fig:pose_sampling}
+			\end{figure}
 
 
 	\section{Path Checking}%
@@ -247,6 +293,7 @@
 				\norm{%
 					\pose_2.\transvec - \pose_1.\transvec
 				}
+			\label{eq:euclidean_distance}
 		\end{equation}
 
 		\todo{Add radius of gyration discussion here}
@@ -288,5 +335,6 @@
 				\norm{%
 					\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
 				}
+			\label{eq:distance_measure}
 		\end{equation}
 
