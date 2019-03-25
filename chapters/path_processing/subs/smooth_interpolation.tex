@@ -1,0 +1,247 @@
+\section{Smooth Interpolation}%
+\label{sec:smooth_interpolation}
+
+	After the path has been simplified using the algorithms described in
+	Section~\ref{sec:path_simplification}, a path consisting of straight lines
+	with hard corners is obtained. The next step is to generate a smoother
+	trajectory that approximates the path while still avoiding obstacles.
+	Figure~\ref{fig:path_smoothing} shows a schematic representation of the
+	desired output.
+
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{smoothed_path.pdf_tex}
+		\caption{Path Smoothing}%
+		\label{fig:path_smoothing}
+	\end{figure}
+
+	B-spline curves were used to obtain the desired trajectory. To achieve this,
+	each pose $\pose$ in the ordered set of poses $\setofposes$ in the
+	simplified path is considered as a control point of the final B-spline
+	trajectory. The trajectory is then generated using the well-known B-spline
+	recursive relation repeated here for completeness:
+
+	\begin{align}
+		\begin{split}
+			\pathsym(\timesym) &=
+				\sum^{|\setofposes|}_{i=0} N_{i, k}(\timesym)\pose_{\indexi}\\
+			%%%%
+			N_{\indexi, \indexj}(\timesym) &=
+				\frac
+				{%
+					\timesym - \timesym_{\indexi}
+				}
+				{%
+					\timesym_{\indexi + \indexj} - \timesym_{\indexi}
+				}
+				N_{\indexi, \indexj - 1}
+				+
+				\frac
+				{%
+					\timesym_{\indexi + \indexj + 1} - \timesym
+				}
+				{%
+					\timesym_{\indexi + \indexj + 1} - \timesym_{\indexi + 1}
+				}
+				N_{\indexi + 1, \indexj - 1}\\
+			%%%%%
+			N_{\indexi, 0}(\timesym) &=
+				\begin{cases}
+					1, \quad \timesym_{\indexi} \leq \timesym < \timesym_{\indexi + 1}\\
+					0, \quad \text{otherwise}
+				\end{cases}\\
+			%%%%%
+			\vec{\timesym} &=
+				\left[
+					\begin{matrix}
+						\timesym_0, \ldots, \timesym_{k + |\setofposes| + 1}
+					\end{matrix}
+				\right]
+		\end{split}
+		\label{eq:b_spline_recursion}
+	\end{align}
+	\todo{Some symbols not in nomenclature}
+
+	Where $k$ is the degree of the B-spline used to approximate the points in
+	$\setofposes$ and $\vec{\timesym}$ is the equidistant knot vector that
+	produces the uniform spline.
+
+	\subsection{Guaranteeing Smooth Path Safety}%
+	\label{sec:guaranteeing_smooth_path_safety}
+
+		Blindly applying Equation~\ref{eq:b_spline_recursion} makes no guarantee
+		that the smooth path will be collision free. The generated spline curve
+		must therefore be checked for collisions and corrective action must be
+		taken in the case that a new collision is detected.
+
+		One technique that is commonly used with B-spline curves is that of knot
+		multiplicity\todo{cite something here}. The elements in the knot vector
+		$\vec{\timesym}$\todo{not in nomenclature} are generally spaced
+		equidistantly. However, the multiplicity of a knot may be increased by
+		letting consecutive knots assume the same value. This has the effect of
+		drawing the spline closer to a control point, but also drops a degree of
+		differentiability at this point. A schematic representation of this
+		effect can be seen in Figure~\ref{fig:knot_multiplicity}.
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{knot_multiplicity.pdf_tex}
+			\caption{Increased Knot Multiplicity}%
+			\label{fig:knot_multiplicity}
+		\end{figure}
+
+		While such an approach works, it presents some drawbacks:
+
+		\begin{itemize}
+
+			\item Loss of smoothness.
+
+				A goal of this thesis is to generate smooth trajectories.
+				Dropping a degree of differentiability can create
+				discontinuities in the jerk, acceleration or velocity profiles
+				of the final trajectory. In the worst case, if a point in the
+				path degenerates to $\contdeggeom{0}$ --- that is, a hard corner
+				in the position profile --- the end-effector would have to come
+				to a complete stop at this point and then accelerate from rest
+				again. Stopping the motion in the middle of the trajectory is a
+				non-ideal approach and should be avoided as much as possible.
+
+			\item Slow Computation Time.
+
+				In general, higher-degree B-spline curves may be used to
+				generate a path in configuration space. If part of the curve is
+				in collision, then the multiplicity of the point must be
+				increased and the path must be checked again. The path can
+				potentially still be in collision and, consequently, this
+				process can repeat until the offending point degenerates to
+				$\contdeggeom{0}$.
+
+		\end{itemize}
+
+		Instead, this thesis proposes to augment $\setofposes$ with additional
+		poses such that the spline curve generated from
+		Equation~\ref{eq:b_spline_recursion} is guaranteed to be free of
+		collisions. This is achieved by noticing from
+		Equation~\ref{eq:b_spline_recursion} that any point in $\pathsym$ is
+		obtained from convex combinations of subsequent poses. This means that
+		the path is guaranteed to go through the convex hull of the currently
+		active control points. The consequence of this is that, if the hull of
+		the points can be shown to be collision-free, then the path is
+		guaranteed to be collision free automatically. The algorithm developed
+		is reported in Algorithm~\ref{alg:set_of_poses_augmentation}.
+
+		\begin{algorithm}[ht]
+			\caption{$\setofposes$ Augmentation}%
+			\label{alg:set_of_poses_augmentation}
+			\begin{algorithmic}[1]
+				\Procedure{Augment\_Pose\_Set}{\setofposes{}}
+					\State{}Declare new set $\setofposes'$
+					\State{}Add first pose in $\setofposes$ to $\setofposes'$
+					\ForAll{$\pose_{\indexi} \in \setofposes$}
+						\State{}$\pose_0 = \pose_{\indexi - 1}$
+						\State{}$\pose_1 = \pose_{\indexi}$
+						\State{}$\pose_2 = \pose_{\indexi + 1}$
+						\State{}$\timenorm_1 = 0$
+						\State{}$\timenorm_2 = 1$
+						\While{$\timenorm_1 \leq 0.5$ and $\timenorm_2 \geq 0.5$}
+							\State{}$\pose_a = \pose_0 + \timenorm_1(\pose_1 -
+								\pose_0)$
+							\State{}$\pose_b = \pose_1 + \timenorm_2(\pose_2 -
+								\pose_1)$
+							\State{}$\timenorm_1 = \timenorm_1 + \Delta\timenorm$
+							\State{}$\timenorm_2 = \timenorm_2 - \Delta\timenorm$
+							\If{Farthest\_Collision\_Free\_Point($\pose_a, \pose_b)= \pose_b$}
+								\State{}break
+							\EndIf{}
+						\EndWhile
+						\State{}$\setofposes'\code{.push}(\pose_a, \pose_1, \pose_b)$
+					\EndFor{}
+					\State{}Add last point in $\setofposes$ to $\setofposes'$
+					\State{}return $\setofposes'$
+				\EndProcedure
+			\end{algorithmic}
+		\end{algorithm}
+
+		A graphical intuition of Algorithm~\ref{alg:set_of_poses_augmentation}
+		can be seen in Figure~\ref{fig:set_of_poses_augmentation}. Essentially,
+		it tries to find a shorter straight-line path
+		$\vecline{\pose_a}{\pose_b}$ that connects poses $\pose_0$ and
+		$\pose_2$, but cuts out $\pose_1$. The search is performed by moving
+		$\pose_a$ from $\pose_0$ to the midpoint of the line
+		$\vecline{\pose_0}{\pose_1}$ and $\pose_b$ from the midpoint of
+		$\vecline{\pose_1}{\pose_2}$ to $\pose_1$.
+
+		A shorter path could potentially be found by varying $\timenorm_1$ and
+		$\timenorm_2$ in nested loops. However, the call to
+		\code{Farthest\_Collision\_Free\_Point} is quite expensive. Nested loops
+		would mean that the function is called
+		\(
+			O
+			\left(
+				\ceil*
+				{%
+					{%
+						\left(
+							\frac
+							{%
+								1
+							}
+							{%
+								2\Delta\timenorm
+							}
+						\right)
+					}^2
+				}
+			\right)
+		\)
+		times, instead of just
+		\(
+			O
+			\left(
+				\ceil*
+				{%
+					\left(
+						\frac
+						{%
+							1
+						}
+						{%
+							2\Delta\timenorm
+						}
+					\right)
+				}
+			\right)
+		\)
+		times. Note here that we require $\Delta\timenorm \in (0, 1]$.
+		Therefore, the algorithm in its presented state represents a tradeoff
+		between speed and path-length.
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{0.8\columnwidth}
+			\import{res/img/}{subdivide_control_points.pdf_tex}
+			\caption{$\setofposes$ Augmentation}%
+			\label{fig:set_of_poses_augmentation}
+		\end{figure}
+
+		A B-spline curve created using Equation~\ref{eq:b_spline_recursion} on
+		the augmented set $\setofposes'$ generated from
+		Algorithm~\ref{alg:set_of_poses_augmentation} can be viewed as a set of
+		straight lines smoothly interpolated with polynomial bends. The
+		algorithm has the following benefits:
+
+		\begin{itemize}
+
+			\item Fast
+
+				The algorithm is linear in the amount of times that the
+				collision algorithm needs to be called.
+
+			\item Smooth
+
+				The algorithm ensures that sampled points are connected with the
+				maximum degree of smoothness that can be achieved by the degree
+				chosen for the B-spline curve.
+		\end{itemize}

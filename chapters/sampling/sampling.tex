@@ -11,6 +11,24 @@
 	sample poses directly. This is due to the fact that there is a one-to-one
 	correlation between end-effector pose and robot configuration.
 
+	The algorithm essentially builds a topological graph $\topologicalgraph$
+	whose vertices contain collision-free end-effector poses. The edges of the
+	graph represent paths that are free of collision. After $\topologicalgraph$
+	is built, a path $\pathsym$ is found that connects the start pose
+	$\pose_{\initial}$ to the final pose $\pose_{\final}$ by taking into account
+	a custom-defined distance function $\dist(\pose_1, \pose_2)$ between two
+	neighbour poses in $\topologicalgraph$. A schematic representation is shown
+	in Figure~\ref{fig:path_search}. The details are described in the following
+	sections.
+
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{path_search.pdf_tex}
+		\caption{Path Smoothing}%
+		\label{fig:path_search}
+	\end{figure}
+
 	\section{Algorithm Overview}%
 	\label{sec:algorithm_overview}
 
@@ -191,7 +209,9 @@
 			schematically in Figure~\ref{fig:pose_sampling}.
 
 			\begin{figure}[hb]
-				\missingfigure{}
+				\centering
+				\def\svgwidth{\columnwidth}
+				\import{res/img/}{pose_sampling.pdf_tex}
 				\caption{Pose Sampling}%
 				\label{fig:pose_sampling}
 			\end{figure}
