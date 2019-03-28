@@ -798,9 +798,9 @@
 % ==============================================================================
 	\newglossaryentry{sym:traj}
 	{%
-		name={\ensuremath{\vec{s}}},
+		name={\ensuremath{\vec{\sigma}}},
 		sort=s,
-		description=A trajectory in space,
+		description=A trajectory along a path,
 		type=symbol
 	}
 	\newcommand{\traj}{\gls{sym:traj}}
@@ -808,7 +808,40 @@
 % ==============================================================================
 % Path
 % ==============================================================================
-	\newcommand{\pathsym}{\traj}
+	\newglossaryentry{sym:pathsym}
+	{%
+		name={\ensuremath{\vec{s}}},
+		sort=s,
+		description=A path in space,
+		type=symbol
+	}
+	\newcommand{\pathsym}{\gls{sym:pathsym}}
+
+% ==============================================================================
+% Range
+% ==============================================================================
+	\newglossaryentry{sym:range}
+	{%
+		name={\ensuremath{R}},
+		sort=r,
+		description=A range of values
+		type=symbol
+	}
+	\newcommand{\range}{\gls{sym:range}}
+	\newcommand{\rangetimenorm}{\ensuremath{\range_{\timenorm}}}
+
+% ==============================================================================
+% Set of Ranges
+% ==============================================================================
+	\newglossaryentry{sym:setofranges}
+	{%
+		name={\ensuremath{\set{R}}},
+		sort=r,
+		description=A range of values
+		type=symbol
+	}
+	\newcommand{\setofranges}{\gls{sym:setofranges}}
+	\newcommand{\setofrangestimenorm}{\ensuremath{\setofranges_{\timenorm}}}
 
 
 % ==============================================================================
@@ -834,6 +867,18 @@
 		type=symbol
 	}
 	\newcommand{\timenorm}{\gls{sym:timenorm}}
+
+% ==============================================================================
+% Motion Law
+% ==============================================================================
+	\newglossaryentry{sym:motionlaw}
+	{%
+		name={\ensuremath{\func{u}}},
+		sort=u,
+		description=motion law
+		type=symbol
+	}
+	\newcommand{\motionlaw}{\gls{sym:motionlaw}}
 
 % ==============================================================================
 % Set of Time Instants
