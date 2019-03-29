@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{282.09943086bp}%
+    \setlength{\unitlength}{283.46456693bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,25 +50,30 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,1.07494024)%
+  \begin{picture}(1,1.2)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{motion_law_intuition.pdf}}%
-    \put(0.15864798,1.06686862){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_1$\end{tabular}}}}%
-    \put(0.47396274,1.06686862){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_2$\end{tabular}}}}%
-    \put(0.6140769,1.06686862){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_3$\end{tabular}}}}%
-    \put(0.93461016,0.92979307){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timenorm$\end{tabular}}}}%
-    \put(0.93161807,0.9823012){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\max}$\end{tabular}}}}%
-    \put(0.9272978,0.88891659){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\min}$\end{tabular}}}}%
-    \put(0.92899405,0.28508729){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timesym$\end{tabular}}}}%
-    \put(0.08302541,0.28141849){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = 0$\end{tabular}}}}%
-    \put(0.24335689,0.34106917){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{1}}$\end{tabular}}}}%
-    \put(0.61878916,0.58218611){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{2}}$\end{tabular}}}}%
-    \put(0.78073389,0.62122268){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{3}}$\end{tabular}}}}%
-    \put(0.08347178,0.70520348){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = 1$\end{tabular}}}}%
+    \put(0.14376586,1.1229807){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_1$\end{tabular}}}}%
+    \put(0.4575621,1.1229807){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_2$\end{tabular}}}}%
+    \put(0.5970015,1.1229807){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}${\rangetimenorm}_3$\end{tabular}}}}%
+    \put(0.91599106,0.98656529){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timenorm$\end{tabular}}}}%
+    \put(0.91301338,1.03882054){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\max}$\end{tabular}}}}%
+    \put(0.90871391,0.94588567){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\min}$\end{tabular}}}}%
+    \put(0.91549988,0.3379485){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timesym$\end{tabular}}}}%
+    \put(0.06850748,0.34131307){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = 0$\end{tabular}}}}%
+    \put(0.22806681,0.40067647){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{1}}$\end{tabular}}}}%
+    \put(0.60169106,0.64063237){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{2}}$\end{tabular}}}}%
+    \put(0.76285583,0.67948094){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{1}{\gain_{3}}$\end{tabular}}}}%
+    \put(0.06895169,0.7630573){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = \motionlaw(\timesym)= 1$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{motion_law_intuition.pdf}}%
-    \put(0.93461016,0.07903085){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timesym$\end{tabular}}}}%
-    \put(0.93161807,0.13153897){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\max}$\end{tabular}}}}%
-    \put(0.9272978,0.03815437){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\min}$\end{tabular}}}}%
+    \put(0.91599108,0.13990024){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timesym$\end{tabular}}}}%
+    \put(0.91301341,0.19215549){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\max}$\end{tabular}}}}%
+    \put(0.90871394,0.09922061){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\dot{\cablelength}_{\min}$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{motion_law_intuition.pdf}}%
+    \put(0.06133564,1.06303014){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{\der\invgeometricmodel(\pathsym(\timenorm))}{\der \timenorm}$\end{tabular}}}}%
+    \put(0.06133566,0.21271016){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\frac{\der\invgeometricmodel(\traj(\timesym))}{\der \timesym}$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{motion_law_intuition.pdf}}%
+    \put(0.69916138,1.14432363){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\setofrangestimenorm$\end{tabular}}}}%
   \end{picture}%
 \endgroup%
