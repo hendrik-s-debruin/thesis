@@ -1,0 +1,49 @@
+\section{Overall Collision Detection Algorithm}%
+\label{sec:overall_collision_detection_algorithm}
+
+	The collision detection algorithms described in this chapter execute
+	quickly. However, since they can potentially be called a few thousand times
+	during the initial path search, it is beneficial to organise them in such a
+	way that the algorithms that are more likely to detect a collision are
+	executed before those that are less likely. This can lead to potential
+	speed-ups during the execution  of the code.  The overall meta-algorithm for
+	collision detection is reported in
+	Algorithm~\ref{alg:overall_collision_detection}.
+
+	\begin{algorithm}[ht]
+		\caption{Overall Collision Detection}%
+		\label{alg:overall_collision_detection}
+		\begin{algorithmic}[1]
+			\Procedure{in\_collision}{}
+				\ForAll{\cable}
+					\ForAll{\obstacle}
+						\If{\code{cable\_obstacle\_collision(\cable, \obstacle)}}
+							\State{}\code{return true}
+						\EndIf{}
+					\EndFor{}
+				\EndFor{}
+				\ForAll{\obstacle}
+					\If{\code{endeffector\_obstacle\_collision(\robot, \obstacle)}}
+						\State{}\code{return true}
+					\EndIf{}
+				\EndFor{}
+				\ForAll{$\cable_{\indexi}$}
+					\ForAll{$\cable_{\indexj} \neq \cable_{\indexi}$}
+						\If{$\code{cable\_cable\_collision}(\cable_{\indexi}, \cable_{\indexj})$}
+					 		\State{}\code{return true}
+						\EndIf{}
+					\EndFor{}
+				\EndFor{}
+				\ForAll{\cable}
+					\If{\code{cable\_endeffector\_collision(\cable, \robot)}}
+						\State{}\code{return true}
+					\EndIf{}
+				\EndFor{}
+				\State{}$\capacitymargin = \robot(\pose)\code{.capacity\_margin()}$
+				\If{$\capacitymargin < 0$}
+					\State{}\code{return true}
+				\EndIf{}
+				\State{}\code{return false}
+			\EndProcedure{}
+		\end{algorithmic}
+	\end{algorithm}
