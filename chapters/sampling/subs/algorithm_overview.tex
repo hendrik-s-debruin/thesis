@@ -1,0 +1,78 @@
+\section{Algorithm Overview}%
+\label{sec:algorithm_overview}
+
+	The pose $\pose$ of the robot $\robot$ is described as a translation
+	vector $\transvec$ combined with a quaternion $\quaternion$:
+
+	\begin{equation}
+		\pose = (\transvec, \quaternion)
+	\end{equation}
+
+	Furthermore, the algorithm defines a graph $\topologicalgraph$ of poses.
+	During each iteration, the algorithm samples a new pose,
+	$\pose_{\indexi}$ such that:
+
+	\begin{equation}
+		\robot(\pose_{\indexi}) \not\in
+		\configurationspace_{\obstacleregion}
+	\end{equation}
+
+	and attempts to add it to the graph:
+
+	\begin{equation}
+		\topologicalgraph_{\indexi + 1} \leftarrow
+			\topologicalgraph_{\indexi} \cup \pose_{\indexi}
+	\end{equation}
+
+	in such a way that:
+
+	\begin{equation}
+		\exists \pose_{\indexj} \in \topologicalgraph_{\indexi}
+			\quad\suchthat\quad
+			\vecline{\pose_{\indexi}}{\pose_{\indexj}} \notin
+			\configurationspace_{\obstacleregion}
+	\end{equation}
+
+	This last line states that the new sampled pose may be connected to some
+	other pose already in the graph in such a way that the path connecting
+	the two poses is free of collisions.
+
+	At the same time, at each iteration, the algorithm attempts to add the
+	goal pose $\pose_{\goal}$ to $\topologicalgraph$. If this is
+	successfully executed, then a path has been found and the algorithm
+	terminates. A high-level overview of the algorithm can be found in
+	Algorithm~\ref{alg:sampling_planning_overview}.
+
+	\begin{algorithm}[ht]
+		\caption{Sampling Planning Overview}%
+		\label{alg:sampling_planning_overview}
+		\begin{algorithmic}[1]
+			\Procedure{Sample\_Search}{$\robot, \obstacle_1, \ldots, \obstacle_n$}
+				\State{}$\topologicalgraph = \emptyset \cup \pose_{\initial}$
+				\While{$\pose_{\goal} \notin \topologicalgraph$}
+					\Repeat{}
+						\State{}$\pose_\text{sampled} \leftarrow
+						\code{sample\_pose}$\label{alg:sampling_planning_overview:sample_pose}
+					\Until{$\robot(\pose) \notin \configurationspace_{\obstacleregion}$}
+					\State{}
+						\(
+							\pose_{\text{neighbour}} =
+							\argmin_{\pose_{\indexi} \in
+							\topologicalgraph}\dist(\pose_\text{sampled}, \pose_{\indexi})
+						\)
+					\State{}$\pose_\text{new} =
+						\code{farthest\_collision\_free\_point}(\pose_{\text{sampled}},
+						\pose_{\text{neighbour}})$\label{alg:sampling_planning_overview:farthest_collision_free_point_sampled}
+					\State{}$\code{connect}(\pose_\text{neighbour},
+						\pose_\text{new})$
+					\State{}$\pose_\text{new} =
+						\code{farthest\_collision\_free\_point}(\pose_{\text{new}},
+						\pose_{\text{\goal}})$\label{alg:sampling_planning_overview:farthest_collision_free_point_goal}
+					\If{$\pose_\text{new} == \pose_{\goal}$}
+						\State{}$\code{connect}(\pose_{\goal},
+							\pose_\text{new})$
+					\EndIf{}
+				\EndWhile{}
+			\EndProcedure{}
+		\end{algorithmic}
+	\end{algorithm}

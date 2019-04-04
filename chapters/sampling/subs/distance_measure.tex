@@ -1,0 +1,115 @@
+\section{Distance Measure}%
+\label{sec:distance_measure}
+
+	Both Algorithm~\ref{alg:sampling_planning_overview}
+	and~\ref{alg:farthest_collision_free_point} require to measure the
+	distance between two poses, $\dist(\pose_1, \pose_2)$. This poses a
+	problem, however, as a pose is a member of the special euclidean group,
+	$\pose \in \specialEuclideanGroup{3}$. There is no one way to measure
+	distances in this set and an arbitrary measure is often required. There
+	is also the problem that the units used for rotations and translations
+	differ.
+
+	Several different measures are often used in these cases. One is to
+	simply define the distance as the translational distance between two
+	poses:
+
+	\begin{equation}
+		\dist(\pose_1, \pose_2) =
+			\norm{%
+				\pose_2.\transvec - \pose_1.\transvec
+			}
+		\label{eq:euclidean_distance}
+	\end{equation}
+
+	\todo{Add radius of gyration discussion here}
+
+	This thesis proposes to instead measure distances in cable-space. This
+	has the following advantages:
+
+	\begin{itemize}
+
+		\item
+
+			Dimensionally homogeneous. Since each pose is related directly
+			to the length of the cable-space vector, both the translation
+			and orientation of a pose can be measured using meters.
+
+		\item
+
+			Direct correlation to actuators. The change in length of the
+			cables relates directly to how much the actuators have to act on
+			the cables. Using the cable-space vector as a distance measure
+			means that the distance exactly encodes the amount of actuation
+			required to move from one pose to another.
+			\todo{wording}
+
+	\end{itemize}
+
+	The cable-space vector, $\cablelengths$, can be found from the indirect
+	geometric model of the \gls{cdpr}:
+
+	\begin{equation}
+		\cablelengths = \invgeometricmodel(\pose)
+	\end{equation}
+
+	The distance function is then taken as:\todo{make sure this is correct,
+	and implement it in the code}
+
+	\begin{equation}
+		\dist(\pose_1, \pose_2) =
+			\norm{%
+				\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+			}
+		\label{eq:distance_measure}
+	\end{equation}
+
+	\subsection{Incorporating the Capacity Margin}%
+	\label{sec:incorporating_the_capacity_margin}
+
+		It may be useful to include the value of an index, such as the capacity
+		margin, in the distance calculation. For such cases
+		Equation~\ref{eq:distance_measure} may be modified to obtain:
+
+		\begin{equation}
+			\dist_{\pathsym}(\pose_1, \pose_2) =
+				-\gain_{\capacitymargin}
+				\frac%
+				{%
+					\int_0^1 \capacitymargin(\pathsym(\timenorm))\der\timenorm
+				}
+				{%
+					%\int_{\pathsym} \der\pose
+					\capacitymargin(\pose_2) - \capacitymargin(\pose_1)
+				}
+				+
+				(1 - \gain_{\capacitymargin})
+				\norm{%
+					\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+				}
+				\label{eq:distance_measure_capcity_margin}
+		\end{equation}
+		\todo{This has not yet been implemented in code}
+		\todo{dimensionally homogeneous?}
+
+		Here
+		\(
+			\dist_{\pathsym}
+		\)
+		measures the distance along the path $\pathsym$ and
+		\(
+			\gain_{\capacitymargin} \in [0, 1]
+		\)
+		is a weighting factor that weighs the relative importance of the change
+		in capacity margin for a longer path to the straight-line distance
+		between two poses.
+
+		The negative sign in front of the integral in
+		Equation~\ref{eq:distance_measure_capcity_margin} is due to the fact
+		that a path for which the capacity margin is higher should be considered
+		more advantageous and therefore shorter.
+
+		The integral in Equation~\ref{eq:distance_measure_capcity_margin} is
+		expensive to evaluate repeatedly during the path-planning phase. As
+		such, it is instead approximated using a...
+		\todo{when implemented, flesh out the following paragraph}
