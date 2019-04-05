@@ -146,3 +146,111 @@
 		Which produce the poses $\pose_a$ and $\pose_b$ which minimises the
 		distance expression and satisfies the constraints of the problem.
 
+	\subsection{Increasing the Capacity Margin}%
+	\label{sec:increasing_the_capacity_margin}
+
+		\todo{the algorithm described here has not been implemented}
+
+		At this point a set $\setofposes$ has been found that is guaranteed to
+		be collision-free. However, due to the random nature of the path search
+		algorithm, little is done to optimise the overall capacity margin
+		$\capacitymargin$ of the trajectory. Two approaches to improve the
+		capacity margin are proposed:
+
+		\begin{enumerate}
+
+			\item
+				Change the condition for the collision detection algorithm.
+				\label{option:change_collision_condition}
+
+			\item
+				Post-process $\setofposes$ to improve $\capacitymargin$.
+				\label{option:post_process_set_of_poses}
+
+		\end{enumerate}
+
+		Option~\ref{option:change_collision_condition} is to define some minimum
+		threshold capacity margin ${\capacitymargin}_{\tol}$ and modify the
+		capacity margin submodule ${\logicalpredicate}_{\capacitymargin}$ of the
+		collision detection algorithm as follows:
+
+		\begin{equation}
+			{\logicalpredicate}_{\capacitymargin} =
+				\begin{cases}
+					\false, \quad \capacitymargin > {\capacitymargin}_{\tol} \\
+					\true, \quad \text{otherwise}
+				\end{cases}
+		\end{equation}
+
+		This will guarantee that at each point in the trajectory the capacity
+		margin is above this minimum limit.
+
+		Option~\ref{option:post_process_set_of_poses} requires that each pose be
+		changed according to:
+
+		\begin{equation}
+			\forall
+				\left(
+					{\pose}_{\indexi} \neq {\pose}_{\initial}, {\pose}_{\goal}
+				\right)
+			\in
+				\setofposes,
+			%
+			{\pose}_{\indexi}' \gets
+				{\pose}_{\indexi} + {\gain}_{\indexi}\nabla\capacitymargin({\pose}_{\indexi})
+			\label{eq:capacity_margin_increase}
+		\end{equation}
+
+		\todo{what is the derivative of a quaternion?}
+
+		Here, the gain ${\gain}_{\indexi}$ determines how far to move
+		${\pose}_{\indexi}$ in the direction of increasing $\capacitymargin$. Of
+		course, this is subject to the constraints:
+
+		\begin{equation}
+			\dist_{\pathsym}
+				\left(
+					{\pose}_{\indexi - 1},
+					{\pose}_{\indexi}'
+				\right)
+			+
+			\dist_{\pathsym}
+				\left(
+					{\pose}_{\indexi}',
+					{\pose}_{\indexi + 1}
+				\right)
+			<
+			\dist_{\pathsym}
+				\left(
+					{\pose}_{\indexi - 1},
+					{\pose}_{\indexi}
+				\right)
+			+
+			\dist_{\pathsym}
+				\left(
+					{\pose}_{\indexi},
+					{\pose}_{\indexi + 1}
+				\right)
+			\label{eq:constraint_shorter_distance}
+		\end{equation}
+
+		and
+
+		\begin{equation}
+			\logicalpredicate(\pathsym') = \false
+			\label{eq:constraint_no_collision}
+		\end{equation}
+
+		These constraints essentially require that the distance found be shorter
+		due to an increase in capacity margin, but still be free of collisions.
+
+		Due to the costs involved in evaluating
+		Constraint~\ref{eq:constraint_shorter_distance}, the search on
+		${\gain}_{\indexi}$ should be limited. As such, it is beneficial to
+		define a discrete set ${{\gain}_{\indexi}}_1 \ldots
+		{{\gain}_{\indexi}}_n$ for which
+		Equation~\ref{eq:capacity_margin_increase} is called.
+		\todo{$n$ is  not in nomenclature} If this set of gains is kept small,
+		the procedure can be run multiple times to search for a path with a
+		higher capacity margin. Of course, this has a trade-off with the overall
+		calculation time required.
