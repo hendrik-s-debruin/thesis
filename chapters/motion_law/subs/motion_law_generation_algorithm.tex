@@ -201,3 +201,128 @@
 		\label{fig:motion_law_spline}
 	\end{figure}
 
+	When interpolating the motion law with a B-spline, certain segments of the
+	motion law may have a steeper slope than the corresponding segments of the
+	linear interpolation of the control points\todo{wording}. A steeper slope
+	means in the motion law corresponds to faster progression along the
+	trajectory and therefore higher cable velocities than those provided by the
+	base linear interpolation.
+	Figure~\ref{fig:augmented_motion_law_control_points} highlights the areas of
+	the motion law of Figure~\ref{fig:motion_law_spline} that have a higher
+	slope. These areas correspond to regions where the output velocities may
+	violate the constraints. To combat this, the control points may be augmented
+	in a manner similar to Algorithm~\ref{alg:set_of_poses_augmentation}. The
+	output of this is illustrated schematically on the right hand side of
+	Figure~\ref{fig:augmented_motion_law_control_points}. The effect of such a
+	procedure is to follow the base motion law as closely as possible, but then
+	connect the sharp corners with smooth bends.
+
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\textwidth}
+		\import{res/img/}{motion_law_spline_problem.pdf_tex}
+		\caption{Augmented Motion Law Control Points}%
+		\label{fig:augmented_motion_law_control_points}
+	\end{figure}
+
+	There is one issue with using a B-spline in this context, however. Each
+	control point for the spline is a coordinate in
+	\(
+		\left(
+			\timesym, \timenorm
+		\right)
+	\)-space. The B-spline $B$ is a mapping of some variable $x$:
+
+	\begin{equation}
+		B: x \in [0, 1] \mapsto \left(\timesym, \timenorm\right)
+	\end{equation}
+
+	However, for use with a motion law, an explicit formula of the form
+
+	\begin{equation}
+		\timenorm = \timenorm(\timesym)
+		\label{eq:direct_relation_motion_law_spline}
+	\end{equation}
+
+	is required. To obtain this explicit form, three options are available:
+
+	\begin{enumerate}
+
+		\item
+
+			Rewrite Equation~\ref{eq:b_spline_recursion} in a non-implicit form.
+			\label{option:rewrite_non_implicit}
+
+		\item
+
+			Solve for
+			\(
+				x = \function(\timesym)
+			\)
+			using numerical techniques such as Newton's method or Regula
+			Falsi. Then obtain
+			\(
+				\timenorm = g(x) = g(\function(\timesym))
+			\)
+			from there.
+			\label{option:solve_numerically}
+
+		\item
+
+			Build a lookup table and smoothly interpolate.
+			\label{option:lookup_table}
+
+	\end{enumerate}
+
+	\todo{in this entire section, $x$ and $B$ not in nomenclature}
+
+	It would clearly be ideal to have a direct relation as in
+	Equation~\ref{eq:direct_relation_motion_law_spline}. However,
+	Option~\ref{option:rewrite_non_implicit} requires expensive computations and
+	difficult to implement algorithms.
+
+	Option~\ref{option:solve_numerically} would require that an implicit
+	equation be solved each time the motion law is evaluated. This is not ideal
+	when the trajectory is used for robot control.
+
+	For these reasons, this thesis makes uses of the lookup table approach in
+	Option~\ref{option:lookup_table}. This is achieved by creating a list of
+	ordered pairs
+	\(
+		\left(
+			(\timesym_0 \timenorm_0),
+			\ldots,
+			(\timesym_n \timenorm_n)
+		\right)
+	\)
+	upon creation of the motion law. These points correspond to the values of
+	$B$ evaluated at linearly spaced intervals of $x$ over its domain. The
+	motion law is then approximated by:
+
+	\begin{equation}
+		\motionlaw(\timesym) \approx
+			\timenorm_{\indexi} +
+				\frac
+				{%
+					\timesym - \timesym_{\indexi}
+				}
+				{%
+					\timesym_{\indexi + 1} - \timesym_{\indexi}
+				}
+				\left(
+					\timenorm_{\indexi + 1} - \timenorm_{\indexi}
+				\right)
+	\end{equation}
+
+	Where
+
+	\begin{equation}
+		\timesym \in [\timesym_{\indexi}, \timesym_{\indexi + 1}]
+	\end{equation}
+
+	Using a lookup table did not lead to any noticeable impacts on the
+	speed of execution, even when a large number of samples was taken to build
+	a high-resolution lookup table. This justifies using the simplification of
+	Option~\ref{option:lookup_table} instead of the exactness of
+	Option~\ref{option:rewrite_non_implicit}.
+
