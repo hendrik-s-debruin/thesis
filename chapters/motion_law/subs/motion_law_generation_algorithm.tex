@@ -286,18 +286,26 @@
 	when the trajectory is used for robot control.
 
 	For these reasons, this thesis makes uses of the lookup table approach in
-	Option~\ref{option:lookup_table}. This is achieved by creating a list of
-	ordered pairs
-	\(
-		\left(
-			(\timesym_0 \timenorm_0),
+	Option~\ref{option:lookup_table}. This is achieved by creating an ordered
+	set of pairs
+
+	\begin{equation}
+		\set{T} =
+		\left\{
+			(\timesym_0, \timenorm_0),
 			\ldots,
-			(\timesym_n \timenorm_n)
-		\right)
-	\)
-	upon creation of the motion law. These points correspond to the values of
-	$B$ evaluated at linearly spaced intervals of $x$ over its domain. The
-	motion law is then approximated by:
+			(\timesym_n, \timenorm_n)
+		\right\}
+	\end{equation}
+
+	upon creation of the motion law. This is done by defining a discrete set
+	$\set{X}$\todo{not in nomenclature} that spans the domain $x$ of $B$ with
+	linearly spaced intervals. $\set{T}$ is then found simply by the relation
+	\(
+		\set{T} = B(\set{X})
+	\).
+
+	The motion law is then approximated by:
 
 	\begin{equation}
 		\motionlaw(\timesym) \approx
@@ -319,6 +327,7 @@
 	\begin{equation}
 		\timesym \in [\timesym_{\indexi}, \timesym_{\indexi + 1}]
 	\end{equation}
+	\todo{$\set{T}$ is not in nomenclature here}
 
 	Using a lookup table did not lead to any noticeable impacts on the
 	speed of execution, even when a large number of samples was taken to build

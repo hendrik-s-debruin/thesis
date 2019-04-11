@@ -10,7 +10,9 @@
 			\quad
 			\suchthat
 			\quad
-			\pathsym(0) = \pose_{\initial}, \pathsym(1) = \pose_{\goal}
+			\pathsym(0) = \pose_{\initial}, \pathsym(1) = \pose_{\goal},
+			\forall\obstacle\forall(\pose\in\pathsym)
+				\robot(\pose) \cap \obstacle = \emptyset
 	\end{equation}
 
 	If $\timenorm$ is interpreted as time, then it would imply that the robot is

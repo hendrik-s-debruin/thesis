@@ -146,6 +146,83 @@
 		Which produce the poses $\pose_a$ and $\pose_b$ which minimises the
 		distance expression and satisfies the constraints of the problem.
 
+	\subsection{Rotation Optimisation}%
+	\label{sec:rotation_optimisation}
+
+		Due to the rotation sampling strategy employed as discussed in
+		Section~\ref{sec:sample_strategy}, the orientations of the end-effector
+		throughout its trajectory will be upright and tend to avoid
+		unnecessarily large rotations. However, there may still be some residual
+		oscillations around the $y$ axis during its motion. For this reason,
+		it is worthwhile to employ a rotation optimisation step.
+
+		The rotation optimisation algorithm uses quaternion \gls{slerp}. It is
+		summarised in Algorithm~\ref{alg:rotation_optimisation}.
+
+		\begin{algorithm}[ht]
+			\caption{Rotation Optimisation}
+			\label{alg:rotation_optimisation}
+			\begin{algorithmic}[1]
+				\Procedure{Optimise\_Rotations}{}
+					\ForAll{$%
+						\pose_{\indexi} \in
+							\setofposes\setminus
+								(\pose_{\initial}, \pose_{\goal})
+					$}
+						\State{}%
+							$
+								\pose_{\indexi}' \gets
+									\code{slerp\_interpolate}
+									(
+										0.5,
+										\pose_{\indexi - 1},
+										\pose_{\indexi},
+										\pose_{\indexi + 1}
+									)
+							$
+							\label{alg:rotation_optimisation:slerp}
+						\If{$
+							\dist(\pose_{\indexi - 1}, \pose_{\indexi}') +
+							\dist(\pose_{\indexi}', \pose_{\indexi + 1})
+							\leq
+							\dist(\pose_{\indexi - 1}, \pose_{\indexi}) +
+							\dist(\pose_{\indexi}, \pose_{\indexi + 1})
+						$}
+							\If{$
+								\code{path\_okay}
+									(
+										\pose_{\indexi - 1},
+										\pose_{\indexi}',
+										\pose_{\indexi + 1}
+									)
+							$}
+								\State{}%
+									$
+										\pose_{\indexi} \gets \pose_{\indexi}'
+									$
+							\EndIf{}
+						\EndIf{}
+					\EndFor{}
+				\EndProcedure{}
+			\end{algorithmic}
+		\end{algorithm}
+
+		The algorithm simply iterates over all the poses in the set and attempts
+		to adjust the rotation of each pose so that it is between the rotations
+		of the poses that precede and follow it. This is done by
+		Line~\ref{alg:rotation_optimisation:slerp}, which returns a pose
+		$\pose_{\indexi}'$ that has the same translation component as
+		$\pose_{\indexi}$, but whose quaternion is the midway point of the
+		\gls{slerp} of poses $\pose_{\indexi - 1}$ and $\pose_{\indexi + 1}$.
+
+		The rotation optimisation algorithm could be run multiple times on
+		$\setofposes$ to obtain a progressively more linear rotation progression
+		from $\pose_{\initial}$ to $\pose_{\goal}$. However, due to the other
+		simplification algorithms, the number of poses in $\setofposes$ tends to
+		be small and repeated execution is usually not necessary. Furthermore,
+		due to the necessity to check collisions, repeatedly running
+		Algorithm~\ref{alg:rotation_optimisation} does get expensive quickly.
+
 	\subsection{Increasing the Capacity Margin}%
 	\label{sec:increasing_the_capacity_margin}
 
