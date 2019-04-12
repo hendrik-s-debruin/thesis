@@ -180,18 +180,19 @@
 
 	\todo{put algorithm here}
 
-	The motion law shown in Figure~\ref{fig:motion_law_graphical_intuition}
-	will guarantee that the velocity constraints of the actuators are
-	respected. However, the corners in this graph correspond to sudden
-	changes in the rate at which $\pathsym$ is followed and can lead to
-	excessive accelerations in the cables. For this reason, instead of using
-	the motion law as it is presented in
-	Figure~\ref{fig:motion_law_graphical_intuition}, the corners are used as
-	control points which can then be interpolated using a B-spline of
-	sufficient degree. A B-spline of degree two can guarantee continuous
-	accelerations. Higher-degree B-splines guarantee continuity in higher
-	time derivatives of $\traj$. A graphical representation of a B-spline motion
-	law is shown in Figure~\ref{fig:motion_law_spline}.
+	The motion law shown in Figure~\ref{fig:motion_law_graphical_intuition} will
+	guarantee that the velocity constraints of the actuators are respected.
+	However, the corners in this graph correspond to sudden changes in the rate
+	at which $\pathsym$ is followed and can lead to excessive accelerations in
+	the cables. For this reason, instead of using the motion law as it is
+	presented in Figure~\ref{fig:motion_law_graphical_intuition}, the corners
+	are used as control points of the form $\mlcontrolpoint = \left(\timesym,
+	\timenorm\right)$. The set of these points is denoted $\mlcontrolpointset$.
+	These control points can then be interpolated using a B-spline of sufficient
+	degree. A B-spline of degree two can guarantee continuous accelerations.
+	Higher-degree B-splines guarantee continuity in higher time derivatives of
+	$\traj$. A graphical representation of a B-spline motion law is shown in
+	Figure~\ref{fig:motion_law_spline}.
 
 	\begin{figure}[hb]
 		\centering

@@ -1,0 +1,45 @@
+\section{Ensuring a Smooth Start}%
+\label{sec:ensuring_a_smooth_start}
+
+	Consider again Figure~\ref{fig:augmented_motion_law_control_points}. The
+	algorithm as presented in Section~\ref{sec:motion_law_generation_algorithm}
+	will have a tendency to produce infinite accelerations at $\timesym = 0$.
+	This is due to the fact that the slope of the B-spline-interpolated motion
+	law at $\timesym = 0$ is non-zero and thus represents a loss of
+	differentiability analogous to the loss of differentiability in the
+	piecewise linear motion law illustrated in the left half of
+	Figure~\ref{fig:motion_law_spline}.
+
+	To combat this effect, an acceleration phase may be introduced into the
+	motion law. The goal of this phase is to prepend a section that smoothly
+	interpolates from zero slope to the initial slope of the original motion
+	law. This is done by choosing some acceleration period $\Delta\timesym$ and
+	changing the control points according to:
+
+	\begin{equation}
+		\timesym_{\indexi} \gets \timesym_{\indexi} + \Delta\timesym
+			\quad\forall\timesym_{\indexi} \in \mlcontrolpointset \setminus \timesym_0
+	\end{equation}
+
+	This can be seen as shifting all but the first control point further into
+	time. Now, a new control point $\mlcontrolpoint$ must be created subject to:
+
+	\begin{align}
+		\begin{split}
+			\mlcontrolpoint.\timesym &\in (0, \Delta\timesym)\\
+			\mlcontrolpoint.\timenorm &\in (0, \mlcontrolpoint_1.\timenorm)
+		\end{split}
+	\end{align}
+
+	$\mlcontrolpoint$ is then inserted into $\mlcontrolpointset$ between
+	$\mlcontrolpoint_0 $ and $\mlcontrolpoint_1$. To ensure that the slope
+	during the acceleration phase of the motion law contains a near-horizontal
+	section of sufficient length, the following values are used in this thesis:
+
+	\begin{align}
+		\begin{split}
+			\mlcontrolpoint.\timesym &= 0.9\Delta\timesym\\
+			\mlcontrolpoint.\timenorm &= 0.1\mlcontrolpoint_1.\timenorm
+		\end{split}
+	\end{align}
+
