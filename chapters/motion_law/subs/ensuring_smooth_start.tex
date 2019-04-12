@@ -22,24 +22,42 @@
 	\end{equation}
 
 	This can be seen as shifting all but the first control point further into
-	time. Now, a new control point $\mlcontrolpoint$ must be created subject to:
+	time. Now, a new control point $\mlcontrolpoint'$ must be created subject
+	to:
 
 	\begin{align}
 		\begin{split}
-			\mlcontrolpoint.\timesym &\in (0, \Delta\timesym)\\
-			\mlcontrolpoint.\timenorm &\in (0, \mlcontrolpoint_1.\timenorm)
+			\mlcontrolpoint'.\timesym &\in (0, \Delta\timesym)\\
+			\mlcontrolpoint'.\timenorm &\in (0, \mlcontrolpoint_1.\timenorm)
 		\end{split}
 	\end{align}
 
-	$\mlcontrolpoint$ is then inserted into $\mlcontrolpointset$ between
+	$\mlcontrolpoint'$ is then inserted into $\mlcontrolpointset$ between
 	$\mlcontrolpoint_0 $ and $\mlcontrolpoint_1$. To ensure that the slope
 	during the acceleration phase of the motion law contains a near-horizontal
 	section of sufficient length, the following values are used in this thesis:
 
 	\begin{align}
 		\begin{split}
-			\mlcontrolpoint.\timesym &= 0.9\Delta\timesym\\
-			\mlcontrolpoint.\timenorm &= 0.1\mlcontrolpoint_1.\timenorm
+			\mlcontrolpoint'.\timesym &= 0.9\Delta\timesym\\
+			\mlcontrolpoint'.\timenorm &= 0.1\mlcontrolpoint_1.\timenorm
 		\end{split}
 	\end{align}
 
+	The effect of applying this procedure is shown schematically in
+	Figure~\ref{fig:smooth_start_motion_law_construction}. Although this figure
+	intends to give only a graphical intuition, it is drawn using B-spline
+	curves. As can be seen in the figure, this procedure effectively shifts the
+	entire motion law in time and slowly accelerates the motion law from zero
+	slope to its initial slope.
+
+	\begin{figure}[hbt]
+		\centering
+		\def\svgwidth{\textwidth}
+		\import{res/img/}{acceleration_phase.pdf_tex}
+		\caption{Smooth Start Motion Law Construction}%
+		\label{fig:smooth_start_motion_law_construction}
+	\end{figure}
+
+	\todo{Next section needs to be updated with figures generated using the
+	approach of this section}

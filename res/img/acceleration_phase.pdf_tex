@@ -1,0 +1,76 @@
+%% Creator: Inkscape inkscape 0.92.4, www.inkscape.org
+%% PDF/EPS/PS + LaTeX output extension by Johan Engelen, 2010
+%% Accompanies image file 'acceleration_phase.pdf' (pdf, eps, ps)
+%%
+%% To include the image in your LaTeX document, write
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics{<filename>.pdf}
+%% To scale the image, write
+%%   \def\svgwidth{<desired width>}
+%%   \input{<filename>.pdf_tex}
+%%  instead of
+%%   \includegraphics[width=<desired width>]{<filename>.pdf}
+%%
+%% Images with a different path to the parent latex file can
+%% be accessed with the `import' package (which may need to be
+%% installed) using
+%%   \usepackage{import}
+%% in the preamble, and then including the image with
+%%   \import{<path to file>}{<filename>.pdf_tex}
+%% Alternatively, one can specify
+%%   \graphicspath{{<path to file>/}}
+%% 
+%% For more information, please see info/svg-inkscape on CTAN:
+%%   http://tug.ctan.org/tex-archive/info/svg-inkscape
+%%
+\begingroup%
+  \makeatletter%
+  \providecommand\color[2][]{%
+    \errmessage{(Inkscape) Color is used for the text in Inkscape, but the package 'color.sty' is not loaded}%
+    \renewcommand\color[2][]{}%
+  }%
+  \providecommand\transparent[1]{%
+    \errmessage{(Inkscape) Transparency is used (non-zero) for the text in Inkscape, but the package 'transparent.sty' is not loaded}%
+    \renewcommand\transparent[1]{}%
+  }%
+  \providecommand\rotatebox[2]{#2}%
+  \newcommand*\fsize{\dimexpr\f@size pt\relax}%
+  \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
+  \ifx\svgwidth\undefined%
+    \setlength{\unitlength}{550.02083292bp}%
+    \ifx\svgscale\undefined%
+      \relax%
+    \else%
+      \setlength{\unitlength}{\unitlength * \real{\svgscale}}%
+    \fi%
+  \else%
+    \setlength{\unitlength}{\svgwidth}%
+  \fi%
+  \global\let\svgwidth\undefined%
+  \global\let\svgscale\undefined%
+  \makeatother%
+  \begin{picture}(1,0.26597497)%
+    \lineheight{1}%
+    \setlength\tabcolsep{0pt}%
+    \put(0,0){\includegraphics[width=\unitlength,page=1]{acceleration_phase.pdf}}%
+    \put(0.47909771,0.02507966){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timesym$\end{tabular}}}}%
+    \put(0.04258279,0.02681366){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = 0$\end{tabular}}}}%
+    \put(0.04281173,0.24416831){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm = 1$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=2]{acceleration_phase.pdf}}%
+    \put(0.26105446,0.26114788){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Initial Motion Law\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=3]{acceleration_phase.pdf}}%
+    \put(0.96998844,0.02507966){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timesym$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=4]{acceleration_phase.pdf}}%
+    \put(0.7519151,0.26114788){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}Smooth Start Motion Law\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=5]{acceleration_phase.pdf}}%
+    \put(0.12484115,0.10272073){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mlcontrolpoint_1$\end{tabular}}}}%
+    \put(0.74024172,0.10440801){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mlcontrolpoint_1$\end{tabular}}}}%
+    \put(0.67594421,0.02977993){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\mlcontrolpoint'$\end{tabular}}}}%
+    \put(0.55614288,0.04923137){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mlcontrolpoint_0$\end{tabular}}}}%
+    \put(0.02144345,0.00130904){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\mlcontrolpoint_0$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=6]{acceleration_phase.pdf}}%
+    \put(0.87171879,0.20612419){\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\Delta\timesym$\end{tabular}}}}%
+    \put(0,0){\includegraphics[width=\unitlength,page=7]{acceleration_phase.pdf}}%
+  \end{picture}%
+\endgroup%
