@@ -53,6 +53,54 @@
 
 	\end{enumerate}
 
+	\subsection{Improving the Sampled Capacity Margin}%
+	\label{sec:improving_the_sampled_capacity_margin}
+
+		\todo{capacity margin is currently defined later in the thesis. Move
+		that discussion up}
+		\todo{Above speaking about normal distribution. That is for the graph.
+		Uniform distribution is used for normal samples}
+
+		While the sampling strategy in
+		Algorithm~\ref{alg:sampling_planning_overview} will find a
+		collision-free path, the path may be suboptimal in terms of the capacity
+		margin. The capacity margin may be improved as part of a post-processing
+		step as explained in Section~\ref{sec:increasing_the_capacity_margin}.
+		However, relying on pure post-processing can be expensive. A small
+		modification to Algorithm~\ref{alg:sampling_planning_overview} is
+		therefore proposed here.
+
+		The idea is to sample poses as before, but then immediately after
+		Line~\ref{alg:sampling_planning_overview:sample_pose} in
+		Algorithm~\ref{alg:sampling_planning_overview} move them in the
+		direction of increasing capacity margin $\capacitymargin$ according to:
+
+		\begin{equation}
+			\pose \gets \pose +
+				\gain\frac
+				{%
+					\nabla\capacitymargin
+				}
+				{%
+					\norm
+					{%
+						\nabla\capacitymargin
+					}
+				}
+			\label{eq:improve_sampled_capacity_margin}
+		\end{equation}
+
+		This operation is fairly cheap. Therefore, $\gain$ is kept small and
+		Equation~\ref{eq:improve_sampled_capacity_margin} is performed
+		repeatedly on the sampled pose $\pose$. This can be seen as taking
+		random samples from the configuration space, and then ``sliding'' them
+		along the curve defining the direction of increasing capacity margin for
+		some predefined distance.
+
+		Due to the shape of the capacity margin polytope, if all samples have a
+		favourable capacity margin, then the entire path through these poses
+		will also have a good capacity margin.
+
 	\subsection{Justification of Sampling Strategy}%
 	\label{sec:justification_of_sampling_strategy}
 
