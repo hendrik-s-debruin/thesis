@@ -1,1 +1,170 @@
-\chapter{Overview}
+\chapter{Overview}%
+\label{chap:overview}
+
+	The goal of this thesis is to develop a path planning and trajectory
+	generation architecture for \glspl{cdpr}. A randomised sampling algorithm
+	based on the \gls{rrt} algorithm is developed.\todo{ref rrt}
+
+	This thesis makes a distinction between a path $\pathsym$ of the robot
+	$\robot$, and its corresponding trajectory $\traj$. In particular, a path is
+	defined as the set $\setofposes$ of all poses $\pose$ in configuration space
+	that the robot moves through while going from the initial pose
+	$\pose_{\initial}$ to its goal pose $\pose_{\goal}$.
+
+	In contrast, a trajectory is concerned with the way the robot visits each
+	pose. That is, the trajectory determines at what time the robot must be at a
+	certain position along the trajectory.
+
+	The path and trajectory are subject to a range of constraints as summarised
+	in symbolic form in Equation~\ref{eq:constraints}.
+
+	\begin{subnumcases}
+		{
+			\text{find }
+			\traj(\timesym), \pathsym(\timenorm) \suchthat
+			\label{eq:constraints}
+		}
+		\pathsym(0)																			&$= {\pose}_{\initial}$																							\label{eq:constraint:start_initial}\\
+		\pathsym(1)																			&$= {\pose_{\goal}}$																							\label{eq:constraint:finish_goal}\\
+		\traj(\timesym) \mapsto \pathsym(\timenorm)											&$\forall\timesym \forall\timenorm \in [0, 1]$																	\label{eq:constraint:trajectory_maps_to_path}\\
+		%\traj(0)																			&$= \pathsym(0)$																								\label{eq:constraint:}\\
+		%\traj(\timenorm_{\final})															&$= \pathsym(1)$																								\label{eq:constraint:}\\
+		\contdeggeombare(\pathsym)															&$\geq \gain_{\contdeggeombare} \quad \forall \timenorm \in [0, 1]$												\label{eq:constraint:geometric_differentiablity}\\
+		\contdegbare(\traj)																	&$\geq \gain_{\contdegbare} \quad\forall\timesym$																\label{eq:constraint:kinematic_differentiability}\\
+		\robot(\pathsym(\timenorm)) \cap \obstacle											&$= \emptyset \quad\forall\timenorm \forall\obstacle$															\label{eq:constraint:end_effector_obstacle_collisions}\\
+		\cable(\pathsym(\timenorm)) \cap \obstacle											&$= \emptyset \quad\forall\timenorm \forall\obstacle \forall\cable$												\label{eq:constraint:cable_obstacle_collisions}\\
+		\robot(\pathsym(\timenorm)) \cap \cable(\pathsym(\timenorm))						&$= \emptyset \quad \forall\timenorm \forall\cable$																\label{eq:constraint:end_effector_cable_collisions}\\
+		\cable_{\indexi}(\pathsym(\timenorm)) \cap \cable_{\indexj}(\pathsym(\timenorm))	&$= \emptyset \quad \forall\timenorm \forall\cable_{\indexi} \forall(\cable_{\indexj} \neq \cable_{\indexi})$	\label{eq:constraint:cable_cable_collisions}\\
+		\force_{\cable}(\traj)																&$\in [{\force_{\cable}}_{\min}, {\force_{\cable}}_{\max}] \forall\cable \forall\timesym$					\label{eq:constraint:positive_cable_tensions}\\
+		%%%%%%%%%% long entry
+		\frac{
+			\der^n
+				\invgeometricmodel
+				\left(
+					\traj(\timesym)
+				\right)
+		}
+		{
+			\der\timesym^n
+		}
+																							&$\leq \tdern{\cablelengths}{n}_{\max} \quad \forall\timesym$													\label{eq:constraint:kinematic_limits}\\
+		%%%%%%%%%% end long entry
+		\min\dist_{\pathsym}(\pose_{\initial}, \pose_{\goal})																																				\label{eq:constraint:minimise_distance}\\
+		\max{\int}_{\pathsym}\capacitymargin																																						\label{eq:constraint:capacity_margin}
+	\end{subnumcases}
+
+	A brief interpretation of the constraints is offered now.
+
+	Constraints~\ref{eq:constraint:start_initial}
+	and~\ref{eq:constraint:finish_goal} impose that the path must start at the
+	initial pose and finish at the goal pose.
+	Constraint~\ref{eq:constraint:trajectory_maps_to_path} requires that the
+	function describing the trajectory map to the function describing the path.
+	That is, for any $\timenorm \in [0, 1]$, exactly one value for $\timesym$
+	can be found such that:
+
+	\begin{equation}
+		\traj(\timesym) = \pathsym(\timenorm)
+	\end{equation}
+
+	Since \glspl{cdpr} are actuated by cables and not rigid links, they may
+	experience vibrations\todo{ref something here}. To mitigate this, an aim of
+	this thesis is to generate paths and trajectories that are as smooth as
+	possible. Constraint~\ref{eq:constraint:geometric_differentiablity} requires
+	that the degree of geometric differentiability of the path be at least
+	larger than some tunable value $\gain_{\contdeggeombare}$. For instance, if:
+
+	\begin{equation}
+		\gain_{\contdeggeombare} \geq 2
+	\end{equation}
+
+	there will be no sharp corners in $\pathsym$. Similarly,
+	constraint~\ref{eq:constraint:kinematic_differentiability} requires that the
+	trajectory have a degree of differentiability at least equal to a tunable
+	value $\gain_{\contdegbare}$. For instance, by requiring that:
+
+	\begin{equation}
+		\gain_{\contdegbare} \geq 4
+	\end{equation}
+
+	will ensure that the trajectory has a smooth velocity, acceleration and jerk
+	profile. Choosing $\gain_{\contdeggeombare}$ and $\gain_{\contdegbare}$
+	therefore has a direct effect on minimising the vibrations imposed on the
+	robot.
+
+	Constraints~\ref{eq:constraint:end_effector_obstacle_collisions}
+	through~\ref{eq:constraint:cable_cable_collisions} require that no
+	collisions occur at any point in the path. Due to the nature of
+	\glspl{cdpr}, different classes of collisions are possible.
+	Constraint~\ref{eq:constraint:end_effector_obstacle_collisions} requires
+	that the end effector not collide with any obstacle $\obstacle$.
+	Constraint~\ref{eq:constraint:cable_obstacle_collisions} requires that no
+	cable $\cable$ collide with any obstacle.
+	Constraints~\ref{eq:constraint:end_effector_cable_collisions}
+	and~\ref{eq:constraint:cable_cable_collisions} require that the cables not
+	collide with the end effector or with each other, respectively.
+
+	Cables can only operate in tension, captured by
+	Constraint~\ref{eq:constraint:positive_cable_tensions}.
+
+	Constraint~\ref{eq:constraint:kinematic_limits} requires that the requested
+	velocities, accelerations and higher derivatives of the cable position
+	adhere to the kinematic limits of the actuators.
+
+	Finally, Constraint~\ref{eq:constraint:minimise_distance}
+	and~\ref{eq:constraint:capacity_margin} attempt to minimise the distance
+	along the path and maximise the capacity margin along the path. These
+	constraints are often in conflict.
+
+	\section{Information Flow in the Architecture}
+
+		A high-level schematic overview of the information flow in the developed
+		architecture can be seen in
+		Figure~\ref{fig:architecture_information_flow}.
+
+		\begin{figure}[hbt]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{architecture_information_flow.pdf_tex}
+			\caption{Architecture Information Flow}
+			\label{fig:architecture_information_flow}
+		\end{figure}\todo{make these colours not shit}
+
+		The architecture is fairly flexible in that it can read the
+		configuration of the robot and obstacles from a configuration file. The
+		same architecture can therefore be used on multiple \glspl{cdpr} without
+		modifying the source code. This configuration is read during the
+		initialisation phase.
+
+		Next, the architecture starts looking for a path through sampling. This
+		part of the architecture is responsible for finding a path and
+		satisfying Constraints~\ref{eq:constraint:start_initial}
+		and~\ref{eq:constraint:finish_goal}, as well as the collision
+		constraints~\ref{eq:constraint:end_effector_obstacle_collisions}
+		through~\ref{eq:constraint:cable_cable_collisions}. Furthermore, it
+		assures that cable tensions remain within bounds
+		(Constraint~\ref{eq:constraint:positive_cable_tensions}).
+
+		The post-processing step attempts to make the path smooth to adhere to
+		Constraint~\ref{eq:constraint:geometric_differentiablity}. It also tries
+		to adapt to the path to simultaneously try and satisfy
+		Constraints~\ref{eq:constraint:minimise_distance}
+		and~\ref{eq:constraint:capacity_margin}.
+
+		Finally, the architecture builds a trajectory along the path
+		(Constraint~\ref{eq:constraint:trajectory_maps_to_path}) subject to the
+		smoothness Constraint~\ref{eq:constraint:kinematic_differentiability}
+		and kinematic Constraints~\ref{eq:constraint:kinematic_limits}.
+
+	\section{Structure of the Thesis}
+
+		The thesis starts with a discussion on how collisions are detected in
+		Chapter~\ref{chap:collision_detection}. Chapter~\ref{chap:sampling}
+		focusses on the algorithms used to find a collision-free path, while
+		Chapter~\ref{chap:path_processing} discusses various post-processing
+		steps that are performed to improve the quality of the path.
+		Chapter~\ref{chap:motion_law} discusses how a trajectory along the found
+		path is generated. An overview of the architecture is given in
+		Chapter~\ref{chap:architecture_developed}. Finally,
+		Chapter~\ref{chap:experimental_results} discusses some experimental
+		results.

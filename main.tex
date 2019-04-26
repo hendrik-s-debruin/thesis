@@ -1,54 +1,57 @@
 \documentclass[]{report}
 
-    \usepackage{ifdraft}
-    \usepackage[obeyFinal]{todonotes}
+	\usepackage{ifdraft}
+	\usepackage[obeyFinal]{todonotes}
 
-    \usepackage{titlesec}
-    \setcounter{secnumdepth}{3}
+	\usepackage{titlesec}
+	\setcounter{secnumdepth}{3}
 
-    \usepackage{mathrsfs}
-    \usepackage{amsfonts}
-    \usepackage{amssymb}
-    \usepackage{dsfont}
+	\usepackage{mathrsfs}
+	\usepackage{amsfonts}
+	\usepackage{amssymb}
+	\usepackage{dsfont}
 	\usepackage{amsmath}
-    \usepackage{mathtools}
+		\usepackage{cases}
+		%\usepackage[overload]{empheq}
+		%\usepackage{cleveref}
+	\usepackage{mathtools}
 	\usepackage{siunitx}
-    % these next 1 packages are temp \usepackage{relsize}
+	% these next 1 packages are temp \usepackage{relsize}
 
-    \usepackage{algorithm}
-    \usepackage{algpseudocode}
+	\usepackage{algorithm}
+	\usepackage{algpseudocode}
 
-    \usepackage{graphicx}
+	\usepackage{graphicx}
 		\graphicspath{{res/img/}}
 	\usepackage{import}
 
 	\usepackage{booktabs}
 
-    \usepackage[citestyle=numeric,bibstyle=numeric]{biblatex}
-        \addbibresource{bib/cdpr.bib}
-        \addbibresource{bib/path_planning.bib}
-        \addbibresource{bib/trajectory_generation.bib}
-        \addbibresource{bib/math.bib}
+	\usepackage[citestyle=numeric,bibstyle=numeric]{biblatex}
+		\addbibresource{bib/cdpr.bib}
+		\addbibresource{bib/path_planning.bib}
+		\addbibresource{bib/trajectory_generation.bib}
+		\addbibresource{bib/math.bib}
 		\nocite{*}
 
-    \input{props/layout.tex}
+	\input{props/layout.tex}
 
 	\usepackage[hidelinks]{hyperref}
-    \usepackage[all]{hypcap}
+	\usepackage[all]{hypcap}
 
 	% This should be used for full thesis:
-    \usepackage[section=section, acronyms]{glossaries}
+	\usepackage[section=section, acronyms]{glossaries}
 	% This should be used for literature study report:
-    %\usepackage[section=subsection, acronyms]{glossaries}
-        \makenoidxglossaries{}
-        \input{defs/notation.tex}
-        \input{defs/symbols.tex}
-        \input{defs/abbrevs.tex}
-        \input{defs/glossary.tex}
-        \input{defs/subscripts.tex}
+	%\usepackage[section=subsection, acronyms]{glossaries}
+		\makenoidxglossaries{}
+		\input{defs/notation.tex}
+		\input{defs/symbols.tex}
+		\input{defs/abbrevs.tex}
+		\input{defs/glossary.tex}
+		\input{defs/subscripts.tex}
 		\setlength{\glslistdottedwidth}{4cm}
-        \setglossarystyle{listdotted}
-        \ifdraft{\glsaddall}{}
+		\setglossarystyle{listdotted}
+		\ifdraft{\glsaddall}{}
 
 	% redefine sections for literature report only
 	%\let\paragraph\subsubsection%
@@ -62,22 +65,22 @@
 %
 %	\pagenumbering{gobble}
 %	\input{chapters/title_page}
-%    \input{chapters/abstract}
+%	\input{chapters/abstract}
 %
-%    \clearpage
-%    \pagenumbering{roman}
+%	\clearpage
+%	\pagenumbering{roman}
 %
-%    \tableofcontents
-%    \listoffigures
-%    \listoftables
-%    \listofalgorithms{}
-%    \input{defs/nomenclature.tex}
+%	\tableofcontents
+%	\listoffigures
+%	\listoftables
+%	\listofalgorithms{}
+%	\input{defs/nomenclature.tex}
 %
-%    \clearpage
-%    \pagenumbering{arabic}
-%    \input{chapters/intro/intro}
-    % \input{chapters/lit_study/lit_study}
-%	\input{chapters/proposed_plan/proposed_plan}
+%	\clearpage
+%	\pagenumbering{arabic}
+%	\input{chapters/intro/intro}
+	%\input{chapters/lit_study/lit_study}
+	%\input{chapters/proposed_plan/proposed_plan}
 
 	\input{chapters/overview/overview}
 	\input{chapters/collision_detection/collision_detection}
@@ -87,6 +90,6 @@
 	% \input{chapters/architecture_developed/architecture_developed}
 	% \input{chapters/experimental_results/experimental_results}
 %
-%    \printbibliography{}
+%	\printbibliography{}
 
 \end{document}
