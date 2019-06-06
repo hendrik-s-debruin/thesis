@@ -76,16 +76,23 @@
 				-\gain_{\capacitymargin}
 				\frac%
 				{%
-					\int_0^1 \capacitymargin(\pathsym(\timenorm))\der\timenorm
+					\capacitymargin(\pose_2) - \capacitymargin(\pose_1)
 				}
 				{%
 					%\int_{\pathsym} \der\pose
-					\capacitymargin(\pose_2) - \capacitymargin(\pose_1)
+					%\int_0^1 \capacitymargin(\pathsym(\timenorm))\der\timenorm
+					\forcemag_{\max}
 				}
 				+
 				(1 - \gain_{\capacitymargin})
-				\norm{%
-					\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+				\frac%
+				{%
+					\norm{%
+						\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+					}
+				}
+				{%
+					\diag(\workspace)
 				}
 				\label{eq:distance_measure_capcity_margin}
 		\end{equation}
@@ -96,20 +103,31 @@
 		\(
 			\dist_{\pathsym}
 		\)
-		measures the distance along the path $\pathsym$ and
+		measures the distance along the path $\pathsym$.
 		\(
 			\gain_{\capacitymargin} \in [0, 1]
 		\)
 		is a weighting factor that weighs the relative importance of the change
 		in capacity margin for a longer path to the straight-line distance
 		between two poses.
+		\(
+			\forcemag_{\max}
+		\)
+		is the maximum cable tension, and
+		\(
+			\diag(\workspace)
+		\)
+		is the diagonal corner-to-corner length of the workspace.
 
-		The negative sign in front of the integral in
+		The numerator of the first term measures the change in capacity margin
+		between two poses and is measured in Newton. As described above, the
+		numerator of the second term is measured in meters. As such, the
+		denominators are introduced to normalise these terms and ensure that
+		they are dimensionally homogeneous. This introduces a degree of
+		arbitrariness in the distance function, which now becomes a
+		dimensionless indicator function.
+
+		The negative sign in front of the first term in
 		Equation~\ref{eq:distance_measure_capcity_margin} is due to the fact
 		that a path for which the capacity margin is higher should be considered
 		more advantageous and therefore shorter.
-
-		The integral in Equation~\ref{eq:distance_measure_capcity_margin} is
-		expensive to evaluate repeatedly during the path-planning phase. As
-		such, it is instead approximated using a...
-		\todo{when implemented, flesh out the following paragraph}
