@@ -1,0 +1,25 @@
+\documentclass{IEEEtran}
+	\usepackage{todonotes}
+	\usepackage{graphicx}
+		\graphicspath{{res/img/}}
+	\usepackage{import}
+
+	\usepackage[section=section, acronyms]{glossaries}
+		% \makenoidxglossaries{}
+		\input{defs/notation.tex}
+		\input{defs/symbols.tex}
+		\input{defs/abbrevs.tex}
+		\input{defs/glossary.tex}
+		\input{defs/subscripts.tex}
+	% 	\setlength{\glslistdottedwidth}{4cm}
+	% 	\setglossarystyle{listdotted}
+	% 	\ifdraft{\glsaddall}{}
+\begin{document}
+	\input{paper_sections/abstract}
+	\input{paper_sections/introduction}
+	\input{paper_sections/assumptions}
+	\input{paper_sections/collision_detection}
+	\input{paper_sections/sampling_approach}
+	\input{paper_sections/post_processing}
+	\input{paper_sections/conclusion_and_future_work}
+\end{document}

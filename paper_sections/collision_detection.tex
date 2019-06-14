@@ -1,0 +1,204 @@
+\section{Collision Detection}
+
+	This section gives an overview of the collision detection methods used in
+	the planning algorithm.
+
+	\subsection{Cable-Cable Collision}
+
+		Due to Assumption~\ref{assumption:cable_slack}, the cables may be
+		modelled as straight lines. The planning algorithm considers cables to
+		be in collision if any point on the cable is within a distance $\tol$ of
+		some point on another cable. Consider
+		Figure~\ref{fig:cable_collision_detection}.
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{cable_collision_detection.pdf_tex}
+			\caption{Cable-Cable Collision Detection}
+			\label{fig:cable_cable_collision_detection}
+		\end{figure}
+
+		The two cables, $\cable_1$ and $\cable_2$, may be written in parametric
+		form as:
+
+		\begin{equation}
+			\cable_i = \distalanchor_i + \timenorm_i(\proximalanchor_i -
+			\distalanchor_i)
+		\end{equation}
+
+		Where $\timenorm_i \in [0, 1]$. Finding the point where these two cables
+		meet, $\cable_1 = \cable_2$:
+
+		\begin{align}
+			\left[
+				\begin{matrix}
+					\proximalanchor_1 - \distalanchor_1 &
+					\distalanchor_2 - \proximalanchor_2
+				\end{matrix}
+			\right]
+			\left[
+				\begin{matrix}
+					\timenorm_1 \\
+					\timenorm_2 \\
+				\end{matrix}
+			\right]
+			&=
+			\left[
+				\begin{matrix}
+					\distalanchor_2 - \distalanchor_1
+				\end{matrix}
+			\right]
+			%
+			\\
+			%
+			\mat{A}\vec{\timenorm} &= \vec{b}%
+			\label{eq:cable_cable_interference}
+		\end{align}
+
+		For the spatial case, this equation can be solved for the least distance
+		between the two cables by using the pseudo-inverse:
+
+		\begin{equation}
+			\vec{\timenorm} = \pseudoinv{\mat{A}}\vec{b}
+		\end{equation}
+
+		However, this finds the shortest distance between the infinite lines
+		along the cables. To find the shortest distance between the finite
+		cables, the solution needs to be clamped as follows:
+
+		\begin{equation}
+			\timenorm_i =
+			\begin{cases}
+				0, \quad \timenorm_i < 0 \\
+				1, \quad \timenorm_i > 1 \\
+				\timenorm_i, \quad \text{otherwise}
+			\end{cases}
+		\end{equation}
+
+		The two cables are then in collision if:
+
+		\begin{equation}
+			\norm{\cable_1(\timenorm_1) - \cable_2(\timenorm_2)} < \tol
+		\end{equation}
+
+	\subsection{Cable-Obstacle Collisions}
+
+		A cable is in collision with an obstacle if it intersects any of the
+		obstacle's faces. As such, it is sufficient to present an algorithm that
+		detects whether a cable $\cable$ intersects a single face $\face$ of an
+		obstacle $\obstacle$ to detect such collisions.
+
+		Consider Figure~\ref{fig:cable_obstacle_collision}. Due to
+		Assumption~\ref{assumption:convex_polyhedra}, each face of the obstacles
+		is modelled as a convex polygon in 3D space.
+
+		\begin{figure}[hbt]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{cable_obstacle_collision.pdf_tex}
+			\caption{Cable-Obstacle Collision Detection}%
+			\label{fig:cable_obstacle_collision_detection}
+		\end{figure}
+
+		A plane $\plane$ through the face $\face$ can be written in parametric
+		form as:
+
+		\begin{equation}
+			\plane = \point_1 + \timenorm_1(\point_2 - \point_1) +
+			\timenorm_2(\point_3 - \point_1)
+		\end{equation}
+
+		The algorithm first determines whether the finite cable intersects the
+		infinite extension of the plane $\plane$. By assuming the cable is of
+		infinite length, the point $\cable = \plane$ is found by:
+
+		\begin{align}
+			\left[
+				\begin{matrix}
+					\proximalanchor - \distalanchor &
+					\vertex_1 - \vertex_2 &
+					\vertex_1 - \vertex_2
+				\end{matrix}
+			\right]
+			\left[
+				\begin{matrix}
+					\timenorm_1 \\
+					\timenorm_2 \\
+					\timenorm_3
+				\end{matrix}
+			\right]
+			&=
+			\left[
+				\begin{matrix}
+					\vertex_1 - \distalanchor
+				\end{matrix}
+			\right]
+			%%
+			\\
+			%%
+			\mat{A}\vec{\timenorm} &= \vec{b}
+			%%
+			\\
+			%%
+			\vec{\timenorm} &= {\mat{A}}^{-1}\vec{b}
+		\end{align}
+
+		Now, the finite cable intersects the infinite plane if:
+
+		\begin{equation}
+			\timenorm_1 \in [0, 1]
+		\end{equation}
+
+		If this is not the case, the algorithm may exit early. Next, it is
+		necessary to determine whether the cable intersects the face of the
+		object. Note, however, that in general it is not sufficient to simply
+		test that $\timenorm_1, \timenorm_2 \in [0, 1]$. Instead, the convex
+		hull of the vertices in $\face$ is used to determine whether the point
+		intersects the face, $\cable(\timenorm_1) \in \face$.
+		\todo{cite convex hull or something}
+
+		The full collision criterion becomes:
+
+		\begin{equation}
+			\begin{cases}
+				\timenorm_1 &\in [0, 1]\\
+				\cable(\timenorm_1) &\in \face_i
+			\end{cases}
+			\label{eq:cable_obstacle_collision_condition}
+		\end{equation}
+
+	\subsection{Cable-End-Effector Collisions}
+
+		Since the end-effector and obstacles are modelled the same way, the same
+		algorithm can be used to detect collisions between cables and the
+		end-effector or obstacles. However, since the cables are fixed to the
+		end-effector at the anchor, the anchor point needs to be removed from
+		consideration for collisions. The collision criterion for
+		cable-end-effector collisions is thus:
+
+		\begin{equation}
+			\begin{cases}
+				\timenorm_1 &\in [0, 1)\\
+				\cable(\timenorm_1) &\in \face_i
+			\end{cases}
+			\label{eq:cable_robot_collision_condition}
+		\end{equation}
+
+	\subsection{End-Effector-Obstacle Collisions}
+
+		Many algorithms are available for collision detection between convex
+		polyhedra. This paper makes use of the well-known Separating Axis
+		Theorem. \todo{cite}
+
+	\subsection{Capacity Margin}\todo{cite capacity margin}
+
+		The planning architecture makes use of the capacity margin
+		$\capacitymargin$ to evaluate the validity of poses along the path.
+		While not a collision in the traditional sense, a pose with a negative
+		capacity margin is not valid. Therefore, a pose is considered in
+		collision for planning purposes if, for some threshold $\tol$:
+
+		\begin{equation}
+			\capacitymargin < \tol
+		\end{equation}
