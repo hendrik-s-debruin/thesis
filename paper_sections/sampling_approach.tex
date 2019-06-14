@@ -1,0 +1,243 @@
+\section{Planning}
+
+	This section gives an overview of the planning step of the algorithm.
+
+	\subsection{Sampling}
+
+		The approach followed is based on the \gls{rrt} \todo{cite} algorithm.
+		For this paper, a pose $\pose$ is defined as a tuple of the
+		end-effector's translation $\transvec$ and orientation quaternion
+		$\quaternion$:
+
+		\begin{equation}
+			\pose = (\transvec, \quaternion)
+		\end{equation}
+
+		The end-effector may start or stop in any pose. However, during the
+		trajectory the end-effector is kept upright. This is done for the
+		following reasons:
+
+		\begin{enumerate}
+
+			\item
+
+				By only searching for upright poses, the search space loses two
+				degrees of freedom and is therefore greatly reduced.
+
+			\item
+
+				By rotating around only one axis for the majority of the path,
+				complicated and potentially unnecessary rotations around
+				multiple axes are avoided.
+
+			\item
+
+				For pick-and-place operations, it may be desirable to keep the
+				end-effector steady and upright through the trajectory.
+
+		\end{enumerate}
+
+		Note that while the end-effector is kept upright in the middle of the
+		trajectory, it is still allowed to do complex rotations at the start and
+		end of the path in order to reach arbitrary start and stop poses. This
+		is shown schematically in Figure~\ref{fig:pose_sampling}.
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{pose_sampling.pdf_tex}
+			\caption{Pose Sampling}%
+			\label{fig:pose_sampling}
+		\end{figure}
+
+		Poses are selected according to the following strategy:
+
+		\begin{enumerate}
+
+			\item
+
+				A translation vector $\transvec$ is drawn from a normal
+				distribution such that:
+				\label{item:sample_strategy:translation}
+
+				\begin{enumerate}
+
+					\item
+
+						The median of the distribution is the centre of the
+						workspace.
+
+					\item
+
+						The edges of the workspace are three standard deviations
+						away from the median.
+				\end{enumerate}
+
+			\item
+
+				An angle $\theta$ is drawn from a normal distribution with
+				median $\pi/2$ and standard deviation $\pi/6$.
+
+				\label{item:sample_strategy:angle}
+
+			\item
+
+				A quaternion is built from the formula:
+
+				\begin{equation}
+					\quaternion = 0\vec{i} + \sin(\theta/2)\vec{j} + 0\vec{k} +
+						\cos(\theta/2)
+				\end{equation}
+
+				\label{item:sample_strategy:quaternion}
+
+				%This produces a rotation of angle $\theta$ around the $y$
+				%axis.\todo{explain that y axis is pointing up}
+
+			\item
+
+				The pose $\pose = (\transvec, \quaternion)$ is returned.
+
+			\item
+
+				The pose is moved in the direction of increasing capacity margin
+				by applying the following expression $n$ times:
+
+				\label{item:improve_capacity_margin}
+
+				\begin{equation}
+					\pose \gets \pose +
+						\gain\frac
+						{%
+							\nabla\capacitymargin
+						}
+						{%
+							\norm
+							{%
+								\nabla\capacitymargin
+							}
+						}
+					\label{eq:improve_sampled_capacity_margin}
+				\end{equation}
+
+
+		\end{enumerate}
+
+	\subsection{Sampling Justification}
+
+		Translations are chosen according to
+		Item~\ref{item:sample_strategy:translation} to create a bias towards the
+		center of the workspace. This is done because the capacity margin tends
+		to be higher towards the center of the workspace. However, by letting
+		the edge of the workspace be within three standard deviations of the
+		center, a path can still be found when the center is obstructed by
+		obstacles.
+
+		Item~\ref{item:sample_strategy:angle} ensures that most of the sampled
+		rotations lie in the range $\theta \in [0, \pi]$, but biased towards
+		$\theta = \pi/2$. The rotations are biased in order to try and limit
+		unnecessary wide rotations between different sampled poses during the
+		planning stage.
+
+		Item~\ref{item:sample_strategy:quaternion} builds a rotation around the
+		vertical axis using the angle obtained from
+		Item~\ref{item:sample_strategy:angle}.
+
+		Item~\ref{item:improve_capacity_margin} tries to improve the capacity
+		margin at the sampled poses. This is done at this step, since taking
+		samples is an inexpensive operation. It is therefore better to try and
+		start from a path with high capacity margin poses, as improving the
+		capacity margin with post-processing operations can become expensive.
+		This is because sampling is concerned only with the current pose,
+		whereas post-processing needs to guarantee all the poses along the
+		entire path.
+
+	\subsection{Path Building}
+
+		As in other \gls{rrt} algorithms, a path is built by combining different
+		poses to their nearest neighbours provided that there is no collision
+		in the path between the poses. This paper simply connects sampled poses
+		by straight lines. The path between poses is checked by simply
+		discretising the line and checking sufficient points along its course.
+
+	\subsection{Distance in $\specialEuclideanGroup{3}$}
+
+		There is a degree of arbitrariness in how to measure distances in
+		$\specialEuclideanGroup{3}$. This paper proposes to use the following
+		distance measure in the context of \glspl{cdpr}:
+
+		\begin{equation}
+			\dist(\pose_1, \pose_2) =
+				\norm{%
+					\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+				}
+			\label{eq:distance_measure}
+		\end{equation}
+
+		Here, $\invgeometricmodel$ denotes the inverse geometric model of the
+		\gls{cdpr} and returns the vector of cable lengths.
+		Equation~\ref{eq:distance_measure} measures distance in cable space and
+		is measured in meters. This has the following advantages:
+
+		\begin{enumerate}
+
+			\item
+
+				Both orientation and translation are measured using a single
+				dimensionally homogeneous measure. There is no need to measure
+				translation and orientation separately and no arbitrariness in
+				how they are compared.
+
+			\item
+
+				The change in the length of the cables relates directly to how
+				much the actuators have to act on the cables. Therefore, this
+				distance measure directly encodes the amount of actuation
+				required to move from one pose to another.
+
+		\end{enumerate}
+
+	\subsection{Distance Measure used for Planning}
+
+		The planning algorithm does not only try to minimise the distance
+		travelled along the entire path, but also attempts to optimise the
+		capacity margin along this path. These two objectives are often in
+		conflict, since a longer path might have a higher capacity margin. As
+		such, during the planning stage, nearest neighbours are chosen according
+		to the following distance function:
+
+		\begin{equation}
+			\dist(\pose_1, \pose_2) =
+				-\gain_{\capacitymargin}
+				\frac%
+				{%
+					\capacitymargin(\pose_2) - \capacitymargin(\pose_1)
+				}
+				{%
+					\forcemag_{\max}
+				}
+				+
+				(1 - \gain_{\capacitymargin})
+				\frac%
+				{%
+					\norm{%
+						\invgeometricmodel(\pose_2) - \invgeometricmodel(\pose_1)
+					}
+				}
+				{%
+					\diag(\workspace)
+				}
+				\label{eq:distance_measure_capcity_margin}
+		\end{equation}
+
+		Here, the first term measures the increase in capacity margin from pose
+		$\pose_1$ to $\pose_2$. Since the capacity margin should be maximised,
+		this term is negative. The second term measures the distance in
+		$\specialEuclideanGroup{3}$ as described above.
+
+		The term $\force_{\max}$ is the maximum allowable cable tension, while
+		$\diag{\workspace}$ is the diagonal corner-to-corner distance of the
+		workspace. These two terms normalise their respective numerators and
+		render them dimensionless. Finally, $\lambda_{\capacitymargin} \in [0,
+		1]$ is a scaling factor that encodes the relative importance of the
+		conflicting objective functions

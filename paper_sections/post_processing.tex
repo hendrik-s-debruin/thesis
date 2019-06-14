@@ -1,0 +1,49 @@
+\section{Post Processing}
+
+	This section documents the path processing steps followed in this paper. The
+	algorithm developed first tries to simplify the path by removing unnecessary
+	intermediate poses and optimising the rotation trajectory. Next, it tries to
+	locally optimise the capacity margin of the remaining poses and finally
+	smoothly interpolates the path using B-splines.
+
+	\subsection{Pose Removal}
+
+		The path planning returns an ordered set of poses, $\setofposes$, such
+		that, by connecting each pose with a straight line, the goal pose may be
+		reached from the start pose without collisions. Due to the random nature
+		of \gls{rrt}, however, there may be many unnecessary poses in
+		$\setofposes$.
+
+		Two simple algorithms are employed to remove unnecessary poses and
+		shorten the total distance as measured by
+		Equation~\ref{eq:distance_measure_capcity_margin}.
+
+		\subsubsection{Reducing Poses in $\setofposes$}
+
+			The first algorithm simply removes a pose $\pose_i$ from
+			$\setofposes$ if:
+
+			\begin{itemize}
+
+				\item
+
+					Doing so decreases the total distance:
+
+					\begin{equation}
+						\dist(\pose_{i - 1}, \pose_{i + 1}) <
+							\dist(\pose_{i - 1}, \pose_i)
+							+ \dist(\pose_i, \pose_{i + 1})
+					\end{equation}
+
+				\item
+
+					The straight-line path between $\pose_{i - 1}$ and $\pose_{i
+					+ 1}$ is collision-free.
+
+			\end{itemize}
+
+			This algorithm is run recursively until no more poses can be
+			removed.
+
+		\subsubsection{Removing Corners from $\setofposes$}
+
