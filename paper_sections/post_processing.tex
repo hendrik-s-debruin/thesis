@@ -57,10 +57,12 @@
 			$\vecline{\pose_2}{\pose_3}$ such that:
 
 			\begin{equation}
-				\dist(\pose_1,\pose_a) + \dist(\pose_a,\pose_b) +
-				\dist(\pose_b,\pose_3)
-				<
-				\dist(\pose_1,\pose_2) + \dist(\pose_2,\pose_3)
+				\begin{split}
+					\dist(\pose_1,\pose_a) + \dist(\pose_a,\pose_b) +
+					\dist(\pose_b,\pose_3)
+					\\<
+					\dist(\pose_1,\pose_2) + \dist(\pose_2,\pose_3)
+				\end{split}
 			\end{equation}
 
 			and such that the straight-line path between $\pose_a$ and $\pose_b$
@@ -69,12 +71,14 @@
 			To find these poses such that:
 
 			\begin{equation}
-				(\pose_a, \pose_b) = \argmin
-					(
-						\dist(\pose_1, \pose_a) +
-						\dist(\pose_a, \pose_b) +
-						\dist(\pose_b, \pose_3)
-					)
+				\begin{split}
+					(\pose_a, \pose_b) = \argmin_{\pose_a, \pose_b}
+						(
+							\dist(\pose_1, \pose_a)
+							&+ \dist(\pose_a, \pose_b)\\
+							&+ \dist(\pose_b, \pose_3)
+						)
+				\end{split}
 			\end{equation}
 
 			the following parametric lines are used:
@@ -116,11 +120,13 @@
 				The total distance is shorter:
 
 				\begin{equation}
-					\dist(\pose_{i - 1}, \pose_i')
-						+ \dist(\pose_i', \pose_{i+1})
-					<
-					\dist(\pose_{i - 1}, \pose_i)
-						+ \dist(\pose_i, \pose_{i + 1})
+					\begin{split}
+						&\dist(\pose_{i - 1}, \pose_i')
+							+ \dist(\pose_i', \pose_{i+1})\\
+						&<
+						\dist(\pose_{i - 1}, \pose_i)
+							+ \dist(\pose_i, \pose_{i + 1})
+					\end{split}
 				\end{equation}
 
 			\item
@@ -166,11 +172,13 @@
 				The new path is shorter:
 
 				\begin{equation}
-					\dist(\pose{i - 1}, \pose_i') + \dist(\pose_i' +
-					\pose_{i+1})
-					<
-					\dist(\pose_{i - 1}, \pose_{1}) + \dist(\pose_i, \pose_{i +
-					1})
+					\begin{split}
+						\dist(\pose{i - 1}, \pose_i') + \dist(\pose_i' +
+						\pose_{i+1})&\\
+						<
+						\dist(\pose_{i - 1}, \pose_{1}) + \dist(\pose_i, \pose_{i +
+						1})&
+					\end{split}
 				\end{equation}
 
 			\item
