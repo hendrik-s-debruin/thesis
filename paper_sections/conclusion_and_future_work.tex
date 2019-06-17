@@ -1,0 +1,18 @@
+\section{Conclusion and Future Work}
+
+	This paper documented a path-planning method for \glspl{cdpr}. The algorithm
+	is based on \gls{rrt}. Methods to detect different classes of collisions
+	were discussed an implemented. The method takes into account the static
+	quality of poses along the path by using the capacity margin. B-splines are
+	used to generate a final smooth path. A simple motion-law generation
+	strategy is also discussed. The motion law makes use of B-splines to ensure
+	continuity in the velocity and acceleration profiles of the actuators.
+
+	This paper made the assumption that the dynamic effects of the capacity
+	margin are negligible for the planning stage. The conditions under which
+	this assumption is valid still need to be investigated.
+
+	This paper discusses many post-processing steps. While they each achieve
+	their respective goals, running all of them can add considerable time to the
+	overall planning process. Methods of tuning them to trade calculation speed
+	for post-processing quality must still be investigated.
