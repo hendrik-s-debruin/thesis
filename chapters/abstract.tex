@@ -1,11 +1,20 @@
 \begin{abstract}
 
-	Generating non-trivial trajectories for Cable Driven Parallel Robots is a
+	% Generating non-trivial trajectories for Cable Driven Parallel Robots is a
+	% complicated problem. Care must be taken to avoid collisions with obstacles,
+	% as well as to avoid self-collisions such as cable-cable and cable-platform
+	% collisions. A proposed project is to investigate generating and guaranteeing
+	% the safety of such trajectories. To this end, the current report gives a
+	% brief overview of trajectory generation techniques, path planning algorithms
+	% and modelling of Cable Driven Parallel Robots.
+
+	Generating non-trivial trajectories for Cable-Driven Parallel Robots is a
 	complicated problem. Care must be taken to avoid collisions with obstacles,
 	as well as to avoid self-collisions such as cable-cable and cable-platform
-	collisions. A proposed project is to investigate generating and guaranteeing
-	the safety of such trajectories. To this end, the current report gives a
-	brief overview of trajectory generation techniques, path planning algorithms
-	and modelling of Cable Driven Parallel Robots.
+	collisions. The current report documents a methodology for generating
+	collision-free paths and trajectories in $\specialEuclideanGroup{3}$ for
+	Cable-Driven Parallel Robots in the presence of such obstacles. B-spline
+	curves are employed to ensure smoothness in both the found path and the
+	motion law along the path.
 
 \end{abstract}
