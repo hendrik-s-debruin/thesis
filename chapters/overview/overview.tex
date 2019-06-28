@@ -3,7 +3,8 @@
 
 	The goal of this thesis is to develop a path planning and trajectory
 	generation architecture for \glspl{cdpr}. A randomised sampling algorithm
-	based on the \gls{rrt} algorithm is developed.\todo{ref rrt}
+	based on the \gls{rrt} algorithm is developed
+	\cite{bib:planning:rapidly-exploring_random_trees_a_new_tool_for_path_planning}.
 
 	This thesis makes a distinction between a path $\pathsym$ of the robot
 	$\robot$, and its corresponding trajectory $\traj$. In particular, a path is
@@ -68,11 +69,12 @@
 	\end{equation}
 
 	Since \glspl{cdpr} are actuated by cables and not rigid links, they may
-	experience vibrations\todo{ref something here}. To mitigate this, an aim of
-	this thesis is to generate paths and trajectories that are as smooth as
-	possible. Constraint~\ref{eq:constraint:geometric_differentiablity} requires
-	that the degree of geometric differentiability of the path be at least
-	larger than some tunable value $\gain_{\contdeggeombare}$. For instance, if:
+	experience vibrations. To mitigate this, an aim of this thesis is to
+	generate paths and trajectories that are as smooth as possible.
+	Constraint~\ref{eq:constraint:geometric_differentiablity}, requires that the
+	degree of geometric differentiability, $\contdeggeombare$ of the path be at
+	least larger than some tunable value $\gain_{\contdeggeombare}$. For
+	instance, if:
 
 	\begin{equation}
 		\gain_{\contdeggeombare} \geq 2
@@ -80,8 +82,9 @@
 
 	there will be no sharp corners in $\pathsym$. Similarly,
 	constraint~\ref{eq:constraint:kinematic_differentiability} requires that the
-	trajectory have a degree of differentiability at least equal to a tunable
-	value $\gain_{\contdegbare}$. For instance, by requiring that:
+	trajectory have a degree of differentiability, $\contdegbare$, at least
+	equal to a tunable value $\gain_{\contdegbare}$. For instance, requiring
+	that:
 
 	\begin{equation}
 		\gain_{\contdegbare} \geq 4
@@ -113,8 +116,8 @@
 
 	Finally, Constraint~\ref{eq:constraint:minimise_distance}
 	and~\ref{eq:constraint:capacity_margin} attempt to minimise the distance
-	along the path and maximise the capacity margin along the path. These
-	constraints are often in conflict.
+	along the path and maximise the capacity margin $\capacitymargin$ along the
+	path. These constraints are often in conflict.
 
 	\section{Information Flow in the Architecture}
 
@@ -128,7 +131,7 @@
 			\import{res/img/}{architecture_information_flow.pdf_tex}
 			\caption{Architecture Information Flow}
 			\label{fig:architecture_information_flow}
-		\end{figure}\todo{make these colours not shit}
+		\end{figure}
 
 		The architecture is fairly flexible in that it can read the
 		configuration of the robot and obstacles from a configuration file. The
@@ -158,16 +161,20 @@
 
 	\section{Structure of the Thesis}
 
-		The thesis starts with a discussion on how collisions are detected in
+		The thesis starts with a literature study in
+		Chapter~\ref{chap:literature_study}. The literature study covers
+		trajectory generation, path planning and modelling of \glspl{cdpr}.  A
+		discussion on how collisions are detected is presented in
 		Chapter~\ref{chap:collision_detection}. Chapter~\ref{chap:sampling}
 		focusses on the algorithms used to find a collision-free path, while
 		Chapter~\ref{chap:path_processing} discusses various post-processing
 		steps that are performed to improve the quality of the path.
 		Chapter~\ref{chap:motion_law} discusses how a trajectory along the found
 		path is generated. An overview of the architecture is given in
-		Chapter~\ref{chap:architecture_developed}. Finally,
-		Chapter~\ref{chap:experimental_results} discusses some experimental
-		results.
+		Chapter~\ref{chap:architecture_developed}.
+		% Finally,
+		% Chapter~\ref{chap:experimental_results} discusses some experimental
+		% results.
 
 	\section{Conventions Used in the Thesis}
 

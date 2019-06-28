@@ -22,12 +22,9 @@
 		\caption{Cable-Cable Collision Detection}
 		\label{fig:cable_cable_collision_detection}
 	\end{figure}
-	\todo{Figure from hand written notes. These are two cables $\cable_i$
-	ranging from $\distalanchor_i$ to $\proximalanchor_i$}
 
 	The equations of the cables in the figure are:
 
-	\todo{The glossary entry for cable should probably say point on cable}
 	\begin{equation}
 		\cable_i = \distalanchor_i + \timenorm_i(\proximalanchor_i -
 		\distalanchor_i)
@@ -85,7 +82,7 @@
 	Assuming for now zero-width, the cables are in collision if and only if
 	$\timenorm_i \in [0, 1]$.
 
-	In the three-dimensional case, infinite lines may not lie in the same plane.
+	In the three-dimensional case, infinite lines could lie in different planes.
 	This is reflected by the fact that $\dim\mat{A} = 3\times2$,
 	$\dim\vec{\timenorm} = 2\times1$ and $\dim\vec{b} = 2\times1$. The system
 	can therefore not be solved by taking the inverse of $\mat{A}$. Instead, the
@@ -121,8 +118,8 @@
 
 	Note that some \gls{cdpr} designs place either the proximal or distal anchor
 	of two or more cables at the same point to reduce the risk of
-	collision\todo{cite this}. For such cases, cables can be considered
-	collision-free if:
+	collision~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
+	For such cases, cables can be considered collision-free if:
 
 	\begin{equation}
 		\timenorm_i = 0 \quad\text{or}\quad \timenorm_i = 1

@@ -14,7 +14,8 @@
 		\glspl{cdpr} can be classified in different ways.	One  way  is  to
 		classify such robots by their degrees of  freedom  $\robotdof$	and  the
 		number of cables, $\numcables$.  Using these parameters, the  degree  of
-        redundancy, $\degofredundancy$, is defined as:
+		redundancy, $\degofredundancy$, is defined
+		as~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}:
 
         \begin{equation}
             \degofredundancy = \numcables - \robotdof
@@ -59,9 +60,9 @@
 		\glspl{cdpr} can also be classified according to the type of motion that
 		they can generate at the end-effector.	These motion types are generally
 		classified according to the pattern $x$R$y$T, where $x$ is	the  degrees
-        of rotational freedom and $y$ is the degrees of translational freedom. A
+		of rotational freedom and $y$ is the degrees of translational freedom. A
 		summary   of   all	 possible	motion	 profiles	is	  reported	  in
-        Table~\ref{tab:types_of_cdpr_motion_profiles}.
+		Table~\ref{tab:types_of_cdpr_motion_profiles}~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
         \begin{table}[ht]
             \centering
@@ -216,7 +217,8 @@
 			Since the \gls{dgm} is generally used in feedback laws for the
 			controller~\cite[][page
 			121]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}
-			and is not directly required in path planning, an overview of the
+			and is not directly required in path
+			planning~\cite{bib:planning:planning_algorithms}, an overview of the
 			algorithms for calculating $\geometricmodel$ is outside the scope of
 			this literature study. The algorithms may be found in~\cite[][page
 			137]{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
@@ -499,34 +501,38 @@
         \subsubsection{Wrench-Feasible Poses}%
         \label{sec:wrench_feasible_poses}
 
-			Wrench feasibility is similar to wrench  closure,  except  it  takes
-			into account the minimum and maximum cable forces of the \gls{cdpr}.
-			The maximum cable forces ensure that  the  cables  do  not	fail  in
-			tension, whereas the minimum cable forces are chosen to ensure	that
-			there is no slack in the cables.  A pose $\pose$ is  wrench-feasible
-            for a set of wrenches $\setofwrenches$ if:
+			Wrench
+			feasibility~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}
+			is similar to wrench  closure,  except  it  takes into account the
+			minimum and maximum cable forces of the \gls{cdpr}.  The maximum
+			cable forces ensure that  the  cables  do  not	fail  in tension,
+			whereas the minimum cable forces are chosen to ensure	that there
+			is no slack in the cables.  A pose $\pose$ is  wrench-feasible for a
+			set of wrenches $\setofwrenches$ if:
 
             \begin{equation}
-                \forall
-                    \left(
-                        {\wrench}_{\platform}\in\setofwrenches
-                    \right)
-                \exists
-                    \left(
-                        \forcemagvec\in\Re^{\numcables}
-                    \right)
-                \suchthat
-                    \left(
-                        \strucmat(\pose)\forcemagvec + \wrench_{\platform} = \zerovec
-                    \right)
-                    \wedge
-                    \left(
-                        0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
-                        \quad\forall \indexi \in
-                            \left\{
-                                1,\ldots,\numcables
-                            \right\}
-                    \right)
+				\begin{split}
+					&\forall
+						\left(
+							{\wrench}_{\platform}\in\setofwrenches
+						\right)
+					\exists
+						\left(
+							\forcemagvec\in\Re^{\numcables}
+						\right)
+					\suchthat\\
+						&\left(
+							\strucmat(\pose)\forcemagvec + \wrench_{\platform} = \zerovec
+						\right)
+						\wedge
+						\left(
+							0 < \forcemag_{\min} \leq \forcemag_{\indexi} \leq \forcemag_{\max}
+							\quad\forall \indexi \in
+								\left\{
+									1,\ldots,\numcables
+								\right\}
+						\right)
+				\end{split}
             \end{equation}
 
 %			\todo{the following discussion is only relevant to	CRPM  and  RRPM}
@@ -713,10 +719,11 @@
         \subsubsection{Common Workspace Subsets}%
         \label{sec:common_workspace_subsets}
 
-			A	brief	overview   of	workspace	subsets   is   given   here.
+			A brief overview  of workspace subsets  is  given
+			here~\cite{bib:cdpr:cable_driven_parallel_robots_theory_and_application}.
 
-            \paragraph{Constant Orientation Workspace}%
-            \label{sec:constant_orientation_workspace}
+			\paragraph{Constant Orientation Workspace}%
+			\label{sec:constant_orientation_workspace}
 
 				The constant orientation workspace is the set of points that can
 				be	 reached   without	 changing	the    robot	orientation:
@@ -924,12 +931,10 @@
 				%This forms a convex polyhedron which may be verified by testing
 				%its vertices.
 
-				Such a constraint is straightforward to test.\todo{convex
-				polyhedron commented out}
+				Such a constraint is straightforward to test.
 
 			%\subsubsection{Dynamic Workspace}%
 			%\label{sec:dynamic_workspace}
-			\todo{section on dynamic workspace should be here}
 
 			\paragraph{Singularities in Workspace}%
 			\label{sec:singularities_in_workspace}
@@ -964,10 +969,14 @@
 			\paragraph{Continuous Workspace Determination}%
 			\label{sec:continuous_workspace_determination}
 
-				One method to evaluate the workspace is through the use of
-				interval analysis. This method breaks the workspace into
-				a finite set intervals within which it can guarantee all poses
-				to be inside or outside of the workspace.
+				\begin{sloppy}
+
+					One method to evaluate the workspace is through the use of
+					interval analysis. This method breaks the workspace into a
+					finite set intervals within which it can guarantee all poses
+					to be inside or outside of the workspace.
+
+				\end{sloppy}
 
 				Interval analysis solves the \gls{csp} problem. Constraints such
 				as those in Section~\ref{sec:criteria_on_poses_in_the_workspace}
@@ -1000,8 +1009,6 @@
 				space, $\cspsearchspace$. The types of workspaces listed in
 				Section~\ref{sec:common_workspace_subsets} may be found by aptly
 				choosing $\cspsearchspace$ and $\verdomain$.
-
-				\todo{interval is broken in nomenclature}
 
 				\gls{csp} solvers look for intervals $\interval{\calcvars}$ for
 				which there is no change in the truth value of the statement:
@@ -1081,8 +1088,6 @@
 					\end{algorithmic}
 				\end{algorithm}
 
-				\todo{bisecting box section, p 203, could go here, but leaving
-				out for now}
 %
 %   \subsection{\glsentrylong{ddm}}
 %

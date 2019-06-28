@@ -37,7 +37,8 @@
 	\label{sec:vector_spaces_in_path_planning}
 
 		Path planning deals with many different vector spaces. As such, an
-		overview of these spaces is briefly given here.
+		overview of these spaces is briefly given
+		here~\cite{bib:planning:planning_algorithms}.
 
 		The reachable world that a robot $\robot$ inhabits is denoted as
 		$\world$. In general, the world is defined as $\world \subseteq \Re^3$,
@@ -158,8 +159,10 @@
 	\label{sec:semi_algebraic_representation_of_bodies}
 
 		A common way of representing a robot $\robot$ or an obstacle $\obstacle$
-		is by the use of convex polyhedra. The following discussion will be
-		based on obstacles, but the same representation can be made for a robot.
+		is by the use of convex polyhedra
+		\cite{bib:planning:planning_algorithms}. The following discussion will
+		be based on obstacles, but the same representation can be made for a
+		robot.
 
 		A polyhedron may be built up by the use of a set of half-space
 		primitives $\halfspaceprimitive$ that each define a face of the
@@ -224,7 +227,8 @@
 
 			In general, it is best to describe the primitives within the robot
 			frame and not the world frame, that is,
-			$\halfspaceprimitive_{\indexi} \in \robot \not\subset\world$. The
+			$\halfspaceprimitive_{\indexi} \in \robot \not\subset\world$~%
+			\cite{bib:planning:planning_algorithms}. The
 			robot may then be positioned in $\world$ by defining a transform
 			function \transform:
 
@@ -260,14 +264,15 @@
 			The semi-algebraic model of
 			Section~\ref{sec:semi_algebraic_representation_of_bodies} can be
 			used to detect whether a point is in collision with an obstacle by
-			use of a simple logical predicate.
+			use of a simple logical
+			predicate~\cite{bib:planning:planning_algorithms}.
 
 			Define, $\forall\halfspaceprimitive_{\indexi}$, a logical predicate
 			\(
 				\logicalpredicate_{\indexi}:
 					\point\in\world \mapsto \{\true, \false\}
 			\)
-			such that:
+			such that~\cite{bib:planning:planning_algorithms}:
 
 			\begin{equation}
 				\logicalpredicate_{\indexi} =
@@ -449,7 +454,6 @@
 
 	%	\todo{page 180 book}
 	%	SECTION 4.3.3
-	\todo{Explicit Modelling of Configuration Space}
 
 	\subsection{Discrete Case}%
 	\label{sec:discrete_case}
@@ -537,8 +541,6 @@
 		stack~\cite[][page 35]{bib:planning:planning_algorithms}. The well-known
 		Dijkstra and $A^*$ algorithms can be seen as specialisations of
 		Algorithm~\ref{alg:general_forward_search}.
-
-		\todo{mention bidirectional search}
 
 	\subsection{Continuous Case}%
 	\label{sec:continuous_case}
@@ -646,11 +648,7 @@
 
 					%\item Low-Discrepancy Sampling
 
-					\todo{Maybe mention low-discrepancy sampling p 221}
-
 					%\item Incremental Sampling and Search
-
-					\todo{Incremental Sampling and Search}
 
 					\item Randomised Potential Fields
 
@@ -676,13 +674,14 @@
 
 					\item \glspl{rdt}
 
-						\glspl{rdt} incrementally construct a tree in
-						$\configurationspace$. The resolution of the tree
-						increases as time progresses. This makes them analogous
-						in a sense to space-filling curves. The well known
-						\gls{rrt} algorithms can be considered as a special case
-						of \glspl{rdt}. The basic \gls{rdt} algorithm is shown
-						in Algorithm~\ref{alg:basic_rdt}.
+						\glspl{rdt}~\cite{bib:planning:rapidly-exploring_random_trees_a_new_tool_for_path_planning}
+						incrementally construct a tree in $\configurationspace$.
+						The resolution of the tree increases as time progresses.
+						This makes them analogous in a sense to space-filling
+						curves. The well known \gls{rrt} algorithms can be
+						considered as a special case of \glspl{rdt}. The basic
+						\gls{rdt} algorithm is shown in
+						Algorithm~\ref{alg:basic_rdt}.
 
 						\begin{algorithm}[ht]
 							\caption{Basic \gls{rdt} Algorithm}%
@@ -737,10 +736,11 @@
 			\paragraph{Smoothing Random Paths}%
 			\label{sec:smoothing_random_paths}
 
-				Randomly samples will tend to lead to jagged paths. A path
+				Random sampling will tend to lead to jagged paths. A path
 				$\pathsym$ may be smoothed to obtain $\pathsym'$ by choosing two
 				points in the original path and smoothly merging them. This is
-				achieved with the following formula, for instance:
+				achieved with the following formula, for
+				instance~\cite{bib:planning:planning_algorithms}:
 
 				\begin{equation}
 					\pathsym'(\timenorm) =
@@ -757,11 +757,16 @@
 		\subsubsection{Combinatorial Motion Planning}%
 		\label{sec:combinatorial_motion_planning}
 
-			Combinatorial motion planning methods differ from the sampling-based
-			methods of Section~\ref{sec:sampling_based_motion_planning} in that
-			they are complete algorithms. That is, these algorithms are
-			guaranteed to find a path in finite time if it exists, or report
-			that no path exists.
+			Combinatorial motion planning
+			methods~%
+			\cite{bib:planning:planning_algorithms}%
+			\cite{bib:planning:robot_motion_planning}
+			differ from the
+			sampling-based methods of
+			Section~\ref{sec:sampling_based_motion_planning} in that they are
+			complete algorithms. That is, these algorithms are guaranteed to
+			find a path in finite time if it exists, or report that no path
+			exists.
 
 			These algorithms work by decomposing $\configurationspace$ into
 			cells $\cell$ that are guaranteed to be free from collisions. That
@@ -799,8 +804,6 @@
 			constraints.  As such, they are not explored further in this report.
 			However, a good reference for such algorithms can be found
 			in~\cite{bib:planning:robot_motion_planning}.
-
-	\todo{Maybe mention Feedback Planning as a subsection}
 
 	\subsection{Planning in the Presence of Differential Constraints}%
 	\label{sec:planning_in_the_presence_of_differential_constraints}

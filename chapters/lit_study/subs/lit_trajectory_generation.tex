@@ -147,7 +147,8 @@
 
 						Harmonic Trajectories are designed such that the
 						acceleration of the trajectory is proportional to its
-						position. Such trajectories are expressed by:
+						position. Such trajectories are expressed by
+						\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 						\begin{equation}
 							\configuration(\timesym) =
@@ -175,7 +176,8 @@
 					\item %ELLIPTICAL
 
 						Elliptical trajectories are a generalised form of
-						harmonic trajectories.  They are of the following form:
+						harmonic trajectories.  They are of the following form
+						\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 						\begin{equation}
 							\configuration(\timesym) =
@@ -232,7 +234,8 @@
 						\(
 							\forall \timesym \in [\timesym_0, \timesym_{\final}]
 						\).
-						These are given by the expression:
+						These are given by the expression
+						\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 						\begin{equation}
 							\configuration(\timesym) =
@@ -448,8 +451,6 @@
 			%	references it on page 117. This section is a combination of
 			%	various sections from the book}
 
-			\todo{maybe add a discussion on the trapezoidal trajectories?}
-
 			\paragraph{Cycloidal and Harmonic Blends}%
 			\label{cycloidal_and_harmonic_blends}
 
@@ -511,7 +512,8 @@
 				except they are suitable for periodic
 				motions~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 				By definition, these trajectories are of type
-				$\contdeg{\infty}$. They are given by the expression:
+				$\contdeg{\infty}$. They are given by the expression
+				\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 				\begin{equation}
 					\configuration(\timesym) =
@@ -573,12 +575,12 @@
 			Multipoint approximation techniques are summarised in the current
 			section.
 
-			\todo{orthogonal polynomials --- p 165}
-
 			\paragraph{Smoothing Cubic Splines}%
 			\label{sec:smoothing_cubic_splines}
 
-				Smoothing cubic splines are an adaptation on the spline
+				Smoothing cubic splines
+				\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}
+				are an adaptation on the spline
 				interpolation of Section~\ref{sec:splines}. They try to have as
 				good as possible a fit of the points in $\setofpoints$, yet try
 				to limit the curvature of the trajectory. This tends to reduce
@@ -649,9 +651,14 @@
 			\paragraph{B-Splines}%
 			\label{sec:b_spines}
 
-				B-splines are a common method to interpolate between points
+				B-splines~%
+				\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}%
+				\cite{bib:traj:handbook_on_splines_for_the_user}%
+				\cite{bib:math:spline_notes}
+				are a common
+				method to interpolate between points
 				$\point$ in a given set
-				$\setofpoints$~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}\cite{bib:traj:handbook_on_splines_for_the_user}.
+				$\setofpoints$.
 				They are given by the relation:
 
 				\begin{equation}
@@ -667,7 +674,8 @@
 				of knots such that
 				\(
 					\knot_{\indexi} \prec \knot_{\indexj} \iff \indexi < \indexj
-				\), a basis spline $\bspline$ is defined as follows:
+				\), a basis spline $\bspline$ is defined as follows~%
+				\cite{bib:math:spline_notes}:
 
 				\begin{align}
 					\begin{split}
@@ -721,7 +729,9 @@
 			\paragraph{Linear Interpolation with Polynomial Bends}%
 			\label{sec:linear_interpolation_with_polynomial_bends}
 
-				Linear interpolation with polynomial bends is a very simple way
+				Linear interpolation with polynomial bends~%
+				\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}
+				is a very simple way
 				to approximate the points $\point\in\setofpoints$ to within a
 				specifiable tolerance $\tol$ and a specified degree of
 				smoothness.  Consider an ordered set of points $\setofpoints$
@@ -927,9 +937,6 @@
 				perform this minimisation can be found in~\cite[][page
 				371]{bib:traj:trajectory_planning_for_automatic_machines_and_robots}.
 
-			\todo{Mixed Interpolation/Approximation, book p 375}
-
-
 	\subsection{Trajectory Scaling}%
 	\label{sec:trajectory_scaling}
 
@@ -1024,7 +1031,7 @@
 			\end{equation}
 
 			In this case, Equation~\ref{eq:kinematic_scaling_general} reduces
-			to:
+			to~\cite{bib:traj:trajectory_planning_for_automatic_machines_and_robots}:
 
 			\begin{equation}
 				\tdern{\configuration'}{\indexi}(\timesym') = \gain^{\indexi}

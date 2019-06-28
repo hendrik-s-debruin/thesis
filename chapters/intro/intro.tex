@@ -1,10 +1,11 @@
 \chapter{Introduction}%
 \label{chap:introduction}
 
-	\glsentrylong{cdpr}s (CDPR)\todo{wrong gls command here}  are a class of
-	robot where the end-effector is suspended and supported by cables. The
-	cables are connected to spools. Through actuation of the spools, the
-	end-effector's pose in space may be controlled.
+	\glsresetall
+
+	\glspl{cdpr} are a class of robot where the end-effector is suspended and
+	supported by cables. The cables are connected to spools. Through actuation
+	of the spools, the end-effector's pose in space may be controlled.
 
 	Using cables for end-effector manipulation has some benefits over
 	traditional serial and parallel robots. Cables are very lightweight.
@@ -26,25 +27,12 @@
 	their potential, they have started attracting more interest in the research
 	community.
 
-	A common problem in robotics is the generation of trajectories.
-	When generating non-trivial trajectories for \glspl{cdpr}, care must be
-	taken to avoid any obstacles in the workspace. This is complicated by the
-	fact that the cables which support the robot can span large sections of the
-	workspace.  Rotational trajectories can also cause cable-cable or
-	cable-platform collisions. The proposed project is therefore to investigate
-	ways of generating non-trivial trajectories and guaranteeing their safety.
+	A common problem in robotics is the generation of trajectories.  When
+	generating non-trivial trajectories for \glspl{cdpr}, care must be taken to
+	avoid any obstacles in the workspace. This is complicated by the fact that
+	the cables which support the robot can span large sections of the workspace.
+	Rotational trajectories can also cause cable-cable or cable-platform
+	collisions. The current thesis report documents an approach to generating
+	collision-free trajectories in $\specialEuclideanGroup{3}$ in the presence
+	of obstacles.
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	\todo{this paragraph must be removed for the thesis. A corresponding
-	paragraph is given in the literature review, but is commented out for the
-	literature review report. Uncomment later and delete this}
-
-	The literature study for the present report has three main sections.
-	Chapter~\ref{sec:trajectory_generation} reviews techniques for generating
-	trajectories that meet certain criteria. Chapter~\ref{sec:path_planning}
-	gives an overview of path planning methodologies. Finally,
-	Chapter~\ref{sec:modelling_of_cable_driven_parallel_robots} gives an
-	overview of the important aspects in modelling \glspl{cdpr}.
-
-	A proposed work plan can be found in Chapter~\ref{sec:proposed_plan}.
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
