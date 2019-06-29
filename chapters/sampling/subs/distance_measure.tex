@@ -22,8 +22,6 @@
 		\label{eq:euclidean_distance}
 	\end{equation}
 
-	\todo{Add radius of gyration discussion here}
-
 	This thesis proposes to instead measure distances in cable-space. This
 	has the following advantages:
 
@@ -42,7 +40,6 @@
 			the cables. Using the cable-space vector as a distance measure
 			means that the distance exactly encodes the amount of actuation
 			required to move from one pose to another.
-			\todo{wording}
 
 	\end{itemize}
 
@@ -53,8 +50,7 @@
 		\cablelengths = \invgeometricmodel(\pose)
 	\end{equation}
 
-	The distance function is then taken as:\todo{make sure this is correct,
-	and implement it in the code}
+	The distance function is then taken as:
 
 	\begin{equation}
 		\dist(\pose_1, \pose_2) =
@@ -96,8 +92,6 @@
 				}
 				\label{eq:distance_measure_capcity_margin}
 		\end{equation}
-		\todo{This has not yet been implemented in code}
-		\todo{dimensionally homogeneous?}
 
 		Here
 		\(

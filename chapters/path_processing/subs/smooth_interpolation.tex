@@ -20,7 +20,8 @@
 	each pose $\pose$ in the ordered set of poses $\setofposes$ in the
 	simplified path is considered as a control point of the final B-spline
 	trajectory. The trajectory is then generated using the well-known B-spline
-	recursive relation repeated here for completeness:
+	recursive relation repeated here for
+	completeness~\cite{bib:math:spline_notes}:
 
 	\begin{align}
 		\begin{split}
@@ -61,7 +62,6 @@
 		\end{split}
 		\label{eq:b_spline_recursion}
 	\end{align}
-	\todo{Some symbols not in nomenclature}
 
 	Where $k$ is the degree of the B-spline used to approximate the points in
 	$\setofposes$ and $\vec{\timesym}$ is the equidistant knot vector that
@@ -76,13 +76,13 @@
 		taken in the case that a new collision is detected.
 
 		One technique that is commonly used with B-spline curves is that of knot
-		multiplicity\todo{cite something here}. The elements in the knot vector
-		$\vec{\timesym}$\todo{not in nomenclature} are generally spaced
-		equidistantly. However, the multiplicity of a knot may be increased by
-		letting consecutive knots assume the same value. This has the effect of
-		drawing the spline closer to a control point, but also drops a degree of
-		differentiability at this point. A schematic representation of this
-		effect can be seen in Figure~\ref{fig:knot_multiplicity}.
+		multiplicity. The elements in the knot vector $\vec{\timesym}$ are
+		generally spaced equidistantly~\cite{bib:math:spline_notes}. However,
+		the multiplicity of a knot may be increased by letting consecutive knots
+		assume the same value. This has the effect of drawing the spline closer
+		to a control point, but also drops a degree of differentiability at this
+		point. A schematic representation of this effect can be seen in
+		Figure~\ref{fig:knot_multiplicity}.
 
 		\begin{figure}[hb]
 			\centering

@@ -79,7 +79,7 @@
 
 		In some instances, a path cannot be shortened by removing a pose
 		from $\setofposes$, since the resulting path would be in collision.
-		In such cases, the path may often contain a corner that may is far
+		In such cases, the path may often contain a corner that may be far
 		away from the rest of the path. Figure~\ref{fig:path_corner} shows
 		a schematic example of this case. To deal with this, an algorithm
 		was developed to remove such corners.
@@ -156,8 +156,10 @@
 		oscillations around the $y$ axis during its motion. For this reason,
 		it is worthwhile to employ a rotation optimisation step.
 
-		The rotation optimisation algorithm uses quaternion \gls{slerp}. It is
-		summarised in Algorithm~\ref{alg:rotation_optimisation}.
+		The rotation optimisation algorithm uses quaternion
+		\gls{slerp}~\cite{bib:math:a_compact_differential_formula_for_the_first_derivative_of_a_unit_quaternion_curve}%
+		\cite{bib:math:a_general_construction_scheme_for_unit_quaternion_curves_with_simple_high_order_derivatives}.
+		It is summarised in Algorithm~\ref{alg:rotation_optimisation}.
 
 		\begin{algorithm}[ht]
 			\caption{Rotation Optimisation}
@@ -226,8 +228,6 @@
 	\subsection{Increasing the Capacity Margin}%
 	\label{sec:increasing_the_capacity_margin}
 
-		\todo{the algorithm described here has not been implemented}
-
 		At this point a set $\setofposes$ has been found that is guaranteed to
 		be collision-free. However, due to the random nature of the path search
 		algorithm, little is done to optimise the overall capacity margin
@@ -278,8 +278,6 @@
 			\label{eq:capacity_margin_increase}
 		\end{equation}
 
-		\todo{what is the derivative of a quaternion?}
-
 		Here, the gain ${\gain}_{\indexi}$ determines how far to move
 		${\pose}_{\indexi}$ in the direction of increasing $\capacitymargin$. Of
 		course, this is subject to the constraints:
@@ -326,8 +324,7 @@
 		${\gain}_{\indexi}$ should be limited. As such, it is beneficial to
 		define a discrete set ${{\gain}_{\indexi}}_1 \ldots
 		{{\gain}_{\indexi}}_n$ for which
-		Equation~\ref{eq:capacity_margin_increase} is called.
-		\todo{$n$ is  not in nomenclature} If this set of gains is kept small,
-		the procedure can be run multiple times to search for a path with a
-		higher capacity margin. Of course, this has a trade-off with the overall
-		calculation time required.
+		Equation~\ref{eq:capacity_margin_increase} is called.  If this set of
+		gains is kept small, the procedure can be run multiple times to search
+		for a path with a higher capacity margin. Of course, this has a
+		trade-off with the overall calculation time required.

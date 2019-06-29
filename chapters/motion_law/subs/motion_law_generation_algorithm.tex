@@ -22,11 +22,10 @@
 	\end{equation}
 
 	Each cable in $\cablevec$ is subjected to kinematic constraints on its
-	velocity, $\dot\cablelength_{\max}$\todo{also discuss acceleration, jerk
-	etc when implemented}.  That is, each cable has a maximum velocity which
-	it may not exceed. As such, the next step in the algorithm is finding
-	the ranges that exceed this maximum velocity. In other words, find the
-	set of time instants $\timenorm$ where:
+	velocity, $\dot\cablelength_{\max}$.  That is, each cable has a maximum
+	velocity which it may not exceed. As such, the next step in the algorithm is
+	finding the ranges that exceed this maximum velocity. In other words, find
+	the set of time instants $\timenorm$ where:
 
 	\begin{equation}
 		\abs{\dot{\cablevec}(\timenorm)} \geq \dot{\cablevec}_{\max}
@@ -158,7 +157,6 @@
 		\leq \dot{\cablevec}_{\max}
 		\quad\forall{\timenorm}\in{\rangetimenorm}_{\indexi}
 	\end{equation}
-	\todo{describe how $\gain_{\indexi}$ is chosen}
 
 	A graphical intuition of the algorithm is given in
 	Figure~\ref{fig:motion_law_graphical_intuition}. The top graph shows the
@@ -177,8 +175,6 @@
 		\caption{Motion Law Construction}%
 		\label{fig:motion_law_graphical_intuition}
 	\end{figure}
-
-	\todo{put algorithm here}
 
 	The motion law shown in Figure~\ref{fig:motion_law_graphical_intuition} will
 	guarantee that the velocity constraints of the actuators are respected.
@@ -204,16 +200,16 @@
 
 	When interpolating the motion law with a B-spline, certain segments of the
 	motion law may have a steeper slope than the corresponding segments of the
-	linear interpolation of the control points\todo{wording}. A steeper slope
-	means in the motion law corresponds to faster progression along the
-	trajectory and therefore higher cable velocities than those provided by the
-	base linear interpolation.
-	Figure~\ref{fig:augmented_motion_law_control_points} highlights the areas of
-	the motion law of Figure~\ref{fig:motion_law_spline} that have a higher
-	slope. These areas correspond to regions where the output velocities may
-	violate the constraints. To combat this, the control points may be augmented
-	in a manner similar to Algorithm~\ref{alg:set_of_poses_augmentation}. The
-	output of this is illustrated schematically on the right hand side of
+	linear interpolation of the control points. A steeper slope means in the
+	motion law corresponds to faster progression along the trajectory and
+	therefore higher cable velocities than those provided by the base linear
+	interpolation.  Figure~\ref{fig:augmented_motion_law_control_points}
+	highlights the areas of the motion law of Figure~\ref{fig:motion_law_spline}
+	that have a higher slope. These areas correspond to regions where the output
+	velocities may violate the constraints. To combat this, the control points
+	may be augmented in a manner similar to
+	Algorithm~\ref{alg:set_of_poses_augmentation}. The output of this is
+	illustrated schematically on the right hand side of
 	Figure~\ref{fig:augmented_motion_law_control_points}. The effect of such a
 	procedure is to follow the base motion law as closely as possible, but then
 	connect the sharp corners with smooth bends.
@@ -275,8 +271,6 @@
 
 	\end{enumerate}
 
-	\todo{in this entire section, $x$ and $B$ not in nomenclature}
-
 	It would clearly be ideal to have a direct relation as in
 	Equation~\ref{eq:direct_relation_motion_law_spline}. However,
 	Option~\ref{option:rewrite_non_implicit} requires expensive computations and
@@ -300,7 +294,7 @@
 	\end{equation}
 
 	upon creation of the motion law. This is done by defining a discrete set
-	$\set{X}$\todo{not in nomenclature} that spans the domain $x$ of $B$ with
+	$\set{X}$ that spans the domain $x$ of $B$ with
 	linearly spaced intervals. $\set{T}$ is then found simply by the relation
 	\(
 		\set{T} = B(\set{X})
@@ -328,7 +322,6 @@
 	\begin{equation}
 		\timesym \in [\timesym_{\indexi}, \timesym_{\indexi + 1}]
 	\end{equation}
-	\todo{$\set{T}$ is not in nomenclature here}
 
 	Using a lookup table did not lead to any noticeable impacts on the
 	speed of execution, even when a large number of samples was taken to build

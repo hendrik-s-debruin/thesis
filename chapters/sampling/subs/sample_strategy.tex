@@ -56,11 +56,6 @@
 	\subsection{Improving the Sampled Capacity Margin}%
 	\label{sec:improving_the_sampled_capacity_margin}
 
-		\todo{capacity margin is currently defined later in the thesis. Move
-		that discussion up}
-		\todo{Above speaking about normal distribution. That is for the graph.
-		Uniform distribution is used for normal samples}
-
 		While the sampling strategy in
 		Algorithm~\ref{alg:sampling_planning_overview} will find a
 		collision-free path, the path may be suboptimal in terms of the capacity
@@ -104,25 +99,26 @@
 	\subsection{Justification of Sampling Strategy}%
 	\label{sec:justification_of_sampling_strategy}
 
-		\glspl{cdpr} have a higher capacity margin towards the centre of
-		their workspace\todo{cite something here}. This led to the decision
-		to use a normal distribution to sample translations as described in
-		Item~\ref{item:sample_strategy:translation} above. In doing so,
-		the sampling algorithm has a higher probability to choose
-		translations closer to the centre of the workspace, thereby
-		increasing the average stability of the trajectory found.
+		\glspl{cdpr} are more likely to have a higher capacity margin towards
+		the centre of their workspace. This led to the decision to use a normal
+		distribution to sample translations as described in
+		Item~\ref{item:sample_strategy:translation} above. In doing so, the
+		sampling algorithm has a higher probability to choose translations
+		closer to the centre of the workspace, thereby increasing the average
+		stability of the trajectory found.
 
 		Items~\ref{item:sample_strategy:angle}
-		and~\ref{item:sample_strategy:quaternion} in the list above generate
-		a rotation $\theta$ around the $y$-axis. The reason that rotations
-		are only drawn around the $y$ axis is two-fold. The first reason is
-		that experimentation has shown that the architecture performs faster
-		when only drawing rotations around a single axis\todo{back this up
-		with numbers}. The second reason is that, by only drawing rotations
-		around the $y$ axis, the robot is guaranteed to be upright during
-		its trajectory. This produces simpler trajectories, as generating
-		completely random quaternions would have the robot change its
-		orientation unpredictably.
+		and~\ref{item:sample_strategy:quaternion} in the list above generate a
+		rotation $\theta$ around the $y$-axis. The reason that rotations are
+		only drawn around the $y$ axis is two-fold. The first reason is that
+		experimentation has shown that the architecture performs faster when
+		only drawing rotations around a single axis. This is because, by
+		removing two rotational axes, the search space is reduced by two
+		dimensions. The second reason is that, by only drawing rotations around
+		the $y$ axis, the robot is guaranteed to be upright during its
+		trajectory. This produces simpler trajectories, as generating completely
+		random quaternions would have the robot change its orientation
+		unpredictably.
 
 		The mean and standard deviation as defined in
 		Item~\ref{item:sample_strategy:angle} are chosen such that 99.7\% of
