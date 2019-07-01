@@ -1,5 +1,31 @@
-\section{Algorithm Overview}%
+\section{Sampling Algorithm Overview}%
 \label{sec:algorithm_overview}
+
+	% Due to the topology of the class of \gls{cdpr} considered, the sampling
+	% algorithm does not need to sample in configuration space, but may instead
+	% sample poses directly. This is due to the fact that there is a one-to-one
+	% correlation between end-effector pose and robot configuration.
+
+	The first step of the algorithm is to build a topological graph
+	$\topologicalgraph$ whose vertices contain collision-free end-effector
+	poses. The edges of the graph represent paths that are free of collision.
+	After $\topologicalgraph$ is built, a path $\pathsym$ is found that connects
+	the start pose $\pose_{\initial}$ to the final pose $\pose_{\final}$ by
+	taking into account a custom-defined distance function $\dist(\pose_1,
+	\pose_2)$ between two neighbour poses in $\topologicalgraph$. A schematic
+	representation is shown in Figure~\ref{fig:path_search}. The left side of
+	the figure shows a representation of $\topologicalgraph$ in configuration
+	space, whereas the right side shows an as-of-yet inefficient path from the
+	start to the goal.
+
+	\begin{figure}[hb]
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{path_search.pdf_tex}
+		\caption{Path Smoothing}%
+		\label{fig:path_search}
+	\end{figure}
+
 
 	The pose $\pose$ of the robot $\robot$ is described as a translation
 	vector $\transvec$ combined with a quaternion $\quaternion$:

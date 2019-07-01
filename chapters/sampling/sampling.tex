@@ -7,28 +7,37 @@
 	of the well-known \gls{rrt}
 	algorithm~\cite{bib:planning:rapidly-exploring_random_trees_a_new_tool_for_path_planning}.
 
-	Due to the topology of the class of \gls{cdpr} considered, the sampling
-	algorithm does not need to sample in configuration space, but may instead
-	sample poses directly. This is due to the fact that there is a one-to-one
-	correlation between end-effector pose and robot configuration.
+	\section{Overview of Planning Steps}
 
-	The algorithm essentially builds a topological graph $\topologicalgraph$
-	whose vertices contain collision-free end-effector poses. The edges of the
-	graph represent paths that are free of collision. After $\topologicalgraph$
-	is built, a path $\pathsym$ is found that connects the start pose
-	$\pose_{\initial}$ to the final pose $\pose_{\final}$ by taking into account
-	a custom-defined distance function $\dist(\pose_1, \pose_2)$ between two
-	neighbour poses in $\topologicalgraph$. A schematic representation is shown
-	in Figure~\ref{fig:path_search}. The details are described in the following
-	sections.
+		As an initial overview, Figure~\ref{fig:path_planning_in_2d} shows the
+		different planning stages for the planar case. The orange shapes
+		represent obstacles that must be avoided. The green dot is the start
+		pose of the end-effector, and the red dot is its final pose. For
+		simplicity, the end-effector is not drawn in these images. The top-left
+		image shows the construction of a topological graph representing
+		possible collision-free paths of the end-effector. The top-right image
+		shows the output of a graph-search to obtain a feasible path after the
+		graph has been built. The bottom-left shows the output of several
+		post-processing steps that optimise and simplify the found path.
+		Finally, the bottom-right image shows the effect of smoothing the
+		corners of the simplified path.
 
-	\begin{figure}[hb]
-		\centering
-		\def\svgwidth{\columnwidth}
-		\import{res/img/}{path_search.pdf_tex}
-		\caption{Path Smoothing}%
-		\label{fig:path_search}
-	\end{figure}
+		\begin{figure}[htb]
+			\centering
+				\includegraphics[width=0.5\textwidth]{2d_search_1}%
+				\includegraphics[width=0.5\textwidth]{2d_search_2}\\
+				\includegraphics[width=0.5\textwidth]{2d_search_3}%
+				\includegraphics[width=0.5\textwidth]{2d_search_4}
+			\caption{Path Planning in 2D}
+			\label{fig:path_planning_in_2d}
+		\end{figure}
+
+		The current chapter discusses the generation of the topological graph
+		and subsequent graph search in the top row of
+		Figure~\ref{fig:path_planning_in_2d}. Chapter~\ref{chap:path_processing}
+		discusses the post-processing phases shown in the bottom row of the
+		figure.  Both chapters discuss these procedures for the general case in
+		$\specialEuclideanGroup{3}$.
 
 	\input{chapters/sampling/subs/algorithm_overview}
 	\input{chapters/sampling/subs/sample_strategy}

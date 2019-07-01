@@ -75,8 +75,6 @@
 	\subsection{Corner Removal}%
 	\label{sec:corner_removal}
 
-		\todo{this is not yet properly implemented in the code}
-
 		In some instances, a path cannot be shortened by removing a pose
 		from $\setofposes$, since the resulting path would be in collision.
 		In such cases, the path may often contain a corner that may be far
@@ -85,9 +83,11 @@
 		was developed to remove such corners.
 
 		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{corner_removal.pdf_tex}
 			\caption{Path Corner}
 			\label{fig:path_corner}
-			\missingfigure{}
 		\end{figure}
 
 		The algorithm tries to find the points $\pose_a, \pose_b$ that

@@ -101,8 +101,20 @@
 	it is not sufficient to test that $\timenorm_2,\timenorm_3 \in [0, 1]$. This
 	is because the section of the infinite plane $\plane$ described by the range
 	$\timenorm_2, \timenorm_3 \in [0, 1]$ is the regular parallelogram defined
-	by the vertices $\vertex_1, \vertex_2, \vertex_3$.\todo{input figure that
-	explains this last sentence}
+	by the vertices $\point_1, \point_2, \point_3$.
+	Figure~\ref{fig:point_in_plane} shows a simple example why this is the case.
+	As can be seen in the figure, point $\point_4$ is inside the parametric
+	plane $\plane$ described by the vertices $\point_1$, $\point_2$ and
+	$\point_3$, even though $\timenorm_3 \not\in [0, 1]$.
+
+	\begin{figure}[hbt]
+		%\missingfigure{Cable Obstacle Collision}
+		\centering
+		\def\svgwidth{\columnwidth}
+		\import{res/img/}{point_in_plane.pdf_tex}
+		\caption{Point in $\plane$}%
+		\label{fig:point_in_plane}
+	\end{figure}
 
 	The cable intersects the plane containing the current face of the polyhedron
 	at point $\cable(\timenorm_1)$. It is therefore sufficient to check that

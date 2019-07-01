@@ -5,8 +5,21 @@
 
 		There is no guarantee that a sampled pose $\pose_\text{sampled}$ can
 		be connected directly to its nearest neighbour
-		$\pose_\text{neighbour} \in \topologicalgraph$. \todo{Put figure
-		explaining why} Therefore, the calls to
+		$\pose_\text{neighbour} \in \topologicalgraph$.
+		Figure~\ref{fig:nearest_neighbour} shows one such case. In the figure,
+		the green dot represents the last sampled pose. There exists no
+		straight-line collision-free path from its nearest neighbour, indicated
+		by the red line.
+
+		\begin{figure}[hb]
+			\centering
+			\def\svgwidth{0.75\columnwidth}
+			\import{res/img/}{nearest_neighbour.pdf_tex}
+			\caption{Invalid nearest neighbour}%
+			\label{fig:nearest_neighbour}
+		\end{figure}
+
+		For this reason, the calls to
 		$\code{farthest\_collision\_free\_point}$ in lines
 		Lines~\ref{alg:sampling_planning_overview:farthest_collision_free_point_sampled}
 		and~\ref{alg:sampling_planning_overview:farthest_collision_free_point_goal}
