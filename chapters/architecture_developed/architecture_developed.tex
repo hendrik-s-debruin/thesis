@@ -1,4 +1,162 @@
-\chapter{Architecture Developed}
+\chapter{Architecture Developed}%
+\label{chap:architecture_developed}
 
 	The current chapter gives a brief overview of the architectural design of
 	the software.
+
+	\section{Configuration}
+
+		The software is flexible in the sense that it can be used to generate
+		plans for a wide range \glspl{cdpr}. This is achieved by defining
+		several configuration files that specify the robot and scene topology.
+
+		In the configuration files, poses are written in the following format:
+
+		\begin{equation*}
+			x \quad y \quad z \quad qx \quad qy \quad qz \quad w
+		\end{equation*}
+
+		Here, $x, y$ and $z$ are the translation components of a pose. $qx, qy$
+		and $qz$ are the imaginary components of the orientation quaternion,
+		while $w$ is the real part of the quaternion.
+
+		Some configuration files require only coordinates, and not full poses.
+		Such configurations are written:
+
+		\begin{equation*}
+			x \quad y \quad z
+		\end{equation*}
+
+		Configuration files exist for the following components:
+
+		\begin{itemize}
+
+			\item
+
+				The start and goal poses of the end-effector
+
+			\item
+
+				The obstacles in the workspace
+
+			\item
+
+				The shape of the end-effector
+
+			\item
+
+				The shape of the workspace
+
+			\item
+
+				The anchors of the cables
+
+		\end{itemize}
+
+		\subsection{Poses}
+
+			The poses configuration file is merely a list of poses of the form
+			defined above.
+
+		\subsection{Obstacles}
+
+			The first line of  the obstacle configuration file defines how many
+			obstacles are in the scene. Then, each obstacle is built up of the
+			following lines:
+
+			\begin{itemize}
+
+				\item
+
+					A pose configuration describing its position within the
+					scene.
+
+				\item
+
+					A list of coordinate lines describing the vertices of the
+					obstacle in model space.
+
+			\end{itemize}
+
+		\subsection{End-Effector}
+
+			The end-effector configuration file is merely a list of coordinates
+			of the vertices of the end-effector in model space.
+
+		\subsection{Work-Space}
+
+			Similarly to the end-effector, the workspace is also just a list of
+			coordinates. These coordinates represent the physical frame of the
+			robot.
+
+		\subsection{Cables}
+
+			The cable configuration file lists, for each cable, their proximal
+			anchors in the world frame and their distal anchors in the
+			end-effector frame on the same line.
+
+	\section{C++ Classes}
+
+		The following section gives a brief overview of the C++ classes
+		developed and their function in the overall algorithm.
+
+		\subsection{Polyhedron}
+
+			The \code{ConvexPolyhedron} class is responsible for defining the
+			vertices of an object. It also implements the SAT algorithm for
+			collision detection.
+
+		\subsection{End-Effector}
+
+			The \code{EndEffector} class inherits from \code{ConvexPolyhedron}
+			and adds capabilities for calculating the capacity margin and
+			inverse geometric model, while also implementing the distance
+			measure used in the architecture.
+
+		\subsection{Cable}
+
+			The \code{Cable} class contains abstractions for testing cable-cable
+			collisions, cable-obstacle collisions and cable-end-effector
+			collisions.
+
+		\subsection{Sampler}
+
+			The \code{Sampler} class is responsible for sampling poses as
+			described in Chapter~\ref{chap:sampling}.
+
+		\subsection{Node}
+
+			The \code{Node} class encodes a vertex of $\topologicalgraph$.
+			Connections between nodes are implemented as smart pointers to other
+			\class{Node}s.
+
+		\subsection{Spline}
+
+			The \code{Spline} class implements B-Splines using the casteljau
+			recursion.
+
+		\subsection{Capacity Margin}
+
+			The capacity margin is not calculated in C++, but instead in Matlab.
+			The class \code{CapacityMargin} is a wrapper class that translates
+			the Matlab output into a form usable from C++.
+
+		\subsection{Path}
+
+			The \code{Path} class encodes the path as a set of poses. It
+			implements the post-processing algorithms as discussed in
+			Chapter~\ref{chap:path_processing}.
+
+		\subsection{Trajectory}
+
+			The \code{Trajectory} class is responsible for creating a
+			collision-free B-spline interpolation of the points of a
+			\code{Path}. It also generates the motion law as described in
+			Chapter~\ref{chap:motion_law}.
+
+		\subsection{Rendering}
+
+			The classes \code{Renderer}, \class{Shader}, \class{Camera} and
+			\class{Object} encapsulate the code required for 3D rendering with
+			OpenGL.
+
