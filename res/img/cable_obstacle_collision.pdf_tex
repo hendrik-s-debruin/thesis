@@ -56,10 +56,9 @@
     \put(0,0){\includegraphics[width=\unitlength,page=1]{cable_obstacle_collision.pdf}}%
     \put(0.68776232,0.16576688){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\plane$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{cable_obstacle_collision.pdf}}%
-    \put(0.6775747,0.57173432){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\point_1$\end{tabular}}}}%
-    \put(0.6775747,0.57173432){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\point_1$\end{tabular}}}}%
-    \put(0.45949789,0.66277603){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\point_2$\end{tabular}}}}%
-    \put(0.76438197,0.25308784){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\point_3$\end{tabular}}}}%
+    \put(0.6775747,0.57173432){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\vertex_1$\end{tabular}}}}%
+    \put(0.45949789,0.66277603){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\vertex_2$\end{tabular}}}}%
+    \put(0.76438197,0.25308784){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\vertex_3$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{cable_obstacle_collision.pdf}}%
     \put(0.0138262,0.23806563){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\proximalanchor$\end{tabular}}}}%
     \put(0.37088989,0.40948595){\color[rgb]{0.01176471,0.01960784,0.06666667}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\distalanchor$\end{tabular}}}}%

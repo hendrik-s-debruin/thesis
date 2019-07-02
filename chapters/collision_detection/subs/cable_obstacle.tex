@@ -35,8 +35,6 @@
 	approximated as an infinite parametric plane through any three vertices
 	$\vertex_i$ on the face. The equations for the cable and infinite plane are:
 
-	\todo{I changed the direction of the cable here to be consistent with the
-	standard. Check that the equations are still correct}
 	\begin{align}
 		\cable &= \distalanchor + \timenorm_1(\proximalanchor - \distalanchor)\\
 		\plane &= \vertex_1 + \timenorm_2(\vertex_2 - \vertex_1) +
@@ -54,7 +52,7 @@
 			\begin{matrix}
 				\proximalanchor - \distalanchor &
 				\vertex_1 - \vertex_2 &
-				\vertex_1 - \vertex_2
+				\vertex_1 - \vertex_3
 			\end{matrix}
 		\right]
 		\left[
@@ -75,7 +73,6 @@
 		%%
 		\mat{A}\vec{\timenorm} &= \vec{b}
 	\end{align}
-	\todo{temp symbols not referenced later or in nomenclature}
 
 	Since $\dim\mat{A} = 3\times3$, $\dim\vec{\timenorm} = 3\times1$ and
 	$\dim\vec{b} = 3\times1$, the intersection of an infinite cable with an
@@ -101,11 +98,11 @@
 	it is not sufficient to test that $\timenorm_2,\timenorm_3 \in [0, 1]$. This
 	is because the section of the infinite plane $\plane$ described by the range
 	$\timenorm_2, \timenorm_3 \in [0, 1]$ is the regular parallelogram defined
-	by the vertices $\point_1, \point_2, \point_3$.
+	by the vertices $\vertex_1, \vertex_2, \vertex_3$.
 	Figure~\ref{fig:point_in_plane} shows a simple example why this is the case.
-	As can be seen in the figure, point $\point_4$ is inside the parametric
-	plane $\plane$ described by the vertices $\point_1$, $\point_2$ and
-	$\point_3$, even though $\timenorm_3 \not\in [0, 1]$.
+	As can be seen in the figure, point $\point$ is inside the parametric
+	plane $\plane$ described by the vertices $\vertex_1$, $\vertex_2$ and
+	$\vertex_3$, even though $\timenorm_3 \not\in [0, 1]$.
 
 	\begin{figure}[hbt]
 		%\missingfigure{Cable Obstacle Collision}

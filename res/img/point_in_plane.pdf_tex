@@ -38,7 +38,7 @@
   \newcommand*\fsize{\dimexpr\f@size pt\relax}%
   \newcommand*\lineheight[1]{\fontsize{\fsize}{#1\fsize}\selectfont}%
   \ifx\svgwidth\undefined%
-    \setlength{\unitlength}{233.42440042bp}%
+    \setlength{\unitlength}{229.94673403bp}%
     \ifx\svgscale\undefined%
       \relax%
     \else%
@@ -50,18 +50,18 @@
   \global\let\svgwidth\undefined%
   \global\let\svgscale\undefined%
   \makeatother%
-  \begin{picture}(1,0.37389614)%
+  \begin{picture}(1,0.37955086)%
     \lineheight{1}%
     \setlength\tabcolsep{0pt}%
     \put(0,0){\includegraphics[width=\unitlength,page=1]{point_in_plane.pdf}}%
-    \put(0.22320521,0.06291496){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\point_1$\end{tabular}}}}%
-    \put(0.59836908,0.04587525){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\point_3$\end{tabular}}}}%
-    \put(0.61106047,0.30796187){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\point_2$\end{tabular}}}}%
-    \put(0.23404464,0.0069273){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timenorm_3$\end{tabular}}}}%
-    \put(0.35392189,0.16677567){\color[rgb]{0,0,0}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm_2$\end{tabular}}}}%
+    \put(0.24771778,0.06386647){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\vertex_1$\end{tabular}}}}%
+    \put(0.62855555,0.04656906){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\vertex_3$\end{tabular}}}}%
+    \put(0.64143888,0.31261942){\color[rgb]{0.01176471,0.01176471,0.01176471}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\vertex_2$\end{tabular}}}}%
+    \put(0.25872114,0.00703206){\color[rgb]{0,0,0}\makebox(0,0)[lt]{\lineheight{1.25}\smash{\begin{tabular}[t]{l}$\timenorm_3$\end{tabular}}}}%
+    \put(0.38041139,0.16929795){\color[rgb]{0,0,0}\makebox(0,0)[rt]{\lineheight{1.25}\smash{\begin{tabular}[t]{r}$\timenorm_2$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=2]{point_in_plane.pdf}}%
-    \put(0.76907967,0.29127534){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\plane$\end{tabular}}}}%
+    \put(0.80184793,0.29568053){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\plane$\end{tabular}}}}%
     \put(0,0){\includegraphics[width=\unitlength,page=3]{point_in_plane.pdf}}%
-    \put(0.77814588,0.23045731){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\point_4$\end{tabular}}}}%
+    \put(0.81105125,0.2339427){\color[rgb]{0,0,0}\makebox(0,0)[t]{\lineheight{1.25}\smash{\begin{tabular}[t]{c}$\point$\end{tabular}}}}%
   \end{picture}%
 \endgroup%
