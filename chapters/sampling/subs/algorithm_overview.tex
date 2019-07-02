@@ -8,21 +8,21 @@
 
 	The first step of the algorithm is to build a topological graph
 	$\topologicalgraph$ whose vertices contain collision-free end-effector
-	poses. The edges of the graph represent paths that are free of collision.
-	After $\topologicalgraph$ is built, a path $\pathsym$ is found that connects
-	the start pose $\pose_{\initial}$ to the final pose $\pose_{\final}$ by
-	taking into account a custom-defined distance function $\dist(\pose_1,
-	\pose_2)$ between two neighbour poses in $\topologicalgraph$. A schematic
-	representation is shown in Figure~\ref{fig:path_search}. The left side of
-	the figure shows a representation of $\topologicalgraph$ in configuration
-	space, whereas the right side shows an as-of-yet inefficient path from the
-	start to the goal.
+	poses. The edges of the graph represent paths between these poses that are
+	also free of collision.  After $\topologicalgraph$ is built, a path
+	$\pathsym$ is found that connects the start pose $\pose_{\initial}$ to the
+	final pose $\pose_{\final}$ by taking into account a custom-defined distance
+	function $\dist(\pose_1, \pose_2)$ between two neighbour poses in
+	$\topologicalgraph$. A schematic representation is shown in
+	Figure~\ref{fig:path_search}. The left side of the figure shows a
+	representation of $\topologicalgraph$ in configuration space, whereas the
+	right side shows an as-of-yet inefficient path from the start to the goal.
 
 	\begin{figure}[hb]
 		\centering
 		\def\svgwidth{\columnwidth}
 		\import{res/img/}{path_search.pdf_tex}
-		\caption{Path Smoothing}%
+		\caption{Initial Path Search}%
 		\label{fig:path_search}
 	\end{figure}
 
