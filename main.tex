@@ -78,17 +78,36 @@
 %
 	\clearpage
 	\pagenumbering{arabic}
-	\input{chapters/intro/intro}
-	%%%%%%% \input{chapters/proposed_plan/proposed_plan}
-	\input{chapters/overview/overview}
-	\input{chapters/lit_study/lit_study}
-	\input{chapters/collision_detection/collision_detection}
-	\input{chapters/sampling/sampling}
-	\input{chapters/path_processing/path_processing}
-	\input{chapters/motion_law/motion_law}
-	% \input{chapters/experimental_validation/experimental_validation}
-	\input{chapters/architecture_developed/architecture_developed}
 
-	% \printbibliography{}
+	\part{Overview and Background}%
+	\label{part:overview_and_background}
+
+		\input{chapters/intro/intro}
+		%%%%%%% \input{chapters/proposed_plan/proposed_plan}
+		\input{chapters/overview/overview}
+		\input{chapters/lit_study/lit_study}
+
+	\part{Path Planning Approach}%
+	\label{part:path_planning_approach}
+
+		% Part~\ref{part:path_planning_approach} discusses the overall planning
+		% approach followed. Chapter~\ref{chap:collision_detection} discusses the
+		% collision detection modules. The main planning is discussed
+		% in~\ref{chap:sampling}. Finally, post processing steps are discussed in
+		% chapters~\ref{chap:path_processing} and~\ref{chap:motion_law}.
+
+		\input{chapters/collision_detection/collision_detection}
+		\input{chapters/sampling/sampling}
+		\input{chapters/path_processing/path_processing}
+		\input{chapters/motion_law/motion_law}
+		% \input{chapters/experimental_validation/experimental_validation}
+
+	\clearpage
+	\pagenumbering{roman}
+	\appendix
+		\input{chapters/architecture_developed/architecture_developed}
+
+	\appendix
+	\printbibliography{}
 
 \end{document}

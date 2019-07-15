@@ -139,7 +139,8 @@
 				\Procedure{Augment\_Pose\_Set}{\setofposes{}}
 					\State{}Declare new set $\setofposes'$
 					\State{}Add first pose in $\setofposes$ to $\setofposes'$
-					\ForAll{$\pose_{\indexi} \in \setofposes$}
+					\ForAll{$\pose_{\indexi} \in \setofposes\setminus
+					\pose_{\initial}, \pose_{\goal}$}
 						\State{}$\pose_0 = \pose_{\indexi - 1}$
 						\State{}$\pose_1 = \pose_{\indexi}$
 						\State{}$\pose_2 = \pose_{\indexi + 1}$
@@ -248,10 +249,11 @@
 
 		A schematic representation of the effect of augmenting $\setofposes$ can
 		be seen in Figure~\ref{fig:set_of_poses_augmentation_path}. Note that
-		the path is drawn with a B-spline curve. As can be seen in the figure,
-		adding additional control poses $\pose_a$ and $\pose_b$, a collision
-		with $\configurationspace_{\obstacleregion}$ can be avoided while still
-		maintaining the smoothness of the curve.
+		although the figure is schematic in nature, it is drawn using B-spline
+		curves and control points as discussed in this section.  As can be seen
+		in the figure, adding additional control poses $\pose_a$ and $\pose_b$,
+		a collision with $\configurationspace_{\obstacleregion}$ can be avoided
+		while still maintaining the smoothness of the curve.
 
 		\begin{figure}[hb]
 			\centering

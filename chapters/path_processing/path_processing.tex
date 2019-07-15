@@ -5,8 +5,9 @@
 	exits when it manages to attach the goal pose to the graph
 	$\topologicalgraph$. At this point, a Dijkstra-search is performed on
 	$\topologicalgraph$ to find an ordered set $\setofposes$ of poses $\pose$
-	using the distance function in Equation~\ref{eq:distance_measure} as the
-	cost-to-go criterion.
+	using the distance function in
+	Equation~\ref{eq:distance_measure_capcity_margin} as the cost-to-go
+	criterion.
 
 	After this step, a collision-free path $\pathsym$ from the start to the goal
 	pose may be found by taking points along the convex hull of subsequent

@@ -13,11 +13,15 @@
 
 		\item
 
-			Remove unnecessary poses
+			Remove unnecessary poses.
 
 		\item
 
-			Remove corners from the path
+			Remove corners from the path.
+
+		\item
+
+			Reduce the total amount of rotation along the path.
 
 	\end{enumerate}
 
@@ -69,7 +73,7 @@
 		is inserted between two points. For this reason, the algorithm only
 		removes points if this would reduce the total travelled distance
 		of the path. This is achieved by using the distance measure
-		(Equation~\ref{eq:distance_measure}) in
+		(Equation~\ref{eq:distance_measure_capcity_margin}) in
 		Line~\ref{alg:pose_removal:distance_check}.
 
 	\subsection{Corner Removal}%

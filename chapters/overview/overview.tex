@@ -14,7 +14,7 @@
 
 	In contrast, a trajectory is concerned with the way the robot visits each
 	pose. That is, the trajectory determines at what time the robot must be at a
-	certain position along the trajectory.
+	certain position along the path.
 
 	The path and trajectory are subject to a range of constraints as summarised
 	in symbolic form in Equation~\ref{eq:constraints}.
@@ -30,8 +30,8 @@
 		\traj(\timesym) \mapsto \pathsym(\timenorm)											&$\forall\timesym \forall\timenorm \in [0, 1]$																	\label{eq:constraint:trajectory_maps_to_path}\\
 		%\traj(0)																			&$= \pathsym(0)$																								\label{eq:constraint:}\\
 		%\traj(\timenorm_{\final})															&$= \pathsym(1)$																								\label{eq:constraint:}\\
-		\contdeggeombare(\pathsym)															&$\geq \gain_{\contdeggeombare} \quad \forall \timenorm \in [0, 1]$												\label{eq:constraint:geometric_differentiablity}\\
-		\contdegbare(\traj)																	&$\geq \gain_{\contdegbare} \quad\forall\timesym$																\label{eq:constraint:kinematic_differentiability}\\
+		\contdeggeombare(\pathsym)															&$\geq \gain_{\contdeggeombare} \in \natural \quad \forall \timenorm \in [0, 1]$												\label{eq:constraint:geometric_differentiablity}\\
+		\contdegbare(\traj)																	&$\geq \gain_{\contdegbare} \in \natural \quad\forall\timesym$																\label{eq:constraint:kinematic_differentiability}\\
 		\robot(\pathsym(\timenorm)) \cap \obstacle											&$= \emptyset \quad\forall\timenorm \forall\obstacle$															\label{eq:constraint:end_effector_obstacle_collisions}\\
 		\cable(\pathsym(\timenorm)) \cap \obstacle											&$= \emptyset \quad\forall\timenorm \forall\obstacle \forall\cable$												\label{eq:constraint:cable_obstacle_collisions}\\
 		\robot(\pathsym(\timenorm)) \cap \cable(\pathsym(\timenorm))						&$= \emptyset \quad \forall\timenorm \forall\cable$																\label{eq:constraint:end_effector_cable_collisions}\\
@@ -171,7 +171,7 @@
 		steps that are performed to improve the quality of the path.
 		Chapter~\ref{chap:motion_law} discusses how a trajectory along the found
 		path is generated. A brief overview of the code is given in
-		Chapter~\ref{chap:architecture_developed}.
+		Appendix~\ref{chap:architecture_developed}.
 		% Finally,
 		% Chapter~\ref{chap:experimental_results} discusses some experimental
 		% results.
