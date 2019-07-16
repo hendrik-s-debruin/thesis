@@ -4,5 +4,5 @@
 latexmk -xelatex -output-directory=output main.tex -pvc -interaction=nonstopmode
 #latexmk -xelatex -output-directory=output defense.tex -pvc #-interaction=nonstopmode
 
-# latexmk -xelatex -output-directory=output paper.tex -pvc -interaction=nonstopmode
-# latexmk -pdf -output-directory=output paper.tex -pvc -interaction=nonstopmode
+#latexmk -xelatex -output-directory=output paper.tex -pvc -interaction=nonstopmode
+#latexmk -pdf -output-directory=output paper.tex -pvc -interaction=nonstopmode
