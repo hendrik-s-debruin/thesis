@@ -6,16 +6,6 @@
 	based on the \gls{rrt} algorithm is developed
 	\cite{bib:planning:rapidly-exploring_random_trees_a_new_tool_for_path_planning}.
 
-	This thesis makes a distinction between a path $\pathsym$ of the robot
-	$\robot$, and its corresponding trajectory $\traj$. In particular, a path is
-	defined as the set $\setofposes$ of all poses $\pose$ in configuration space
-	that the robot moves through while going from the initial pose
-	$\pose_{\initial}$ to its goal pose $\pose_{\goal}$.
-
-	In contrast, a trajectory is concerned with the way the robot visits each
-	pose. That is, the trajectory determines at what time the robot must be at a
-	certain position along the path.
-
 	The path and trajectory are subject to a range of constraints as summarised
 	in symbolic form in Equation~\ref{eq:constraints}.
 
@@ -54,11 +44,14 @@
 		\max{\int}_{\pathsym}\capacitymargin																																						\label{eq:constraint:capacity_margin}
 	\end{subnumcases}
 
-	A brief interpretation of the constraints is offered now.
+	The symbols and meanings of the constraints are discussed in the following.
+	Note that $\pathsym$ denotes a path through the workspace and is indexed by
+	$\timenorm \in [0, 1]$, whereas $\traj$ denotes a trajectory along this
+	path, and is indexed by $\timesym \in \Re$.
 
 	Constraints~\ref{eq:constraint:start_initial}
 	and~\ref{eq:constraint:finish_goal} impose that the path must start at the
-	initial pose and finish at the goal pose.
+	initial pose $\pose_{\initial}$ and finish at the goal pose $\pose_{\goal}$.
 	Constraint~\ref{eq:constraint:trajectory_maps_to_path} requires that the
 	function describing the trajectory map to the function describing the path.
 	That is, for any $\timenorm \in [0, 1]$, exactly one value for $\timesym$
@@ -97,8 +90,11 @@
 
 	Constraints~\ref{eq:constraint:end_effector_obstacle_collisions}
 	through~\ref{eq:constraint:cable_cable_collisions} require that no
-	collisions occur at any point in the path. Due to the nature of
-	\glspl{cdpr}, different classes of collisions are possible.
+	collisions occur at any point in the path. Here, $\robot$ is the set of all
+	points in the end-effector at a given pose $\pose$ along the path, while
+	$\obstacle$ denotes the set of all points in an obstacle, and $\cable$
+	denotes the set of all points in a cable. Due to the nature of \glspl{cdpr},
+	different classes of collisions are possible.
 	Constraint~\ref{eq:constraint:end_effector_obstacle_collisions} requires
 	that the end effector not collide with any obstacle $\obstacle$.
 	Constraint~\ref{eq:constraint:cable_obstacle_collisions} requires that no
@@ -112,7 +108,9 @@
 
 	Constraint~\ref{eq:constraint:kinematic_limits} requires that the requested
 	velocities, accelerations and higher derivatives of the cable position
-	adhere to the kinematic limits of the actuators.
+	adhere to the kinematic limits of the actuators. Here, $\invgeometricmodel$
+	is the inverse geometric model of the \gls{cdpr} and returns the cable
+	length vector for a given pose of the robot.
 
 	Finally, Constraint~\ref{eq:constraint:minimise_distance}
 	and~\ref{eq:constraint:capacity_margin} attempt to minimise the distance
@@ -186,3 +184,16 @@
 			However, note that the $y$-axis was chosen to point upwards. This
 			was done to coincide with the conventions used in some of the
 			software libraries used during the development of the thesis.
+
+		\subsection{Path vs Trajectory}
+
+			This thesis makes a distinction between a path $\pathsym$ of the
+			robot $\robot$, and its corresponding trajectory $\traj$. In
+			particular, a path is defined as the set $\setofposes$ of all poses
+			$\pose$ in configuration space that the robot moves through while
+			going from the initial pose $\pose_{\initial}$ to its goal pose
+			$\pose_{\goal}$.
+
+			In contrast, a trajectory is concerned with the way the robot visits
+			each pose. That is, the trajectory determines at what time the robot
+			must be at a certain position along the path.
