@@ -1,0 +1,23 @@
+\chapter{Conclusion}%
+\label{chap:conclusion}
+
+	The present thesis investigated methods for path planning and trajectory
+	generation for \glspl{cdpr}. The final planning algorithm is based on a
+	\gls{rrt} approach.
+
+	Collision detection is done by modelling obstacles and the end-effector as
+	unions of convex polyhedra. Cables are modelled as straight lines. Sagging
+	is not taken into account. The approach also takes into account the static
+	capacity margin along the trajectory as an optimisation criterion.
+
+	Several post-processing steps were developed to generate simplified and
+	smooth paths. The approach followed makes use of B-spline curves to ensure
+	both the degree of differentiability of the trajectory, as well as the
+	geometric degree of differentiability of the path.
+
+	To this end, a software implementation of the algorithms discussed in this
+	thesis was developed. The implementation is agnostic in the exact topology
+	of the robot or in the amount and positions of obstacles in the workspace.
+	Without modification of the source, the same code can be used to generate
+	trajectories for a wide range of problems and a wide range of robots.
+
