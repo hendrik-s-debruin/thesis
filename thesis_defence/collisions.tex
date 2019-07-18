@@ -1,0 +1,128 @@
+\begin{frame}
+	\frametitle{Collision Detection}
+
+	Collision Types
+
+	\begin{itemize}
+
+		\item
+
+			Cable-Cable
+
+		\item
+
+			Cable-Obstacle
+
+		\item
+
+			Cable-End-Effector
+
+		\item
+
+			End-Effector-Obstacle
+	\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cable-Cable Collisions}
+
+	Assumption: Cables have no slack
+
+	\begin{columns}
+		\column{0.6\textwidth}
+			\begin{figure}[hb]
+				\centering
+				\def\svgwidth{\columnwidth}
+				\import{res/img/}{cable_collision_detection.pdf_tex}
+				\caption{Cable-Cable Collision Detection}
+				\label{fig:cable_cable_collision_detection}
+			\end{figure}
+
+		\column{0.4\textwidth}
+			\begin{itemize}
+
+				\item
+
+					Cables modelled as parametric lines
+
+				\item
+
+					Collision if minimum distance between cables shorter than a
+					tolerance value.
+
+			\end{itemize}
+	\end{columns}
+
+	Collision Criterion:
+
+	\begin{equation*}
+		\norm{\cable_1(\timenorm_1) - \cable_2(\timenorm_2)} < \tol
+	\end{equation*}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{Cable-Obstacle Collisions and Cable-End-Effector Collisions}
+
+	\begin{columns}
+		\column{0.5\textwidth}
+			\begin{figure}[hbt]
+				\centering
+				\def\svgwidth{\columnwidth}
+				\import{res/img/}{cable_obstacle_collision.pdf_tex}
+				\caption{Cable-Obstacle Collision Detection}%
+				\label{fig:cable_obstacle_collision_detection}
+			\end{figure}
+		\column{0.5\textwidth}
+			\begin{itemize}
+				\item
+					Obstacles and end-effector modelled as unions of convex
+					polyhedra
+				\item
+					A cable intersects with an obstacle if it intersects with
+					any of its faces
+				\item
+					First check whether cable intersects infinite extension of
+					face
+				\item
+					Then check whether intersection point is in convex hull of
+					face
+			\end{itemize}
+	\end{columns}
+
+	Collision Criterion:
+
+	\begin{equation*}
+		\begin{cases}
+			\timenorm_1 &\in [0, 1]\\
+			\cable(\timenorm_1) &\in \face_i
+		\end{cases}
+		\quad \forall i \in \{1, \ldots, \norm{\obstacle}\}
+		\label{eq:cable_obstacle_collision_condition}
+	\end{equation*}
+
+\end{frame}
+
+\begin{frame}
+	\frametitle{End-Effector-Obstacle Collisions}
+
+	\begin{itemize}
+		\item
+
+			Collision detection between convex polyhedra is achieved using SAT
+			theorem.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Collision Demo}
+
+	\movie[
+		height = 5cm,
+		width = 5cm,
+		externalviewer,
+		showcontrols
+	]
+	{Demo}{./demos/3d_col.mp4}
+\end{frame}

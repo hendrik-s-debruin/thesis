@@ -1,0 +1,54 @@
+\documentclass{beamer}
+	\title{Path Planning for Cable Driven Parallel Robots}
+	\author{Hendrik Scheepers de Bruin}
+	\institute{École Centrale de Nantes, Università degli Studi di Genova}
+	\date{22 July 2019}
+
+%\videoOFF
+
+    \usepackage{graphicx}
+		\graphicspath{{res/img/}}
+	\usepackage{multimedia}
+	\usepackage{import}
+
+    \usepackage{mathrsfs}
+    \usepackage{amsfonts}
+    \usepackage{amssymb}
+    \usepackage{dsfont}
+	\usepackage{amsmath}
+    \usepackage{mathtools}
+    \usepackage{ifdraft}
+    \usepackage[section=subsection, acronyms]{glossaries}
+        \makenoidxglossaries{}
+        \input{defs/notation.tex}
+        \input{defs/symbols.tex}
+        \input{defs/abbrevs.tex}
+        \input{defs/glossary.tex}
+        \input{defs/subscripts.tex}
+
+	\let\beameraction\action%
+
+	\usepackage{caption}
+
+	\AtBeginSection[]
+	{%
+	  \begin{frame}
+		\frametitle{Table of Contents}
+		\tableofcontents[currentsection]
+	  \end{frame}
+	}
+
+
+\begin{document}
+
+	\frame{\titlepage}
+	\section{Introduction and Overview}
+		\input{thesis_defence/intro}
+	\section{Collision Detection}
+		\input{thesis_defence/collisions}
+	\section{Planning}
+		\input{thesis_defence/planning}
+	\section{Post-Processing}
+		\input{thesis_defence/post_processing}
+
+\end{document}
