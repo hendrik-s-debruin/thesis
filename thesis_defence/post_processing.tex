@@ -20,7 +20,11 @@
 
 			\begin{itemize}
 				\item Rotation Optimisation using slerp
-				\item Smoothing with $\setofposes$-augmentation
+					\begin{itemize}
+						\item Due to sampling strategy, very little optimisation
+							required
+					\end{itemize}
+				\item Smoothing with B-splines
 
 			\end{itemize}
 
@@ -33,14 +37,25 @@
 			\caption{Superfluous Pose Removal}%
 			\label{fig:superfluous_poses}
 		\end{figure}
+\end{frame}
 
-		% \begin{figure}[hb]
-		% 	\centering
-		% 	\def\svgwidth{\columnwidth}
-		% 	\import{res/img/}{corner_removal.pdf_tex}
-		% 	\caption{Path Corner}
-		% 	\label{fig:path_corner}
-		% \end{figure}
+\begin{frame}
+	\frametitle{B-Spline Collision Guarantee}
+		\begin{figure}[hbt]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{knot_multiplicity.pdf_tex}
+			\caption{Increasing B-Spline Knot Multiplicity}%
+			\label{fig:set_of_poses_augmentation}
+		\end{figure}
+
+		\begin{figure}[hbt]
+			\centering
+			\def\svgwidth{\columnwidth}
+			\import{res/img/}{augmented_control_points.pdf_tex}
+			\caption{Augmenting Control Points}%
+			\label{fig:set_of_poses_augmentation}
+		\end{figure}
 \end{frame}
 
 \begin{frame}
@@ -56,6 +71,14 @@
 			\label{fig:set_of_poses_augmentation}
 		\end{figure}
 	\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\frametitle{B-spline Collision Guarantee with $\setofposes$-Augmentation}
+	\begin{center}
+		\includegraphics[width=\textwidth, height=0.8\textheight, keepaspectratio=true]{clutter_perspective.png}
+		\captionof{figure}{Sample planning problem}
+	\end{center}
 \end{frame}
 
 \begin{frame}

@@ -4,8 +4,6 @@
 	\institute{École Centrale de Nantes, Università degli Studi di Genova}
 	\date{22 July 2019}
 
-%\videoOFF
-
     \usepackage{graphicx}
 		\graphicspath{{res/img/}}
 	\usepackage{multimedia}
@@ -30,11 +28,18 @@
 
 	\usepackage{caption}
 
+	\usepackage[citestyle=numeric,bibstyle=numeric]{biblatex}
+		\addbibresource{bib/cdpr.bib}
+		\addbibresource{bib/path_planning.bib}
+		\addbibresource{bib/trajectory_generation.bib}
+		\addbibresource{bib/math.bib}
+
 	\AtBeginSection[]
 	{%
 	  \begin{frame}
-		\frametitle{Table of Contents}
-		\tableofcontents[currentsection]
+		  \frametitle{Table of Contents}
+		  \tableofcontents[currentsection]
+		%\tableofcontents[currentsection]
 	  \end{frame}
 	}
 
@@ -50,11 +55,17 @@
 	\frame{\titlepage}
 	\section{Introduction and Overview}
 		\input{thesis_defence/intro}
-	\section{Collision Detection}
-		\input{thesis_defence/collisions}
 	\section{Planning}
 		\input{thesis_defence/planning}
+	\section{Collision Detection}
+		\input{thesis_defence/collisions}
 	\section{Post-Processing}
 		\input{thesis_defence/post_processing}
+	\section{Conclusion}
+		\input{thesis_defence/conclusion}
 
+	\begin{frame}
+		\frametitle{Bibliography}
+		\printbibliography{}
+	\end{frame}
 \end{document}

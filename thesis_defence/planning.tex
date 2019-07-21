@@ -20,12 +20,17 @@
 
 						\item
 
+							Capacity margin higher towards center of workspace
+
+						\item
+
 							Median in center of workspace
 
 						\item
 
 							Edges are three standard deviations away from the
 							median
+
 					\end{itemize}
 			\end{itemize}
 		\column{0.5\textwidth}
@@ -76,6 +81,12 @@
 		\pose \gets \pose +
 		\gain\frac{\nabla\capacitymargin}{\norm{\nabla\capacitymargin}}
 	\end{equation*}
+
+	\begin{center}
+		\includegraphics[width=0.8\textwidth]{capacity_margin_isocontours}
+		\captionof{figure}{Capacity Margin Isocontours~\cite{bib:cdpr:measuring_how_well_a_structure_supports_varying_external_wrenches}}
+	\end{center}
+	\end{columns}
 \end{frame}
 
 \begin{frame}
